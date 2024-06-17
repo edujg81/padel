@@ -4,18 +4,13 @@ import javax.persistence.*;
 import java.util.Set;
 
 @Entity
-public class MatchDay {
+public class Jornada {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private int dayNumber;
-
-    @OneToMany(mappedBy = "matchDay")
-    private Set<Match> matches;
-
+    private int numero;
     @ManyToOne
-    @JoinColumn(name = "championship_id")
-    private Championship championship;
+    private Campeonato campeonato;
 
     // Getters y setters
 }

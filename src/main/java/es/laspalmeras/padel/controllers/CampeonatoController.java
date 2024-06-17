@@ -3,36 +3,36 @@ package es.laspalmeras.padel.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import es.laspalmeras.padel.models.Championship;
+import es.laspalmeras.padel.models.Campeonato;
 import es.laspalmeras.padel.models.Substitution;
-import es.laspalmeras.padel.services.ChampionshipService;
+import es.laspalmeras.padel.services.CampeonatoService;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/championships")
-public class ChampionshipController {
+public class CampeonatoController {
     @Autowired
-    private ChampionshipService championshipService;
+    private CampeonatoService championshipService;
 
     @GetMapping
-    public List<Championship> getAllChampionships() {
+    public List<Campeonato> getAllChampionships() {
         return championshipService.getAllChampionships();
     }
 
     @GetMapping("/{id}")
-    public Championship getChampionshipById(@PathVariable Long id) {
+    public Campeonato getChampionshipById(@PathVariable Long id) {
         return championshipService.getChampionshipById(id);
     }
 
     @PostMapping
-    public Championship saveChampionship(@RequestBody Championship championship) {
+    public Campeonato saveChampionship(@RequestBody Campeonato championship) {
         return championshipService.saveChampionship(championship);
     }
 
     @PostMapping("/{id}/generate-matches")
     public void generateMatches(@PathVariable Long id) {
-        Championship championship = championshipService.getChampionshipById(id);
+        Campeonato championship = championshipService.getChampionshipById(id);
         championshipService.generateMatches(championship);
     }
 

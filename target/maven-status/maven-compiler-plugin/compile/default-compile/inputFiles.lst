@@ -1,2 +1,12 @@
+C:\Users\Usuario\Documents\Spring\desarrollo\padel\src\main\java\es\laspalmeras\padel\controllers\ChampionshipController.java
+C:\Users\Usuario\Documents\Spring\desarrollo\padel\src\main\java\es\laspalmeras\padel\models\Championship.java
+C:\Users\Usuario\Documents\Spring\desarrollo\padel\src\main\java\es\laspalmeras\padel\models\Match.java
+C:\Users\Usuario\Documents\Spring\desarrollo\padel\src\main\java\es\laspalmeras\padel\models\MatchDay.java
 C:\Users\Usuario\Documents\Spring\desarrollo\padel\src\main\java\es\laspalmeras\padel\models\Player.java
+C:\Users\Usuario\Documents\Spring\desarrollo\padel\src\main\java\es\laspalmeras\padel\models\Ranking.java
+C:\Users\Usuario\Documents\Spring\desarrollo\padel\src\main\java\es\laspalmeras\padel\models\Substitution.java
+C:\Users\Usuario\Documents\Spring\desarrollo\padel\src\main\java\es\laspalmeras\padel\models\Team.java
 C:\Users\Usuario\Documents\Spring\desarrollo\padel\src\main\java\es\laspalmeras\padel\PadelApplication.java
+C:\Users\Usuario\Documents\Spring\desarrollo\padel\src\main\java\es\laspalmeras\padel\repositories\MatchRepository.java
+C:\Users\Usuario\Documents\Spring\desarrollo\padel\src\main\java\es\laspalmeras\padel\repositories\RankingRepository.java
+C:\Users\Usuario\Documents\Spring\desarrollo\padel\src\main\java\es\laspalmeras\padel\services\ChampionshipService.java

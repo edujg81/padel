@@ -14,7 +14,7 @@ public class Team {
       name = "team_player", 
       joinColumns = @JoinColumn(name = "team_id"), 
       inverseJoinColumns = @JoinColumn(name = "player_id"))
-    private Set<Player> players;
+    private Set<Jugador> players;
 
     // Getters y setters
 }

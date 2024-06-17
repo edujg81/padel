@@ -10,15 +10,15 @@ public class Substitution {
 
     @ManyToOne
     @JoinColumn(name = "match_id")
-    private Match match;
+    private Partido match;
 
     @ManyToOne
     @JoinColumn(name = "absent_player_id")
-    private Player absentPlayer;
+    private Jugador absentPlayer;
 
     @ManyToOne
     @JoinColumn(name = "substitute_player_id")
-    private Player substitutePlayer;
+    private Jugador substitutePlayer;
 
     private String reason; // "Lesión", "Ausencia"
 
