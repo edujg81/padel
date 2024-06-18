@@ -1,5 +1,10 @@
 package es.laspalmeras.padel.repositories;
 
-public interface CategoriaRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
+import es.laspalmeras.padel.models.Categoria;
+
+@Repository
+public interface CategoriaRepository extends JpaRepository<Categoria, Long> {
 }

@@ -1,137 +1,110 @@
 package es.laspalmeras.padel.services;
 
+import es.laspalmeras.padel.exception.ResourceNotFoundException;
 import es.laspalmeras.padel.models.*;
-import es.laspalmeras.padel.repositories.CampeonatoRepository;
-import es.laspalmeras.padel.repositories.PartidoRepository;
-import es.laspalmeras.padel.repositories.JugadorRepository;
-import es.laspalmeras.padel.repositories.ClasificacionRepository;
-
+import es.laspalmeras.padel.repositories.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import java.util.*;
+
+import java.util.List;
 
 @Service
 public class CampeonatoService {
     @Autowired
-    private CampeonatoRepository championshipRepository;
+    private CampeonatoRepository campeonatoRepository;
 
     @Autowired
-    private PartidoRepository matchRepository;
+    private InscripcionRepository inscripcionRepository;
 
     @Autowired
-    private JugadorRepository playerRepository;
+    private JornadaRepository jornadaRepository;
 
     @Autowired
-    private ClasificacionRepository rankingRepository;
+    private PartidoRepository partidoRepository;
 
-    public List<Campeonato> getAllChampionships() {
-        return championshipRepository.findAll();
+    @Autowired
+    private ClasificacionRepository clasificacionRepository;
+
+    // Métodos existentes...
+
+    public Partido registrarResultadoPartido(Long partidoId, Partido resultado) {
+        Partido partido = partidoRepository.findById(partidoId).orElseThrow(() -> new ResourceNotFoundException("Partido no encontrado"));
+
+        // Actualizar el partido con los resultados y datos proporcionados
+        partido.setResultado(resultado.getResultado());
+        partido.setPista(resultado.getPista());
+        partido.setFecha(resultado.getFecha());
+        partido.setAusente(resultado.getAusente());
+        partido.setLesionado(resultado.getLesionado());
+        partido.setSustituto(resultado.getSustituto());
+        partido.setJuegosGanadosEquipo1(resultado.getJuegosGanadosEquipo1());
+        partido.setJuegosPerdidosEquipo1(resultado.getJuegosPerdidosEquipo1());
+        partido.setSetsGanadosEquipo1(resultado.getSetsGanadosEquipo1());
+        partido.setSetsPerdidosEquipo1(resultado.getSetsPerdidosEquipo1());
+        partido.setJuegosGanadosEquipo2(resultado.getJuegosGanadosEquipo2());
+        partido.setJuegosPerdidosEquipo2(resultado.getJuegosPerdidosEquipo2());
+        partido.setSetsGanadosEquipo2(resultado.getSetsGanadosEquipo2());
+        partido.setSetsPerdidosEquipo2(resultado.getSetsPerdidosEquipo2());
+
+        actualizarClasificacion(partido);
+        return partidoRepository.save(partido);
     }
 
-    public Campeonato getChampionshipById(Long id) {
-        return championshipRepository.findById(id).orElse(null);
+    private void actualizarClasificacion(Partido partido) {
+        List<Clasificacion> clasificaciones = clasificacionRepository.findByCampeonatoOrderByPosicionAsc(partido.getJornada().getCampeonato());
+
+        // Lógica para actualizar la clasificación basándose en los resultados del partido
+        // Equipo 1
+        Clasificacion clasificacionEquipo1Jugador1 = clasificaciones.stream()
+                .filter(c -> c.getJugador().equals(partido.getEquipo1Jugador1()))
+                .findFirst()
+                .orElseThrow(() -> new ResourceNotFoundException("Clasificación no encontrada para el jugador"));
+
+        Clasificacion clasificacionEquipo1Jugador2 = clasificaciones.stream()
+                .filter(c -> c.getJugador().equals(partido.getEquipo1Jugador2()))
+                .findFirst()
+                .orElseThrow(() -> new ResourceNotFoundException("Clasificación no encontrada para el jugador"));
+
+        // Equipo 2
+        Clasificacion clasificacionEquipo2Jugador1 = clasificaciones.stream()
+                .filter(c -> c.getJugador().equals(partido.getEquipo2Jugador1()))
+                .findFirst()
+                .orElseThrow(() -> new ResourceNotFoundException("Clasificación no encontrada para el jugador"));
+
+        Clasificacion clasificacionEquipo2Jugador2 = clasificaciones.stream()
+                .filter(c -> c.getJugador().equals(partido.getEquipo2Jugador2()))
+                .findFirst()
+                .orElseThrow(() -> new ResourceNotFoundException("Clasificación no encontrada para el jugador"));
+
+        // Actualizar la lógica de clasificación
+        actualizarEstadisticas(clasificacionEquipo1Jugador1, partido, true);
+        actualizarEstadisticas(clasificacionEquipo1Jugador2, partido, true);
+        actualizarEstadisticas(clasificacionEquipo2Jugador1, partido, false);
+        actualizarEstadisticas(clasificacionEquipo2Jugador2, partido, false);
+
+        clasificacionRepository.save(clasificacionEquipo1Jugador1);
+        clasificacionRepository.save(clasificacionEquipo1Jugador2);
+        clasificacionRepository.save(clasificacionEquipo2Jugador1);
+        clasificacionRepository.save(clasificacionEquipo2Jugador2);
     }
 
-    public Campeonato saveChampionship(Campeonato championship) {
-        return championshipRepository.save(championship);
-    }
-
-    public void deleteChampionship(Long id) {
-        championshipRepository.deleteById(id);
-    }
-
-    public void generateMatches(Campeonato championship) {
-        List<Jugador> players = new ArrayList<>(championship.getPlayers());
-        players.sort(Comparator.comparingInt(player -> player.getRanking().getPosition()));
-
-        for (int i = 0; i < players.size(); i += 4) {
-            Team team1 = new Team();
-            team1.setPlayers(Set.of(players.get(i), players.get(i + 3)));
-            Team team2 = new Team();
-            team2.setPlayers(Set.of(players.get(i + 1), players.get(i + 2)));
-            
-            Partido match = new Partido();
-            match.setTeam1(team1);
-            match.setTeam2(team2);
-            match.setChampionship(championship);
-            match.setCourt("Court " + ((i / 4) + 1)); // Asigna una pista
-            match.setDate(LocalDate.now().plusDays(i / 4)); // Asigna una fecha
-            
-            matchRepository.save(match);
-        }
-    }
-
-    public void updateMatchResult(Long matchId, int scoreTeam1, int scoreTeam2, List<Substitution> substitutions) {
-        Partido match = matchRepository.findById(matchId).orElse(null);
-        if (match == null) {
-            throw new RuntimeException("Match not found");
-        }
-
-        match.setScoreTeam1(scoreTeam1);
-        match.setScoreTeam2(scoreTeam2);
-        matchRepository.save(match);
-
-        processSubstitutions(match, substitutions);
-        updateRankings(match);
-    }
-
-    private void processSubstitutions(Partido match, List<Substitution> substitutions) {
-        for (Substitution substitution : substitutions) {
-            substitution.setMatch(match);
-            if (substitution.getReason().equals("Ausencia")) {
-                penalizeAbsentPlayer(substitution.getAbsentPlayer());
-            } else if (substitution.getReason().equals("Lesión")) {
-                // Manejar la lógica específica para lesiones si es necesario
-            }
-
-            if (match.getChampionship().getCategory().equals("Femenina")) {
-                awardPointToSubstitutePlayer(substitution.getSubstitutePlayer());
-            }
-        }
-    }
-
-    private void penalizeAbsentPlayer(Jugador player) {
-        Clasificacion ranking = rankingRepository.findByChampionshipAndPlayer(player.getChampionship(), player);
-        ranking.setSetsLost(ranking.getSetsLost() + 2);
-        ranking.setGamesLost(ranking.getGamesLost() + 12);
-        rankingRepository.save(ranking);
-    }
-
-    private void awardPointToSubstitutePlayer(Jugador player) {
-        Clasificacion ranking = rankingRepository.findByChampionshipAndPlayer(player.getChampionship(), player);
-        ranking.setPoints(ranking.getPoints() + 1);
-        rankingRepository.save(ranking);
-    }
-
-    private void updateRankings(Partido match) {
-        // Actualiza los rankings de los jugadores en base al resultado del partido
-        List<Jugador> team1Players = new ArrayList<>(match.getTeam1().getPlayers());
-        List<Jugador> team2Players = new ArrayList<>(match.getTeam2().getPlayers());
-
-        for (Jugador player : team1Players) {
-            updatePlayerRanking(player, match.getScoreTeam1(), match.getScoreTeam2());
-        }
-        for (Jugador player : team2Players) {
-            updatePlayerRanking(player, match.getScoreTeam2(), match.getScoreTeam1());
-        }
-    }
-
-    private void updatePlayerRanking(Jugador player, int scoreWon, int scoreLost) {
-        Clasificacion ranking = rankingRepository.findByChampionshipAndPlayer(player.getChampionship(), player);
-        ranking.setMatchesPlayed(ranking.getMatchesPlayed() + 1);
-        ranking.setGamesWon(ranking.getGamesWon() + scoreWon);
-        ranking.setGamesLost(ranking.getGamesLost() + scoreLost);
-        ranking.setSetsWon(ranking.getSetsWon() + (scoreWon >= 6 ? 1 : 0));
-        ranking.setSetsLost(ranking.getSetsLost() + (scoreLost >= 6 ? 1 : 0));
-
-        if (scoreWon > scoreLost) {
-            ranking.setPoints(ranking.getPoints() + 2);
-            ranking.setMatchesWon(ranking.getMatchesWon() + 1);
+    private void actualizarEstadisticas(Clasificacion clasificacion, Partido partido, boolean esGanador) {
+        clasificacion.setPartidosJugados(clasificacion.getPartidosJugados() + 1);
+        if (esGanador) {
+            clasificacion.setPartidosGanados(clasificacion.getPartidosGanados() + 1);
+            clasificacion.setPuntos(clasificacion.getPuntos() + 2);
         } else {
-            ranking.setMatchesLost(ranking.getMatchesLost() + 1);
+            clasificacion.setPartidosPerdidos(clasificacion.getPartidosPerdidos() + 1);
         }
 
-        rankingRepository.save(ranking);
+        clasificacion.setSetsGanados(clasificacion.getSetsGanados() + (esGanador ? partido.getSetsGanadosEquipo1() : partido.getSetsGanadosEquipo2()));
+        clasificacion.setSetsPerdidos(clasificacion.getSetsPerdidos() + (esGanador ? partido.getSetsPerdidosEquipo1() : partido.getSetsPerdidosEquipo2()));
+        clasificacion.setJuegosGanados(clasificacion.getJuegosGanados() + (esGanador ? partido.getJuegosGanadosEquipo1() : partido.getJuegosGanadosEquipo2()));
+        clasificacion.setJuegosPerdidos(clasificacion.getJuegosPerdidos() + (esGanador ? partido.getJuegosPerdidosEquipo1() : partido.getJuegosPerdidosEquipo2()));
+     
+        // Actualizar diferencia de sets y juegos
+        clasificacion.setDiferenciaSets(clasificacion.getSetsGanados() - clasificacion.getSetsPerdidos());
+        clasificacion.setDiferenciaJuegos(clasificacion.getJuegosGanados() - clasificacion.getJuegosPerdidos());
     }
 }

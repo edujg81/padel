@@ -1,9 +1,10 @@
 package es.laspalmeras.padel.repositories;
 
-import es.laspalmeras.padel.models.Jugador;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import es.laspalmeras.padel.models.Division;
+
 @Repository
-public interface JugadorRepository extends JpaRepository<Jugador, Long> {
+public interface DivisionRepository extends JpaRepository<Division, Long> {
 }
