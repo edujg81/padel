@@ -20,34 +20,34 @@ import es.laspalmeras.padel.business.service.model.Jugador;
 @RequestMapping("/jugadores")
 public class JugadorController {
 
-    @Autowired
-    private JugadorService jugadorService;
+	@Autowired
+	private JugadorService jugadorService;
 
-    @GetMapping
-    public List<Jugador> getAllJugadores() {
-        return jugadorService.getAllJugadores();
-    }
+	@PostMapping
+	public Jugador createJugador(@RequestBody Jugador jugador) {
+		return jugadorService.saveJugador(jugador);
+	}
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Jugador> getJugadorById(@PathVariable Long id) {
-        Jugador jugador = jugadorService.getJugadorById(id);
-        return ResponseEntity.ok(jugador);
-    }
+	@DeleteMapping("/{id}")
+	public ResponseEntity<Void> deleteJugador(@PathVariable Long id) {
+		jugadorService.deleteJugador(id);
+		return ResponseEntity.noContent().build();
+	}
 
-    @PostMapping
-    public Jugador createJugador(@RequestBody Jugador jugador) {
-        return jugadorService.saveJugador(jugador);
-    }
+	@GetMapping
+	public List<Jugador> getAllJugadores() {
+		return jugadorService.getAllJugadores();
+	}
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Jugador> updateJugador(@PathVariable Long id, @RequestBody Jugador jugadorDetails) {
-        Jugador updatedJugador = jugadorService.updateJugador(id, jugadorDetails);
-        return ResponseEntity.ok(updatedJugador);
-    }
+	@GetMapping("/{id}")
+	public ResponseEntity<Jugador> getJugadorById(@PathVariable Long id) {
+		Jugador jugador = jugadorService.getJugadorById(id);
+		return ResponseEntity.ok(jugador);
+	}
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteJugador(@PathVariable Long id) {
-        jugadorService.deleteJugador(id);
-        return ResponseEntity.noContent().build();
-    }
+	@PutMapping("/{id}")
+	public ResponseEntity<Jugador> updateJugador(@PathVariable Long id, @RequestBody Jugador jugadorDetails) {
+		Jugador updatedJugador = jugadorService.updateJugador(id, jugadorDetails);
+		return ResponseEntity.ok(updatedJugador);
+	}
 }

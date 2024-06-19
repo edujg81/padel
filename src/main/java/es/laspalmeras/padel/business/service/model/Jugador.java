@@ -7,81 +7,81 @@ import javax.persistence.Id;
 
 @Entity
 public class Jugador {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-    private String dni;
-    private String nombreCompleto;
-    private String telefono;
-    private String email;
-    private String sexo; // "Masculino", "Femenino"
-    private boolean estado; // "Alta", "Baja"
-    private boolean lesionado;
+	private String dni;
+	private String nombreCompleto;
+	private String telefono;
+	private String email;
+	private String sexo; // "Masculino", "Femenino"
+	private String estado; // "Alta", "Baja"
+	private Boolean lesionado;
 
-    // Getters y setters
+	// Getters y setters
 
-    public Long getId() {
-        return id;
-    }
+	public String getDni() {
+		return dni;
+	}
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	public String getEmail() {
+		return email;
+	}
 
-    public String getDni() {
-        return dni;
-    }
+	public Long getId() {
+		return id;
+	}
 
-    public void setDni(String dni) {
-        this.dni = dni;
-    }
+	public String getNombreCompleto() {
+		return nombreCompleto;
+	}
 
-    public String getNombreCompleto() {
-        return nombreCompleto;
-    }
+	public String getSexo() {
+		return sexo;
+	}
 
-    public void setNombreCompleto(String nombreCompleto) {
-        this.nombreCompleto = nombreCompleto;
-    }
+	public String getTelefono() {
+		return telefono;
+	}
 
-    public String getTelefono() {
-        return telefono;
-    }
+	public String isEstado() {
+		return estado;
+	}
 
-    public void setTelefono(String telefono) {
-        this.telefono = telefono;
-    }
+	public boolean isLesionado() {
+		return lesionado;
+	}
 
-    public String getEmail() {
-        return email;
-    }
+	public void setDni(String dni) {
+		this.dni = dni;
+	}
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
-    public String getSexo() {
-        return sexo;
-    }
+	public void setEstado(String estado) {
+		this.estado = estado;
+	}
 
-    public void setSexo(String sexo) {
-        this.sexo = sexo;
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public boolean isEstado() {
-        return estado;
-    }
+	public void setLesionado(boolean lesionado) {
+		this.lesionado = lesionado;
+	}
 
-    public void setEstado(boolean estado) {
-        this.estado = estado;
-    }
+	public void setNombreCompleto(String nombreCompleto) {
+		this.nombreCompleto = nombreCompleto;
+	}
 
-    public boolean isLesionado() {
-        return lesionado;
-    }
+	public void setSexo(String sexo) {
+		this.sexo = sexo;
+	}
 
-    public void setLesionado(boolean lesionado) {
-        this.lesionado = lesionado;
-    }
+	public void setTelefono(String telefono) {
+		this.telefono = telefono;
+	}
 }

@@ -8,9 +8,9 @@ import es.laspalmeras.padel.business.service.model.Campeonato;
 @Repository
 public interface CampeonatoRepository extends JpaRepository<Campeonato, Long> {
 
-    // Puedes agregar métodos específicos de consulta si son necesarios
-    // Spring Data JPA proporciona métodos por defecto para operaciones CRUD
-    // No es necesario definirlos aquí a menos que necesites consultas personalizadas
-
+	// Puedes agregar métodos específicos de consulta si son necesarios
+	// Spring Data JPA proporciona métodos por defecto para operaciones CRUD
+	// No es necesario definirlos aquí a menos que necesites consultas
+	// personalizadas
 
 }

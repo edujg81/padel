@@ -14,64 +14,64 @@ import javax.persistence.OneToMany;
 
 @Entity
 public class Campeonato {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-    private boolean activo;
+	private Boolean activo;
 
-    @ManyToOne
-    @Enumerated(EnumType.STRING)
-    private Categoria categoria; // "Masculina", "Femenina", "Mixta"
+	@ManyToOne
+	@Enumerated(EnumType.STRING)
+	private Categoria categoria; // "Masculina", "Femenina", "Mixta"
 
-    @ManyToOne
-    @Enumerated(EnumType.STRING)
-    private Division division; // "Primera", "Segunda", "Tercera"
+	@ManyToOne
+	@Enumerated(EnumType.STRING)
+	private Division division; // "Primera", "Segunda", "Tercera"
 
-    @OneToMany(mappedBy = "campeonato")
-    private Set<Jornada> jornadas = new HashSet<>();
+	@OneToMany(mappedBy = "campeonato")
+	private Set<Jornada> jornadas = new HashSet<>();
 
-    // Constructor vacío y constructor con parámetros (si es necesario)
+	// Constructor vacío y constructor con parámetros (si es necesario)
 
-    // Getters y setters
+	// Getters y setters
 
-    public Long getId() {
-        return id;
-    }
+	public Categoria getCategoria() {
+		return categoria;
+	}
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	public Division getDivision() {
+		return division;
+	}
 
-    public Categoria getCategoria() {
-        return categoria;
-    }
+	public Long getId() {
+		return id;
+	}
 
-    public void setCategoria(Categoria categoria) {
-        this.categoria = categoria;
-    }
+	public Set<Jornada> getJornadas() {
+		return jornadas;
+	}
 
-    public Division getDivision() {
-        return division;
-    }
+	public boolean isActivo() {
+		return activo;
+	}
 
-    public void setDivision(Division division) {
-        this.division = division;
-    }
+	public void setActivo(boolean activo) {
+		this.activo = activo;
+	}
 
-    public boolean isActivo() {
-        return activo;
-    }
+	public void setCategoria(Categoria categoria) {
+		this.categoria = categoria;
+	}
 
-    public void setActivo(boolean activo) {
-        this.activo = activo;
-    }
+	public void setDivision(Division division) {
+		this.division = division;
+	}
 
-    public Set<Jornada> getJornadas() {
-        return jornadas;
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public void setJornadas(Set<Jornada> jornadas) {
-        this.jornadas = jornadas;
-    }
+	public void setJornadas(Set<Jornada> jornadas) {
+		this.jornadas = jornadas;
+	}
 }

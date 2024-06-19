@@ -41,15 +41,7 @@ CREATE TABLE partido (
     juegos_ganados_equipo2 INTEGER,
     juegos_perdidos_equipo2 INTEGER,
     sets_ganados_equipo2 INTEGER,
-    sets_perdidos_equipo2 INTEGER,
-    FOREIGN KEY (jornada_id) REFERENCES jornada(id),
-    FOREIGN KEY (equipo1_jugador1_id) REFERENCES jugador(id),
-    FOREIGN KEY (equipo1_jugador2_id) REFERENCES jugador(id),
-    FOREIGN KEY (equipo2_jugador1_id) REFERENCES jugador(id),
-    FOREIGN KEY (equipo2_jugador2_id) REFERENCES jugador(id),
-    FOREIGN KEY (ausente_id) REFERENCES jugador(id),
-    FOREIGN KEY (lesionado_id) REFERENCES jugador(id),
-    FOREIGN KEY (sustituto_id) REFERENCES jugador(id)
+    sets_perdidos_equipo2 INTEGER
 );
 
 -- Creación de la tabla Jornada

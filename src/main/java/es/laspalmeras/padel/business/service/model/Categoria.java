@@ -7,24 +7,24 @@ import javax.persistence.Id;
 
 @Entity
 public class Categoria {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-    private String nombre; // Masculina, Femenina, Mixta
+	private String nombre; // Masculina, Femenina, Mixta
 
-    // Getters y setters
-    
+	// Getters y setters
+
 	public Long getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
-	}
-
 	public String getNombre() {
 		return nombre;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public void setNombre(String nombre) {

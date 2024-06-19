@@ -22,9 +22,9 @@ VALUES
 -- Insertar partidos de ejemplo
 INSERT INTO partido (jornada_id, equipo1_jugador1_id, equipo1_jugador2_id, equipo2_jugador1_id, equipo2_jugador2_id, resultado, pista, fecha, ausente_id, lesionado_id, sustituto_id, juegos_ganados_equipo1, juegos_perdidos_equipo1, sets_ganados_equipo1, sets_perdidos_equipo1, juegos_ganados_equipo2, juegos_perdidos_equipo2, sets_ganados_equipo2, sets_perdidos_equipo2)
 VALUES 
-    (1, 1, 2, 3, 4, '2-0', 'Pista 1', '2024-07-10', NULL, NULL, NULL, 21, 15, 2, 0, 0, 0),
-    (1, 3, 4, 1, 2, '1-2', 'Pista 2', '2024-07-10', NULL, NULL, NULL, 15, 21, 1, 2, 21, 15, 0, 2),
-    (2, 1, 2, 3, 4, NULL, 'Pista 1', '2024-07-17', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-    (3, 3, 4, 1, 2, NULL, 'Pista 2', '2024-09-15', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+    (1, 1, 2, 3, 4, NULL, 'Pista 1', '2024-07-10', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+    (1, 3, 4, 1, 2, NULL, 'Pista 2', '2024-07-10', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+    (2, 1, 2, 3, 4, NULL, 'Pista 1', '2024-07-17', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+    (3, 3, 4, 1, 2, NULL, 'Pista 2', '2024-09-15', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- Puedes agregar más datos según sea necesario

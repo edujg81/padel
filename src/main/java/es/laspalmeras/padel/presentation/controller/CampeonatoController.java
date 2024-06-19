@@ -20,34 +20,35 @@ import es.laspalmeras.padel.business.service.model.Campeonato;
 @RequestMapping("/campeonatos")
 public class CampeonatoController {
 
-    @Autowired
-    private CampeonatoService campeonatoService;
+	@Autowired
+	private CampeonatoService campeonatoService;
 
-    @GetMapping
-    public List<Campeonato> getAllCampeonatos() {
-        return campeonatoService.getAllCampeonatos();
-    }
+	@PostMapping
+	public Campeonato createCampeonato(@RequestBody Campeonato campeonato) {
+		return campeonatoService.saveCampeonato(campeonato);
+	}
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Campeonato> getCampeonatoById(@PathVariable Long id) {
-        Campeonato campeonato = campeonatoService.getCampeonatoById(id);
-        return ResponseEntity.ok(campeonato);
-    }
+	@DeleteMapping("/{id}")
+	public ResponseEntity<Void> deleteCampeonato(@PathVariable Long id) {
+		campeonatoService.deleteCampeonato(id);
+		return ResponseEntity.noContent().build();
+	}
 
-    @PostMapping
-    public Campeonato createCampeonato(@RequestBody Campeonato campeonato) {
-        return campeonatoService.saveCampeonato(campeonato);
-    }
+	@GetMapping
+	public List<Campeonato> getAllCampeonatos() {
+		return campeonatoService.getAllCampeonatos();
+	}
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Campeonato> updateCampeonato(@PathVariable Long id, @RequestBody Campeonato campeonatoDetails) {
-        Campeonato updatedCampeonato = campeonatoService.updateCampeonato(id, campeonatoDetails);
-        return ResponseEntity.ok(updatedCampeonato);
-    }
+	@GetMapping("/{id}")
+	public ResponseEntity<Campeonato> getCampeonatoById(@PathVariable Long id) {
+		Campeonato campeonato = campeonatoService.getCampeonatoById(id);
+		return ResponseEntity.ok(campeonato);
+	}
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteCampeonato(@PathVariable Long id) {
-        campeonatoService.deleteCampeonato(id);
-        return ResponseEntity.noContent().build();
-    }
+	@PutMapping("/{id}")
+	public ResponseEntity<Campeonato> updateCampeonato(@PathVariable Long id,
+			@RequestBody Campeonato campeonatoDetails) {
+		Campeonato updatedCampeonato = campeonatoService.updateCampeonato(id, campeonatoDetails);
+		return ResponseEntity.ok(updatedCampeonato);
+	}
 }

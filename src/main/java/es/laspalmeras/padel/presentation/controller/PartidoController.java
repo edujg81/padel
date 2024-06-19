@@ -20,43 +20,43 @@ import es.laspalmeras.padel.business.service.model.Partido;
 @RestController
 @RequestMapping("/partidos")
 public class PartidoController {
-    @Autowired
-    private CampeonatoService campeonatoService;
+	@Autowired
+	private CampeonatoService campeonatoService;
 
-    @Autowired
-    private PartidoService partidoService;
+	@Autowired
+	private PartidoService partidoService;
 
-    @GetMapping
-    public List<Partido> getAllPartidos() {
-        return partidoService.getAllPartidos();
-    }
+	@PostMapping
+	public Partido createPartido(@RequestBody Partido partido) {
+		return partidoService.savePartido(partido);
+	}
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Partido> getPartidoById(@PathVariable Long id) {
-        Partido partido = partidoService.getPartidoById(id);
-        return ResponseEntity.ok(partido);
-    }
+	@DeleteMapping("/{id}")
+	public ResponseEntity<Void> deletePartido(@PathVariable Long id) {
+		partidoService.deletePartido(id);
+		return ResponseEntity.noContent().build();
+	}
 
-    @PostMapping
-    public Partido createPartido(@RequestBody Partido partido) {
-        return partidoService.savePartido(partido);
-    }
+	@GetMapping
+	public List<Partido> getAllPartidos() {
+		return partidoService.getAllPartidos();
+	}
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Partido> updatePartido(@PathVariable Long id, @RequestBody Partido partidoDetails) {
-        Partido updatedPartido = partidoService.updatePartido(id, partidoDetails);
-        return ResponseEntity.ok(updatedPartido);
-    }
+	@GetMapping("/{id}")
+	public ResponseEntity<Partido> getPartidoById(@PathVariable Long id) {
+		Partido partido = partidoService.getPartidoById(id);
+		return ResponseEntity.ok(partido);
+	}
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletePartido(@PathVariable Long id) {
-        partidoService.deletePartido(id);
-        return ResponseEntity.noContent().build();
-    }
+	@PostMapping("/{partidoId}/registrar-resultado")
+	public ResponseEntity<Partido> registrarResultado(@PathVariable Long partidoId, @RequestBody Partido resultado) {
+		Partido partidoActualizado = campeonatoService.registrarResultadoPartido(partidoId, resultado);
+		return ResponseEntity.ok(partidoActualizado);
+	}
 
-    @PostMapping("/{partidoId}/registrar-resultado")
-    public ResponseEntity<Partido> registrarResultado(@PathVariable Long partidoId, @RequestBody Partido resultado) {
-        Partido partidoActualizado = campeonatoService.registrarResultadoPartido(partidoId, resultado);
-        return ResponseEntity.ok(partidoActualizado);
-    }
+	@PutMapping("/{id}")
+	public ResponseEntity<Partido> updatePartido(@PathVariable Long id, @RequestBody Partido partidoDetails) {
+		Partido updatedPartido = partidoService.updatePartido(id, partidoDetails);
+		return ResponseEntity.ok(updatedPartido);
+	}
 }

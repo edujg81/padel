@@ -8,15 +8,15 @@ import javax.persistence.ManyToOne;
 
 @Entity
 public class Inscripcion {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-    @ManyToOne
-    private Jugador jugador;
+	@ManyToOne
+	private Jugador jugador;
 
-    @ManyToOne
-    private Campeonato campeonato;
+	@ManyToOne
+	private Campeonato campeonato;
 
-    // Getters y setters
+	// Getters y setters
 }

@@ -10,5 +10,5 @@ import es.laspalmeras.padel.business.service.model.Clasificacion;
 
 @Repository
 public interface ClasificacionRepository extends JpaRepository<Clasificacion, Long> {
-    List<Clasificacion> findByCampeonatoOrderByPosicionAsc(Campeonato campeonato);
+	List<Clasificacion> findByCampeonatoOrderByPosicionAsc(Campeonato campeonato);
 }

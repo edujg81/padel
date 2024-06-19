@@ -7,14 +7,14 @@ import javax.persistence.Id;
 
 @Entity
 public class Division {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-    private String nombre; // Primera, Segunda, Tercera
+	private String nombre; // Primera, Segunda, Tercera
 
-    // Getters y setters
-    
+	// Getters y setters
+
 	public String getNombre() {
 		return nombre;
 	}
