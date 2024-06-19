@@ -10,8 +10,6 @@ import es.laspalmeras.padel.business.service.model.Clasificacion;
 import es.laspalmeras.padel.business.service.model.Partido;
 import es.laspalmeras.padel.integration.repository.CampeonatoRepository;
 import es.laspalmeras.padel.integration.repository.ClasificacionRepository;
-import es.laspalmeras.padel.integration.repository.InscripcionRepository;
-import es.laspalmeras.padel.integration.repository.JornadaRepository;
 import es.laspalmeras.padel.integration.repository.PartidoRepository;
 import es.laspalmeras.padel.presentation.config.exception.ResourceNotFoundException;
 
@@ -20,18 +18,11 @@ public class CampeonatoService {
 	 private final CampeonatoRepository campeonatoRepository;
 
     @Autowired
-    private InscripcionRepository inscripcionRepository;
-
-    @Autowired
-    private JornadaRepository jornadaRepository;
-
-    @Autowired
     private PartidoRepository partidoRepository;
 
     @Autowired
     private ClasificacionRepository clasificacionRepository;
 
-    @Autowired
     public CampeonatoService(CampeonatoRepository campeonatoRepository) {
         this.campeonatoRepository = campeonatoRepository;
     }

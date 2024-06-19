@@ -18,8 +18,6 @@ public class Campeonato {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String nombre;
-    private int año;
     private boolean activo;
 
     @ManyToOne
