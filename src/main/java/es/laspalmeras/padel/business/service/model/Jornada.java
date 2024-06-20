@@ -1,43 +1,40 @@
 package es.laspalmeras.padel.business.service.model;
 
-import java.util.Date;
+import java.io.Serializable;
+import java.time.LocalDate;
+import java.util.List;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
+@SuppressWarnings("serial")
+@Getter
+@Setter
+@EqualsAndHashCode(of={"numero", "campeonato"})
+@ToString
 @Entity
-public class Jornada {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+@Table(name="JORNADA")
+public class Jornada implements Serializable {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-	String nombre;
+    private Integer numero;
+    private LocalDate fechaInicio;
 
-	private Date fecha;
+    @ManyToOne
+    private Campeonato campeonato;
 
-	private Campeonato campeonato;
-
-	// Getters y setters
-
-	public Campeonato getCampeonato() {
-		return campeonato;
-	}
-
-	public Date getFecha() {
-		return fecha;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setFecha(Date fecha) {
-		this.fecha = fecha;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
+    @OneToMany(mappedBy = "jornada", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Partido> partidos;
 }
