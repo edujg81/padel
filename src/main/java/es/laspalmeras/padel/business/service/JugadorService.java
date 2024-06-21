@@ -16,6 +16,8 @@ public interface JugadorService {
 	List<Jugador> getAllJugadores();
 
 	Jugador getJugadorById(Long id);
+	
+	Jugador getJugadorByDni(String dni);
 
 	Jugador saveJugador(Jugador jugador);
 
