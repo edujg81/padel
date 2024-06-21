@@ -25,7 +25,9 @@ public class Campeonato implements Serializable {
 
     private Integer año;
     private String categoria; // "Masculino", "Femenino", "Mixto"
-    private Integer division;
+    private Integer division; // 1, 2, 3...
     private String estado; // "Sin iniciar", "En curso", "Finalizado"
     private Boolean activo;
+    private Integer puntosPorVictoria = 2; // Valor predeterminado
+    private Integer puntosPorDerrota = 0;  // Valor predeterminado
 }

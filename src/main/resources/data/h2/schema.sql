@@ -19,6 +19,8 @@ CREATE TABLE CAMPEONATO (
     division INTEGER NOT NULL,
     estado VARCHAR(20) NOT NULL,
     activo BOOLEAN NOT NULL,
+    puntos_por_victoria INTEGER NOT NULL DEFAULT 2,
+    puntos_por_derrota INTEGER NOT NULL DEFAULT 0,
     UNIQUE (año, categoria, division)
 );
 
