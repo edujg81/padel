@@ -22,4 +22,10 @@ public interface JugadorService {
 	Jugador saveJugador(Jugador jugador);
 
 	Jugador updateJugador(Long id, Jugador jugadorDetails);
+
+	void darDeBajaJugadorPorId(Long id);
+
+	void darDeBajaJugadorPorDni(String dni);
+
+	void eliminarJugadoresBajaMasDeCincoAnios();
 }

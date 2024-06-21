@@ -1,5 +1,6 @@
 package es.laspalmeras.padel.business.service.impl;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 import es.laspalmeras.padel.business.service.JugadorService;
 import es.laspalmeras.padel.business.service.model.Jugador;
 import es.laspalmeras.padel.integration.repository.JugadorRepository;
+import es.laspalmeras.padel.presentation.config.exception.ResourceNotFoundException;
 
 @Service
 public class JugadorServiceImpl implements JugadorService{
@@ -18,8 +20,9 @@ public class JugadorServiceImpl implements JugadorService{
 	
 	@Override
 	public Long create(Jugador jugador) {
-		Jugador savedJugador = jugadorRepository.save(jugador);
-        return savedJugador.getId();
+		jugador.setFechaAlta(LocalDate.now());
+	    jugador.setEstado("Alta");
+	    return jugadorRepository.save(jugador).getId();
 	}
 
 	@Override
@@ -41,6 +44,11 @@ public class JugadorServiceImpl implements JugadorService{
 	public Jugador getJugadorById(Long id) {
 		return jugadorRepository.findById(id).orElse(null);
 	}
+	
+	@Override
+	public Jugador getJugadorByDni(String dni) {
+		return jugadorRepository.findByDni(dni).orElse(null);
+	}
 
 	@Override
 	public Jugador saveJugador(Jugador jugador) {
@@ -48,22 +56,46 @@ public class JugadorServiceImpl implements JugadorService{
 	}
 
 	@Override
-	public Jugador updateJugador(Long id, Jugador jugadorDetails) {
-		return jugadorRepository.findById(id).map(jugador -> {
-            jugador.setDni(jugadorDetails.getDni());
-            jugador.setNombreCompleto(jugadorDetails.getNombreCompleto());
-            jugador.setTelefono(jugadorDetails.getTelefono());
-            jugador.setEmail(jugadorDetails.getEmail());
-            jugador.setSexo(jugadorDetails.getSexo());
-            jugador.setEstado(jugadorDetails.getEstado());
-            jugador.setLesionado(jugadorDetails.getLesionado());
-            return jugadorRepository.save(jugador);
-        }).orElse(null);
-	}
-
+    public Jugador updateJugador(Long id, Jugador jugadorDetails) {
+        Jugador jugador = jugadorRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Jugador no encontrado"));
+        jugador.setDni(jugadorDetails.getDni());
+        jugador.setNombreCompleto(jugadorDetails.getNombreCompleto());
+        jugador.setTelefono(jugadorDetails.getTelefono());
+        jugador.setEmail(jugadorDetails.getEmail());
+        jugador.setSexo(jugadorDetails.getSexo());
+        jugador.setEstado(jugadorDetails.getEstado());
+        jugador.setLesionado(jugadorDetails.getLesionado());
+        return jugadorRepository.save(jugador);
+    }
+	
 	@Override
-	public Jugador getJugadorByDni(String dni) {
-		return jugadorRepository.findByDni(dni).orElse(null);
-	}
-
+    public void darDeBajaJugadorPorId(Long id) {
+        Jugador jugador = jugadorRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Jugador no encontrado"));
+        if (jugador != null && jugador.getEstado().equals("Alta")) {
+        	jugador.setEstado("Baja");
+        	jugador.setFechaBaja(LocalDate.now());
+        }
+        jugadorRepository.save(jugador);
+    }
+	
+	@Override
+    public void darDeBajaJugadorPorDni(String dni) {
+        Jugador jugador = jugadorRepository.findByDni(dni).orElseThrow(() -> new ResourceNotFoundException("Jugador no encontrado"));
+        if (jugador != null && jugador.getEstado().equals("Alta")) {
+        	jugador.setEstado("Baja");
+        	jugador.setFechaBaja(LocalDate.now());
+        }
+        jugadorRepository.save(jugador);
+    }
+	
+	@Override
+    public void eliminarJugadoresBajaMasDeCincoAnios() {
+        List<Jugador> jugadores = jugadorRepository.findAll();
+        LocalDate cincoAniosAtras = LocalDate.now().minusYears(5);
+        for (Jugador jugador : jugadores) {
+            if (jugador.getFechaBaja() != null && jugador.getFechaBaja().isBefore(cincoAniosAtras)) {
+                jugadorRepository.delete(jugador);
+            }
+        }
+    }
 }

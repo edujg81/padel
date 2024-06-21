@@ -1,6 +1,7 @@
 package es.laspalmeras.padel.business.service.model;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -31,4 +32,6 @@ public class Jugador implements Serializable {
     private String sexo; // "Masculino", "Femenino"
     private String estado; // "Alta", "Baja"
     private Boolean lesionado;
+    private LocalDate fechaAlta;
+    private LocalDate fechaBaja;
 }

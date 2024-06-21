@@ -8,6 +8,8 @@ CREATE TABLE JUGADOR (
     sexo VARCHAR(10) NOT NULL,
     estado VARCHAR(10) NOT NULL,
     lesionado BOOLEAN NOT NULL DEFAULT false,
+    fecha_alta DATE NOT NULL,
+    fecha_baja DATE,
     UNIQUE (dni)
 );
 
