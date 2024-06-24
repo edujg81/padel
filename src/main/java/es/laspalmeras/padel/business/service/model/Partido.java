@@ -49,5 +49,26 @@ public class Partido implements Serializable {
     @JoinColumn(name = "equipo2_jugador2_id")
     private Jugador equipo2Jugador2;
 
-    private String resultado; // Puede ser nulo hasta que se registre un resultado
+    private String resultado; // Ej: "6-4, 5-7, 6-3"
+    private String pista;
+   
+    @ManyToOne
+    private Jugador ausente;
+
+    @ManyToOne
+    private Jugador lesionado;
+
+    @ManyToOne
+    private Jugador sustituto;
+
+    private Integer juegosGanadosEquipo1Set1;
+    private Integer juegosGanadosEquipo2Set1;
+
+    private Integer juegosGanadosEquipo1Set2;
+    private Integer juegosGanadosEquipo2Set2;
+
+    private Integer juegosGanadosEquipo1Set3;
+    private Integer juegosGanadosEquipo2Set3;
+
+    private String equipoGanador;
 }
