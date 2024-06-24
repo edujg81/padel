@@ -14,4 +14,10 @@ public interface CampeonatoService {
     Optional<Campeonato> findCampeonatoById(Long id);
 
     void deleteCampeonato(Long id);
+
+    Campeonato createCampeonato(Campeonato campeonato);
+
+    Campeonato updateCampeonato(Long id, Campeonato campeonatoDetails);
+
+    void cambiarEstadoCampeonato(Long id, String nuevoEstado);
 }

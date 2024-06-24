@@ -16,14 +16,14 @@ CREATE TABLE JUGADOR (
 -- Creación de la tabla Campeonato
 CREATE TABLE CAMPEONATO (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    año INTEGER NOT NULL,
+    anio INTEGER NOT NULL,
     categoria VARCHAR(20) CHECK (categoria IN ('Masculino', 'Femenino', 'Mixto')) NOT NULL,
     division INTEGER NOT NULL,
     estado VARCHAR(20) CHECK (estado IN ('Sin iniciar', 'En curso', 'Finalizado')) NOT NULL,
     activo BOOLEAN NOT NULL DEFAULT true,
     puntos_por_victoria INTEGER NOT NULL DEFAULT 2,
     puntos_por_derrota INTEGER NOT NULL DEFAULT 0,
-    UNIQUE (año, categoria, division, activo)
+    UNIQUE (anio, categoria, division, activo)
 );
 
 -- Creación de la tabla INSCRIPCION

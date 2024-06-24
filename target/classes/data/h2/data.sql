@@ -26,9 +26,12 @@ INSERT INTO jugador (dni, nombre_completo, telefono, email, sexo, estado, lesion
 ('24242424X', 'Jugador Veinticuatro', '602424242', 'jugador24@padel.com', 'Femenino', 'Alta', false, '2023-12-15', null);
 
 -- Insertar campeonatos de ejemplo
-INSERT INTO campeonato (año, categoria, division, estado, activo, puntos_por_victoria, puntos_por_derrota) VALUES
+INSERT INTO campeonato (anio, categoria, division, estado, activo, puntos_por_victoria, puntos_por_derrota) VALUES
 (2024, 'Masculino', 1, 'Sin iniciar', true, 2, 0),
-(2024, 'Femenino', 1, 'Sin iniciar', true, 2, 0);
+(2024, 'Femenino', 1, 'Sin iniciar', true, 2, 0),
+(2024, 'Masculino', 2, 'Sin iniciar', true, 2, 0),
+(2024, 'Femenino', 2, 'Sin iniciar', true, 2, 0),
+(2024, 'Mixto', 1, 'Sin iniciar', true, 2, 0);
 
 -- Insertar jornadas de ejemplo
 

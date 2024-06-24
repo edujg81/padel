@@ -8,6 +8,7 @@ es\laspalmeras\padel\business\service\model\Jugador.class
 es\laspalmeras\padel\business\service\impl\JornadaServiceImpl.class
 es\laspalmeras\padel\integration\repository\CampeonatoRepository.class
 es\laspalmeras\padel\presentation\config\exception\ResourceNotFoundException.class
+es\laspalmeras\padel\integration\repository\AusenciaRepository.class
 es\laspalmeras\padel\business\service\CampeonatoService.class
 es\laspalmeras\padel\business\service\JornadaService.class
 es\laspalmeras\padel\business\service\model\Ausencia.class

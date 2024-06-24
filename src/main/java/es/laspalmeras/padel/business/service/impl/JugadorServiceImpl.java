@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import es.laspalmeras.padel.business.service.JugadorService;
@@ -89,13 +90,10 @@ public class JugadorServiceImpl implements JugadorService{
     }
 	
 	@Override
+	@Scheduled(cron = "0 0 0 * * ?")
     public void eliminarJugadoresBajaMasDeCincoAnios() {
-        List<Jugador> jugadores = jugadorRepository.findAll();
         LocalDate cincoAniosAtras = LocalDate.now().minusYears(5);
-        for (Jugador jugador : jugadores) {
-            if (jugador.getFechaBaja() != null && jugador.getFechaBaja().isBefore(cincoAniosAtras)) {
-                jugadorRepository.delete(jugador);
-            }
-        }
+        List<Jugador> jugadoresParaEliminar = jugadorRepository.findByFechaBajaBeforeAndEstado(cincoAniosAtras, "Baja");
+        jugadorRepository.deleteAll(jugadoresParaEliminar);
     }
 }

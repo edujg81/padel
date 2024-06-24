@@ -32,9 +32,6 @@ public class JugadorController {
         Long id = jugadorService.create(jugador);
         return ResponseEntity.ok(id);
     }
-	/*public Jugador createJugador(@RequestBody Jugador jugador) {
-		return jugadorService.saveJugador(jugador);
-	}*/
 
 	@Operation(summary = "Obtener un jugador por ID")
 	@GetMapping("/{id}")
