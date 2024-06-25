@@ -41,9 +41,9 @@ CREATE TABLE JORNADA (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     numero INTEGER NOT NULL,
     fecha_inicio DATE NOT NULL,
-    campeonato_id BIGINT,
+    campeonato_id BIGINT NOT NULL,
     FOREIGN KEY (campeonato_id) REFERENCES CAMPEONATO(id),
-    UNIQUE (numero, campeonato_id)
+    UNIQUE (campeonato_id, numero)
 );
 
 -- Creación de la tabla Partido
@@ -51,10 +51,10 @@ CREATE TABLE PARTIDO (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     fecha DATE NOT NULL,
     jornada_id BIGINT,
-    equipo1_jugador1_id BIGINT,
-    equipo1_jugador2_id BIGINT,
-    equipo2_jugador1_id BIGINT,
-    equipo2_jugador2_id BIGINT,
+    equipo1_jugador1_id BIGINT NOT NULL,
+    equipo1_jugador2_id BIGINT NOT NULL,
+    equipo2_jugador1_id BIGINT NOT NULL,
+    equipo2_jugador2_id BIGINT NOT NULL,
     resultado VARCHAR(20),
     pista VARCHAR(100),
     juegos_ganados_equipo1_set1 INTEGER,

@@ -1,17 +1,19 @@
 package es.laspalmeras.padel.business.service;
 
+import java.time.LocalDate;
 import java.util.List;
-
-import org.springframework.stereotype.Service;
 
 import es.laspalmeras.padel.business.service.model.Jornada;
 
-@Service
 public interface JornadaService {
-
-    Jornada saveJornada(Jornada jornada);
+    
+    Jornada createJornada(Long campeonatoId, LocalDate fechaInicio);
 
     List<Jornada> findAllJornadas();
 
-    Jornada createJornadaForCampeonato(Long campeonatoId);
+    Jornada findJornadaById(Long id);
+
+    List<Jornada> findJornadasByCampeonato(Long campeonatoId);
+
+    void deleteJornada(Long id);
 }
