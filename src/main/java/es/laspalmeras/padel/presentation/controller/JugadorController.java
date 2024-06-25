@@ -36,8 +36,6 @@ public class JugadorController {
 	@Operation(summary = "Obtener un jugador por ID")
 	@GetMapping("/{id}")
 	public ResponseEntity<Jugador> getJugadorById(@PathVariable Long id) {
-		/*Jugador jugador = jugadorService.getJugadorById(id);
-		return ResponseEntity.ok(jugador);*/
 		Optional<Jugador> jugador = jugadorService.read(id);
         return jugador.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
 	}

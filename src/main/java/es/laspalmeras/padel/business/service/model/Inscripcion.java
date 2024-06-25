@@ -25,8 +25,8 @@ public class Inscripcion implements Serializable {
     private Long id;
 
     @ManyToOne
-    private Jugador jugador;
-
-    @ManyToOne
     private Campeonato campeonato;
+    
+    @ManyToOne
+    private Jugador jugador;
 }

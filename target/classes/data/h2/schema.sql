@@ -29,11 +29,11 @@ CREATE TABLE CAMPEONATO (
 -- Creación de la tabla INSCRIPCION
 CREATE TABLE INSCRIPCION (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    jugador_id BIGINT,
     campeonato_id BIGINT,
-    FOREIGN KEY (jugador_id) REFERENCES JUGADOR(id),
+    jugador_id BIGINT,
     FOREIGN KEY (campeonato_id) REFERENCES CAMPEONATO(id),
-    UNIQUE (jugador_id, campeonato_id)
+    FOREIGN KEY (jugador_id) REFERENCES JUGADOR(id),
+    UNIQUE (campeonato_id, jugador_id)
 );
 
 -- Creación de la tabla Jornada
