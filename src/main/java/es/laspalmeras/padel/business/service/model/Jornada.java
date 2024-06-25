@@ -9,6 +9,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
@@ -33,6 +34,7 @@ public class Jornada implements Serializable {
     private LocalDate fechaInicio;
 
     @ManyToOne
+    @JoinColumn(name = "campeonato_id", nullable = false)
     private Campeonato campeonato;
 
     @OneToMany(mappedBy = "jornada", cascade = CascadeType.ALL, orphanRemoval = true)

@@ -64,6 +64,7 @@ CREATE TABLE PARTIDO (
     juegos_ganados_equipo1_set3 INTEGER,
     juegos_ganados_equipo2_set3 INTEGER,
     equipo_ganador VARCHAR(20),
+    registrado BOOLEAN NOT NULL DEFAULT false,
     FOREIGN KEY (jornada_id) REFERENCES JORNADA(id),
     FOREIGN KEY (equipo1_jugador1_id) REFERENCES JUGADOR(id),
     FOREIGN KEY (equipo1_jugador2_id) REFERENCES JUGADOR(id),

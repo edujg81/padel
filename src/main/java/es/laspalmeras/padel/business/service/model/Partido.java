@@ -33,27 +33,27 @@ public class Partido implements Serializable {
     private LocalDate fecha;
 
     @ManyToOne
-    @JoinColumn(name = "jornada_id")
+    @JoinColumn(name = "jornada_id", nullable = false)
     private Jornada jornada;
 
     @ManyToOne
-    @JoinColumn(name = "equipo1_jugador1_id")
+    @JoinColumn(name = "equipo1_jugador1_id", nullable = false)
     private Jugador equipo1Jugador1;
 
     @ManyToOne
-    @JoinColumn(name = "equipo1_jugador2_id")
+    @JoinColumn(name = "equipo1_jugador2_id", nullable = false)
     private Jugador equipo1Jugador2;
 
     @ManyToOne
-    @JoinColumn(name = "equipo2_jugador1_id")
+    @JoinColumn(name = "equipo2_jugador1_id", nullable = false)
     private Jugador equipo2Jugador1;
 
     @ManyToOne
-    @JoinColumn(name = "equipo2_jugador2_id")
+    @JoinColumn(name = "equipo2_jugador2_id", nullable = false)
     private Jugador equipo2Jugador2;
 
-    private String resultado; // Ej: "6-4, 5-7, 6-3"
-    private String pista;
+    private String resultado = "No jugado"; // Ej: "6-4, 5-7, 6-3"
+    private String pista = "Sin asignar";
 
     @OneToMany(mappedBy = "partido")
     private List<Ausencia> ausencias;
@@ -76,5 +76,7 @@ public class Partido implements Serializable {
     @Column(name = "juegos_ganados_equipo2_set3")
     private Integer juegosGanadosEquipo2Set3;
 
-    private String equipoGanador;
+    private String equipoGanador = "Ninguno";
+    
+    private Boolean registrado = false;
 }
