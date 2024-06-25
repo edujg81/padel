@@ -7,6 +7,12 @@ import es.laspalmeras.padel.business.service.model.Jugador;
 
 public interface JugadorService {
 
+	/**
+	 * Devuelve el codigo que le ha otorgado el sistema.
+	 *
+	 * 
+	 *
+	 */
 	Long create(Jugador jugador);
 	
 	Optional<Jugador> read(Long id);
