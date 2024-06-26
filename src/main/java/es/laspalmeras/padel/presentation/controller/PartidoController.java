@@ -14,44 +14,52 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import es.laspalmeras.padel.business.service.PartidoService;
-import es.laspalmeras.padel.business.service.model.Jugador;
-import es.laspalmeras.padel.business.service.model.Partido;
+import es.laspalmeras.padel.business.service.dto.PartidoDTO;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
 @RequestMapping("/partidos")
+@Tag(name = "Gestión de Partido", description = "Operaciones pertenecientes a partidos en Club de Padel")
 public class PartidoController {
 
     @Autowired
     private PartidoService partidoService;
 
+    @Operation(summary = "Obtener todos los partidos")
     @GetMapping
-    public List<Partido> getAllPartidos() {
-        return partidoService.findAllPartidos();
+    public List<PartidoDTO> getAllPartidos() {
+        return partidoService.getAllPartidos();
     }
 
+    @Operation(summary = "Obtener partido por ID")
     @GetMapping("/{id}")
-    public ResponseEntity<Partido> getPartidoById(@PathVariable Long id) {
-        Partido partido = partidoService.findPartidoById(id);
+    public ResponseEntity<PartidoDTO> getPartidoById(@PathVariable Long id) {
+        PartidoDTO partido = partidoService.getPartidoById(id);
         return ResponseEntity.ok(partido);
     }
 
+    @Operation(summary = "Obtener partidos de una jornada(ID)")
     @GetMapping("/jornada/{jornadaId}")
-    public List<Partido> getPartidosByJornada(@PathVariable Long jornadaId) {
-        return partidoService.findPartidosByJornada(jornadaId);
+    public List<PartidoDTO> getPartidosByJornada(@PathVariable Long jornadaId) {
+        return partidoService.getPartidosByJornada(jornadaId);
     }
 
+    @Operation(summary = "Crear partidos para una jornada")
     @PostMapping("/jornada/{jornadaId}")
-    public ResponseEntity<List<Partido>> createPartidosForJornada(@PathVariable Long jornadaId, @RequestBody List<Jugador> jugadores) {
-        List<Partido> partidos = partidoService.createPartidosForJornada(jornadaId, jugadores);
+    public ResponseEntity<List<PartidoDTO>> createPartidosForJornada(@PathVariable Long jornadaId) {
+        List<PartidoDTO> partidos = partidoService.createPartidosForJornada(jornadaId);
         return ResponseEntity.ok(partidos);
     }
 
+    @Operation(summary = "Actualizar partido")
     @PutMapping("/{id}")
-    public ResponseEntity<Partido> updatePartido(@PathVariable Long id, @RequestBody Partido partidoDetails) {
-        Partido updatedPartido = partidoService.updatePartido(id, partidoDetails);
+    public ResponseEntity<PartidoDTO> updatePartido(@PathVariable Long id, @RequestBody PartidoDTO partidoDetails) {
+        PartidoDTO updatedPartido = partidoService.updatePartido(id, partidoDetails);
         return ResponseEntity.ok(updatedPartido);
     }
 
+    @Operation(summary = "Borrar partido")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletePartido(@PathVariable Long id) {
         partidoService.deletePartido(id);

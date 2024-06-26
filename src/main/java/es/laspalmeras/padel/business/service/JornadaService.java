@@ -2,16 +2,18 @@ package es.laspalmeras.padel.business.service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
+import es.laspalmeras.padel.business.service.dto.JornadaDTO;
 import es.laspalmeras.padel.business.service.model.Jornada;
 
 public interface JornadaService {
     
     Jornada createJornada(Long campeonatoId, LocalDate fechaInicio);
 
-    List<Jornada> findAllJornadas();
+    List<JornadaDTO> findAllJornadas();
 
-    Jornada findJornadaById(Long id);
+    Optional<JornadaDTO> findJornadaById(Long id);
 
     List<Jornada> findJornadasByCampeonato(Long campeonatoId);
 

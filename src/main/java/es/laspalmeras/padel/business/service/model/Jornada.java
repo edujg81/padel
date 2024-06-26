@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -38,5 +40,6 @@ public class Jornada implements Serializable {
     private Campeonato campeonato;
 
     @OneToMany(mappedBy = "jornada", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnoreProperties("jornada")
     private List<Partido> partidos;
 }

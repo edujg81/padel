@@ -3,12 +3,15 @@ package es.laspalmeras.padel.business.service.impl;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import es.laspalmeras.padel.business.service.JugadorService;
+import es.laspalmeras.padel.business.service.dto.JugadorDTO;
+import es.laspalmeras.padel.business.service.mapper.JugadorMapper;
 import es.laspalmeras.padel.business.service.model.Jugador;
 import es.laspalmeras.padel.integration.repository.JugadorRepository;
 import es.laspalmeras.padel.presentation.config.exception.ResourceNotFoundException;
@@ -19,16 +22,15 @@ public class JugadorServiceImpl implements JugadorService{
 	@Autowired
     private JugadorRepository jugadorRepository;
 	
+	private final JugadorMapper jugadorMapper = JugadorMapper.INSTANCE;
+	
 	@Override
-	public Long create(Jugador jugador) {
+	public Long create(JugadorDTO jugadorDTO) {
+		Jugador jugador = jugadorMapper.toEntity(jugadorDTO);
 		jugador.setFechaAlta(LocalDate.now());
 	    jugador.setEstado("Alta");
-	    return jugadorRepository.save(jugador).getId();
-	}
-
-	@Override
-	public Optional<Jugador> read(Long id) {
-		return jugadorRepository.findById(id);
+	    jugadorMapper.toDto(jugadorRepository.save(jugador));
+		return jugador.getId();
 	}
 
 	@Override
@@ -37,28 +39,35 @@ public class JugadorServiceImpl implements JugadorService{
 	}
 
 	@Override
-	public List<Jugador> getAllJugadores() {
-		return jugadorRepository.findAll();
+	public List<JugadorDTO> getAllJugadores() {
+		return jugadorRepository.findAll().stream()
+                .map(jugadorMapper::toDto)
+                .collect(Collectors.toList());
 	}
 
 	@Override
-	public Jugador getJugadorById(Long id) {
-		return jugadorRepository.findById(id).orElse(null);
+	public JugadorDTO getJugadorById(Long id) {
+		Optional<Jugador> jugador = jugadorRepository.findById(id);
+        return jugador.map(jugadorMapper::toDto).orElse(null);
 	}
 	
 	@Override
-	public Jugador getJugadorByDni(String dni) {
-		return jugadorRepository.findByDni(dni).orElse(null);
+	public JugadorDTO getJugadorByDni(String dni) {
+		Optional<Jugador> jugador = jugadorRepository.findByDni(dni);
+        return jugador.map(jugadorMapper::toDto).orElse(null);
 	}
 
 	@Override
-	public Jugador saveJugador(Jugador jugador) {
-		return jugadorRepository.save(jugador);
+	public JugadorDTO saveJugador(JugadorDTO jugadorDTO) {
+		Jugador jugador = jugadorMapper.toEntity(jugadorDTO);
+		jugador = jugadorRepository.save(jugador);
+		return jugadorMapper.toDto(jugador);
 	}
 
 	@Override
-    public Jugador updateJugador(Long id, Jugador jugadorDetails) {
-        Jugador jugador = jugadorRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Jugador no encontrado"));
+    public JugadorDTO updateJugador(Long id, JugadorDTO jugadorDetails) {
+		Jugador jugador = jugadorMapper.toEntity(jugadorDetails);
+		jugador = jugadorRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Jugador no encontrado"));
         jugador.setDni(jugadorDetails.getDni());
         jugador.setNombreCompleto(jugadorDetails.getNombreCompleto());
         jugador.setTelefono(jugadorDetails.getTelefono());
@@ -66,7 +75,8 @@ public class JugadorServiceImpl implements JugadorService{
         jugador.setSexo(jugadorDetails.getSexo());
         jugador.setEstado(jugadorDetails.getEstado());
         jugador.setLesionado(jugadorDetails.getLesionado());
-        return jugadorRepository.save(jugador);
+        jugador = jugadorRepository.save(jugador);
+        return jugadorMapper.toDto(jugador);
     }
 	
 	@Override
@@ -96,4 +106,10 @@ public class JugadorServiceImpl implements JugadorService{
         List<Jugador> jugadoresParaEliminar = jugadorRepository.findByFechaBajaBeforeAndEstado(cincoAniosAtras, "Baja");
         jugadorRepository.deleteAll(jugadoresParaEliminar);
     }
+
+	@Override
+	public Optional<JugadorDTO> read(Long id) {
+		Optional<Jugador> jugador = jugadorRepository.findById(id);
+        return Optional.ofNullable(jugador.map(jugadorMapper::toDto).orElse(null));
+	}
 }

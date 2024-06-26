@@ -3,7 +3,7 @@ package es.laspalmeras.padel.business.service;
 import java.util.List;
 import java.util.Optional;
 
-import es.laspalmeras.padel.business.service.model.Jugador;
+import es.laspalmeras.padel.business.service.dto.JugadorDTO;
 
 public interface JugadorService {
 
@@ -13,25 +13,25 @@ public interface JugadorService {
 	 * 
 	 *
 	 */
-	Long create(Jugador jugador);
-	
-	Optional<Jugador> read(Long id);
+	Long create(JugadorDTO jugadorDTO);
 	
 	void deleteJugador(Long id);
 
-	List<Jugador> getAllJugadores();
+	List<JugadorDTO> getAllJugadores();
 
-	Jugador getJugadorById(Long id);
+	JugadorDTO getJugadorById(Long id);
 	
-	Jugador getJugadorByDni(String dni);
+	JugadorDTO getJugadorByDni(String dni);
 
-	Jugador saveJugador(Jugador jugador);
-
-	Jugador updateJugador(Long id, Jugador jugadorDetails);
+	JugadorDTO updateJugador(Long id, JugadorDTO jugadorDetails);
 
 	void darDeBajaJugadorPorId(Long id);
 
 	void darDeBajaJugadorPorDni(String dni);
 
 	void eliminarJugadoresBajaMasDeCincoAnios();
+
+	JugadorDTO saveJugador(JugadorDTO jugadorDTO);
+
+	Optional<JugadorDTO> read(Long id);
 }

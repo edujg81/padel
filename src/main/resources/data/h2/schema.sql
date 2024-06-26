@@ -63,6 +63,8 @@ CREATE TABLE PARTIDO (
     juegos_ganados_equipo2_set2 INTEGER,
     juegos_ganados_equipo1_set3 INTEGER,
     juegos_ganados_equipo2_set3 INTEGER,
+    sets_ganados_Equipo1 INTEGER,
+    sets_ganados_Equipo2 INTEGER,
     equipo_ganador VARCHAR(20),
     registrado BOOLEAN NOT NULL DEFAULT false,
     FOREIGN KEY (jornada_id) REFERENCES JORNADA(id),
@@ -80,4 +82,22 @@ CREATE TABLE ausencia (
     FOREIGN KEY (partido_id) REFERENCES partido(id),
     FOREIGN KEY (ausente_id) REFERENCES jugador(id),
     FOREIGN KEY (sustituto_id) REFERENCES jugador(id)
+);
+
+-- Clasificacion table
+CREATE TABLE IF NOT EXISTS clasificacion (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    campeonato_id BIGINT NOT NULL,
+    jugador_id BIGINT NOT NULL,
+    posicion INT DEFAULT 0,
+    puntos INT DEFAULT 0,
+    partidos_jugados INT DEFAULT 0,
+    partidos_ganados INT DEFAULT 0,
+    partidos_perdidos INT DEFAULT 0,
+    sets_ganados INT DEFAULT 0,
+    sets_perdidos INT DEFAULT 0,
+    juegos_ganados INT DEFAULT 0,
+    juegos_perdidos INT DEFAULT 0,
+    FOREIGN KEY (campeonato_id) REFERENCES campeonato(id),
+    FOREIGN KEY (jugador_id) REFERENCES jugador(id)
 );

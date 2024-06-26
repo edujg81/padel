@@ -3,18 +3,25 @@ package es.laspalmeras.padel.business.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import es.laspalmeras.padel.business.service.PartidoService;
+import es.laspalmeras.padel.business.service.dto.AusenciaDTO;
+import es.laspalmeras.padel.business.service.dto.PartidoDTO;
+import es.laspalmeras.padel.business.service.mapper.AusenciaMapper;
+import es.laspalmeras.padel.business.service.mapper.PartidoMapper;
 import es.laspalmeras.padel.business.service.model.Ausencia;
 import es.laspalmeras.padel.business.service.model.Campeonato;
+import es.laspalmeras.padel.business.service.model.Clasificacion;
 import es.laspalmeras.padel.business.service.model.Inscripcion;
 import es.laspalmeras.padel.business.service.model.Jornada;
 import es.laspalmeras.padel.business.service.model.Jugador;
 import es.laspalmeras.padel.business.service.model.Partido;
 import es.laspalmeras.padel.integration.repository.AusenciaRepository;
+import es.laspalmeras.padel.integration.repository.ClasificacionRepository;
 import es.laspalmeras.padel.integration.repository.InscripcionRepository;
 import es.laspalmeras.padel.integration.repository.JornadaRepository;
 import es.laspalmeras.padel.integration.repository.JugadorRepository;
@@ -27,40 +34,51 @@ public class PartidoServiceImpl implements PartidoService{
 
 	@Autowired
     private PartidoRepository partidoRepository;
-	
-	@Autowired
+
+    @Autowired
     private AusenciaRepository ausenciaRepository;
-	
-	@Autowired
+
+    @Autowired
     private JugadorRepository jugadorRepository;
-	
-	@Autowired
+
+    @Autowired
     private JornadaRepository jornadaRepository;
 
     @Autowired
     private InscripcionRepository inscripcionRepository;
+
+    @Autowired
+    private ClasificacionRepository clasificacionRepository;
+
+    @Autowired
+    private PartidoMapper partidoMapper;
 	
 	@Override
-	public Optional<Partido> read(Long id) {
-		 return partidoRepository.findById(id);
+	public Optional<PartidoDTO> read(Long id) {
+		return partidoRepository.findById(id).map(partidoMapper::toDto);
 	}
 	
 	@Override
-	public Partido savePartido(Partido partido) {
-		return partidoRepository.save(partido);
+	@Transactional
+	public PartidoDTO savePartido(PartidoDTO partidoDTO) {
+		Partido partido = partidoMapper.toEntity(partidoDTO);
+        return partidoMapper.toDto(partidoRepository.save(partido));
 	}
 
 	@Override
-	public List<Partido> getAllPartidos() {
-		return partidoRepository.findAll();
+	public List<PartidoDTO> getAllPartidos() {
+		return partidoRepository.findAll().stream().map(partidoMapper::toDto).collect(Collectors.toList());
 	}
 
 	@Override
     @Transactional
-    public List<Partido> createPartidosForJornada(Long jornadaId, List<Jugador> jugadores) {
+    public List<PartidoDTO> createPartidosForJornada(Long jornadaId) {
         Jornada jornada = jornadaRepository.findById(jornadaId)
                 .orElseThrow(() -> new ResourceNotFoundException("Jornada no encontrada con id: " + jornadaId));
-
+        
+        List<Jugador> jugadores = inscripcionRepository.findByCampeonatoId(jornada.getCampeonato().getId())
+                .stream().map(Inscripcion::getJugador).collect(Collectors.toList());
+        
         int numInscritos = jugadores.size();
         int numPartidos = numInscritos / 4;
 
@@ -76,48 +94,24 @@ public class PartidoServiceImpl implements PartidoService{
             partidos.add(partido);
         }
 
-        return partidoRepository.saveAll(partidos);
+        return partidoRepository.saveAll(partidos).stream().map(partidoMapper::toDto).collect(Collectors.toList());
     }
 
 	@Override
-	public Long create(Partido partido) {
-		return partidoRepository.save(partido).getId();
-	}
-
-	@Override
+	@Transactional
 	public void deletePartido(Long id) {
 		partidoRepository.deleteById(id);
 	}
 
 	@Override
-	public Partido getPartidoById(Long id) {
-		return partidoRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Partido no encontrado con id: " + id));
+	public PartidoDTO getPartidoById(Long id) {
+		return partidoRepository.findById(id).map(partidoMapper::toDto)
+                .orElseThrow(() -> new ResourceNotFoundException("Partido no encontrado con id: " + id));
 	}
 
-	/*@Override
-	public Partido updatePartido(Long id, Partido partidoDetails) {
-		Partido partido = partidoRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Partido no encontrado"));
-        partido.setJornada(partidoDetails.getJornada());
-        partido.setEquipo1Jugador1(partidoDetails.getEquipo1Jugador1());
-        partido.setEquipo1Jugador2(partidoDetails.getEquipo1Jugador2());
-        partido.setEquipo2Jugador1(partidoDetails.getEquipo2Jugador1());
-        partido.setEquipo2Jugador2(partidoDetails.getEquipo2Jugador2());
-        partido.setResultado(partidoDetails.getResultado());
-        partido.setPista(partidoDetails.getPista());
-        partido.setFecha(partidoDetails.getFecha());
-        partido.setJuegosGanadosEquipo1Set1(partidoDetails.getJuegosGanadosEquipo1Set1());
-        partido.setJuegosGanadosEquipo2Set1(partidoDetails.getJuegosGanadosEquipo2Set1());
-        partido.setJuegosGanadosEquipo1Set2(partidoDetails.getJuegosGanadosEquipo1Set2());
-        partido.setJuegosGanadosEquipo2Set2(partidoDetails.getJuegosGanadosEquipo2Set2());
-        partido.setJuegosGanadosEquipo1Set3(partidoDetails.getJuegosGanadosEquipo1Set3());
-        partido.setJuegosGanadosEquipo2Set3(partidoDetails.getJuegosGanadosEquipo2Set3());
-        partido.setEquipoGanador(partidoDetails.getEquipoGanador());
-        return partidoRepository.save(partido);
-	}*/
-	
 	@Override
     @Transactional
-    public Partido updatePartido(Long id, Partido partidoDetails) {
+    public PartidoDTO updatePartido(Long id, PartidoDTO partidoDetails) {
         Partido partido = partidoRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Partido no encontrado con id: " + id));
 
@@ -127,7 +121,8 @@ public class PartidoServiceImpl implements PartidoService{
         partido.setJuegosGanadosEquipo2Set1(partidoDetails.getJuegosGanadosEquipo2Set1());
         partido.setJuegosGanadosEquipo2Set2(partidoDetails.getJuegosGanadosEquipo2Set2());
         partido.setJuegosGanadosEquipo2Set3(partidoDetails.getJuegosGanadosEquipo2Set3());
-        /*partido.setAusenteJugador1(partidoDetails.getAusenteJugador1());
+        /*partido.setAusencias(partidoDetails.getAusencias());
+        partido.setAusenteJugador1(partidoDetails.getAusenteJugador1());
         partido.setAusenteJugador2(partidoDetails.getAusenteJugador2());
         partido.setAusenteJugador3(partidoDetails.getAusenteJugador3());
         partido.setAusenteJugador4(partidoDetails.getAusenteJugador4());
@@ -152,14 +147,21 @@ public class PartidoServiceImpl implements PartidoService{
         } else {
             setsGanadosEquipo2++;
         }
-        if (partido.getJuegosGanadosEquipo1Set3() > partido.getJuegosGanadosEquipo2Set3()) {
-            setsGanadosEquipo1++;
-        } else {
-            setsGanadosEquipo2++;
+        
+        if (partido.getJuegosGanadosEquipo1Set3() != null && partido.getJuegosGanadosEquipo2Set3() != null) {
+	        if (partido.getJuegosGanadosEquipo1Set3() > partido.getJuegosGanadosEquipo2Set3()) {
+	            setsGanadosEquipo1++;
+	        } else {
+	            setsGanadosEquipo2++;
+	        }
         }
 
+        partido.setSetsGanadosEquipo1(setsGanadosEquipo1);
+        partido.setSetsGanadosEquipo2(setsGanadosEquipo2);
+        
         if (setsGanadosEquipo1 > setsGanadosEquipo2) {
             partido.setEquipoGanador("Equipo 1");
+            
         } else {
             partido.setEquipoGanador("Equipo 2");
         }
@@ -167,38 +169,67 @@ public class PartidoServiceImpl implements PartidoService{
         partido.setRegistrado(true);
 
         // Actualizar clasificación del campeonato
+        Campeonato campeonato = partido.getJornada().getCampeonato();
+        actualizarClasificacion(campeonato, partido);
 
-        return partidoRepository.save(partido);
+        return partidoMapper.toDto(partidoRepository.save(partido));
     }
 	
+	@Transactional
     private void actualizarClasificacion(Campeonato campeonato, Partido partido) {
-        List<Inscripcion> inscripciones = inscripcionRepository.findByCampeonatoId(campeonato.getId());
+    	List<Clasificacion> clasificaciones = clasificacionRepository.findByCampeonatoId(campeonato.getId());
 
-        for (Inscripcion inscripcion : inscripciones) {
-            Jugador jugador = inscripcion.getJugador();
-            //int puntos = clasificacion.getPuntos(jugador);
-
+    	for (Clasificacion clasificacion : clasificaciones) {
+            Jugador jugador = clasificacion.getJugador();
+            int puntos = clasificacion.getPuntos();
+            
             if (partido.getEquipoGanador().equals("Equipo 1") &&
                     (jugador.equals(partido.getEquipo1Jugador1()) || jugador.equals(partido.getEquipo1Jugador2()))) {
-               // puntos += campeonato.getPuntosPorVictoria();
+                puntos += campeonato.getPuntosPorVictoria();
+                clasificacion.setPartidosGanados(clasificacion.getPartidosGanados() + 1);
+                clasificacion.setSetsGanados(clasificacion.getSetsGanados() + partido.getSetsGanadosEquipo1());
+                clasificacion.setSetsPerdidos(clasificacion.getSetsPerdidos() + partido.getSetsGanadosEquipo2());
+                clasificacion.setJuegosGanados(clasificacion.getJuegosGanados() 
+                		+ partido.getJuegosGanadosEquipo1Set1() 
+                		+ partido.getJuegosGanadosEquipo1Set2() 
+                		+ partido.getJuegosGanadosEquipo1Set3());
+                clasificacion.setJuegosPerdidos(clasificacion.getJuegosPerdidos() 
+                		+ partido.getJuegosGanadosEquipo2Set1() 
+                		+ partido.getJuegosGanadosEquipo2Set2() 
+                		+ partido.getJuegosGanadosEquipo2Set3());
             } else if (partido.getEquipoGanador().equals("Equipo 2") &&
                     (jugador.equals(partido.getEquipo2Jugador1()) || jugador.equals(partido.getEquipo2Jugador2()))) {
-              //  puntos += campeonato.getPuntosPorVictoria();
+                puntos += campeonato.getPuntosPorVictoria();
+                clasificacion.setPartidosGanados(clasificacion.getPartidosGanados() + 1);
+                clasificacion.setSetsGanados(clasificacion.getSetsGanados() + partido.getSetsGanadosEquipo2());
+                clasificacion.setSetsPerdidos(clasificacion.getSetsPerdidos() + partido.getSetsGanadosEquipo1());
+                clasificacion.setJuegosGanados(clasificacion.getJuegosGanados() 
+                		+ partido.getJuegosGanadosEquipo2Set1() 
+                		+ partido.getJuegosGanadosEquipo2Set2() 
+                		+ partido.getJuegosGanadosEquipo2Set3());
+                clasificacion.setJuegosPerdidos(clasificacion.getJuegosPerdidos() 
+                		+ partido.getJuegosGanadosEquipo1Set1() 
+                		+ partido.getJuegosGanadosEquipo1Set2() 
+                		+ partido.getJuegosGanadosEquipo1Set3());
             } else {
-              //  puntos += campeonato.getPuntosPorDerrota();
+                puntos += campeonato.getPuntosPorDerrota();
+                clasificacion.setPartidosPerdidos(clasificacion.getPartidosPerdidos() + 1);
             }
 
-           // clasificacion.setPuntos(puntos);
-            inscripcionRepository.save(inscripcion);
+            clasificacion.setPuntos(puntos);
+            clasificacion.setPartidosJugados(clasificacion.getPartidosJugados() + 1);
+            
+            clasificacionRepository.save(clasificacion);
         }
     }
 
 	@Override
-    public List<Partido> findPartidosByJornada(Long jornadaId) {
-        return partidoRepository.findByJornadaId(jornadaId);
+    public List<PartidoDTO> getPartidosByJornada(Long jornadaId) {
+		return partidoRepository.findByJornadaId(jornadaId).stream().map(partidoMapper::toDto).collect(Collectors.toList());
     }
 	
 	@Override
+	@Transactional
 	public void registrarAusencia(Long partidoId, Long ausenteId, Long sustitutoId) {
 		Ausencia ausencia = new Ausencia();
         ausencia.setPartido(partidoRepository.findById(partidoId).orElseThrow(() -> new ResourceNotFoundException("Partido", "id", partidoId)));
@@ -208,19 +239,7 @@ public class PartidoServiceImpl implements PartidoService{
 	}
 
 	@Override
-	public List<Ausencia> getAusenciasByPartidoId(Long partidoId) {
-		return ausenciaRepository.findByPartidoId(partidoId);
-	}
-
-	@Override
-	public List<Partido> findAllPartidos() {
-		// TODO Esbozo de método generado automáticamente
-		return null;
-	}
-
-	@Override
-	public Partido findPartidoById(Long id) {
-		// TODO Esbozo de método generado automáticamente
-		return null;
+	public List<AusenciaDTO> getAusenciasByPartidoId(Long partidoId) {
+		return ausenciaRepository.findByPartidoId(partidoId).stream().map(AusenciaMapper.INSTANCE::toDto).collect(Collectors.toList());
 	}
 }

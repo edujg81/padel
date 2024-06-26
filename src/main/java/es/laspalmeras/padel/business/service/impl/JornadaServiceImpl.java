@@ -3,12 +3,15 @@ package es.laspalmeras.padel.business.service.impl;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import es.laspalmeras.padel.business.service.JornadaService;
+import es.laspalmeras.padel.business.service.dto.JornadaDTO;
+import es.laspalmeras.padel.business.service.dto.PartidoDTO;
 import es.laspalmeras.padel.business.service.model.Campeonato;
 import es.laspalmeras.padel.business.service.model.Inscripcion;
 import es.laspalmeras.padel.business.service.model.Jornada;
@@ -37,22 +40,30 @@ public class JornadaServiceImpl implements JornadaService {
     private InscripcionRepository inscripcionRepository;
 
     @Override
-    public List<Jornada> findAllJornadas() {
-        return jornadaRepository.findAll();
+    @Transactional
+    public List<JornadaDTO> findAllJornadas() {
+    	List<Jornada> jornadas = jornadaRepository.findAll();
+       
+    	return jornadas.stream().map(this::convertToDTO).collect(Collectors.toList());
     }
     
     @Override
-    public Jornada findJornadaById(Long id) {
-        return jornadaRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Jornada no encontrada con id: " + id));
+    //@Transactional
+    public Optional<JornadaDTO> findJornadaById(Long id) {
+        Optional<Jornada> jornada = jornadaRepository.findById(id);
+              //  .orElseThrow(() -> new ResourceNotFoundException("Jornada no encontrada con id: " + id)));
+        
+        return jornada.map(this::convertToDTO);
     }
 
     @Override
+    //@Transactional
     public List<Jornada> findJornadasByCampeonato(Long campeonatoId) {
         return jornadaRepository.findByCampeonatoId(campeonatoId);
     }
 
     @Override
+    @Transactional
     public void deleteJornada(Long id) {
         jornadaRepository.deleteById(id);
     }
@@ -93,6 +104,7 @@ public class JornadaServiceImpl implements JornadaService {
         return savedJornada;
     }
     
+    @Transactional
     private List<Partido> generarPartidos(Campeonato campeonato, List<Inscripcion> inscripciones, int numPartidos) {
         List<Partido> partidos = new ArrayList<>();
         List<Jugador> jugadores = inscripciones.stream()
@@ -109,5 +121,25 @@ public class JornadaServiceImpl implements JornadaService {
             partidos.add(partido);
         }
         return partidos;
+    }
+    
+    private JornadaDTO convertToDTO(Jornada jornada) {
+        JornadaDTO dto = new JornadaDTO();
+        dto.setId(jornada.getId());
+        dto.setNumero(jornada.getNumero());
+        dto.setFechaInicio(jornada.getFechaInicio());
+        dto.setPartidos(jornada.getPartidos().stream().map(this::convertToDTO).collect(Collectors.toList()));
+        return dto;
+    }
+    
+    private PartidoDTO convertToDTO(Partido partido) {
+        PartidoDTO dto = new PartidoDTO();
+        dto.setId(partido.getId());
+        dto.setResultado(partido.getResultado());
+        dto.setPista(partido.getPista());
+        dto.setFecha(partido.getFecha());
+        dto.setEquipoGanador(partido.getEquipoGanador());
+        dto.setRegistrado(partido.getRegistrado());
+        return dto;
     }
 }

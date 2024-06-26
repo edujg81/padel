@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import es.laspalmeras.padel.business.service.JugadorService;
-import es.laspalmeras.padel.business.service.model.Jugador;
+import es.laspalmeras.padel.business.service.dto.JugadorDTO;
 
 @RestController
 @RequestMapping("/jugadores")
@@ -28,28 +28,28 @@ public class JugadorController {
 
 	@Operation(summary = "Crear un nuevo jugador")
 	@PostMapping
-	public ResponseEntity<Long> createJugador(@RequestBody Jugador jugador) {
+	public ResponseEntity<Long> createJugador(@RequestBody JugadorDTO jugador) {
         Long id = jugadorService.create(jugador);
         return ResponseEntity.ok(id);
     }
 
 	@Operation(summary = "Obtener un jugador por ID")
 	@GetMapping("/{id}")
-	public ResponseEntity<Jugador> getJugadorById(@PathVariable Long id) {
-		Optional<Jugador> jugador = jugadorService.read(id);
+	public ResponseEntity<JugadorDTO> getJugadorById(@PathVariable Long id) {
+		Optional<JugadorDTO> jugador = jugadorService.read(id);
         return jugador.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
 	}
 	
 	@Operation(summary = "Obtener todos los jugadores")
 	@GetMapping
-	public List<Jugador> getAllJugadores() {
+	public List<JugadorDTO> getAllJugadores() {
 		return jugadorService.getAllJugadores();
 	}
 	
 	@Operation(summary = "Actualizar un jugador por ID")
 	@PutMapping("/{id}")
-	public ResponseEntity<Jugador> updateJugador(@PathVariable Long id, @RequestBody Jugador jugadorDetails) {
-		Jugador updatedJugador = jugadorService.updateJugador(id, jugadorDetails);
+	public ResponseEntity<JugadorDTO> updateJugador(@PathVariable Long id, @RequestBody JugadorDTO jugadorDetails) {
+		JugadorDTO updatedJugador = jugadorService.updateJugador(id, jugadorDetails);
 		return ResponseEntity.ok(updatedJugador);
 	}
 	

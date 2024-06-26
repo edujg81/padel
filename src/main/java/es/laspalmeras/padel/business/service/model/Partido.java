@@ -4,6 +4,9 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -13,8 +16,10 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -23,6 +28,8 @@ import lombok.ToString;
 @Setter
 @EqualsAndHashCode(of="id")
 @ToString
+@Data
+@NoArgsConstructor
 @Entity
 @Table(name="PARTIDO")
 public class Partido implements Serializable {
@@ -31,6 +38,10 @@ public class Partido implements Serializable {
     private Long id;
 
     private LocalDate fecha;
+    private String pista = "Sin asignar";
+    private String resultado = "No jugado"; // Ej: "6-4, 5-7, 6-3"
+    private String equipoGanador = "Ninguno";
+    private Boolean registrado = false;
 
     @ManyToOne
     @JoinColumn(name = "jornada_id", nullable = false)
@@ -51,13 +62,14 @@ public class Partido implements Serializable {
     @ManyToOne
     @JoinColumn(name = "equipo2_jugador2_id", nullable = false)
     private Jugador equipo2Jugador2;
-
-    private String resultado = "No jugado"; // Ej: "6-4, 5-7, 6-3"
-    private String pista = "Sin asignar";
-
-    @OneToMany(mappedBy = "partido")
+    
+    @OneToMany(mappedBy = "partido", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnoreProperties("partido")
     private List<Ausencia> ausencias;
 
+    
+    /* Juegos ganados por equipos en cada set */
+    
     @Column(name = "juegos_ganados_equipo1_set1")
     private Integer juegosGanadosEquipo1Set1;
     
@@ -75,8 +87,10 @@ public class Partido implements Serializable {
     
     @Column(name = "juegos_ganados_equipo2_set3")
     private Integer juegosGanadosEquipo2Set3;
-
-    private String equipoGanador = "Ninguno";
     
-    private Boolean registrado = false;
+    @Column(name = "sets_ganados_equipo1")
+    private Integer setsGanadosEquipo1;
+    
+    @Column(name = "sets_ganados_equipo2")
+    private Integer setsGanadosEquipo2;
 }
