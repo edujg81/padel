@@ -6,8 +6,6 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import es.laspalmeras.padel.business.service.model.Jornada;
-import es.laspalmeras.padel.business.service.model.Jugador;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -47,23 +45,23 @@ public class PartidoDTO implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "jornada_id", nullable = false)
-    private Jornada jornada;
+    private JornadaDTO jornada;
 
     @ManyToOne
     @JoinColumn(name = "equipo1_jugador1_id", nullable = false)
-    private Jugador equipo1Jugador1;
+    private JugadorDTO equipo1Jugador1;
 
     @ManyToOne
     @JoinColumn(name = "equipo1_jugador2_id", nullable = false)
-    private Jugador equipo1Jugador2;
+    private JugadorDTO equipo1Jugador2;
 
     @ManyToOne
     @JoinColumn(name = "equipo2_jugador1_id", nullable = false)
-    private Jugador equipo2Jugador1;
+    private JugadorDTO equipo2Jugador1;
 
     @ManyToOne
     @JoinColumn(name = "equipo2_jugador2_id", nullable = false)
-    private Jugador equipo2Jugador2;
+    private JugadorDTO equipo2Jugador2;
     
     @OneToMany(mappedBy = "partido", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnoreProperties("partido")
