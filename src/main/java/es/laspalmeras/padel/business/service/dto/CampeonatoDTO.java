@@ -56,8 +56,8 @@ public class CampeonatoDTO implements Serializable {
     private Integer puntosPorVictoria = 2; // Valor predeterminado
     private Integer puntosPorDerrota = 0;  // Valor predeterminado
     
-    /*@OneToMany(mappedBy = "campeonato", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<JornadaDTO> jornadas;*/
+    /*@OneToMany(mappedBy = "campeonato", cascade = CascadeType.ALL, orphanRemoval = true)*/
+    private List<JornadaDTO> jornadas;
     
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "campeonato", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnoreProperties("inscripcion")

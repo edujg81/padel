@@ -2,11 +2,15 @@ package es.laspalmeras.padel.business.service.impl;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import es.laspalmeras.padel.business.service.CampeonatoService;
+import es.laspalmeras.padel.business.service.dto.CampeonatoDTO;
+import es.laspalmeras.padel.business.service.mapper.CampeonatoMapper;
 import es.laspalmeras.padel.business.service.model.Campeonato;
 import es.laspalmeras.padel.integration.repository.CampeonatoRepository;
 import es.laspalmeras.padel.presentation.config.exception.ResourceNotFoundException;
@@ -16,41 +20,55 @@ public class CampeonatoServiceImpl implements CampeonatoService{
 	
 	@Autowired
     private CampeonatoRepository campeonatoRepository;
+
+    @Autowired
+    private CampeonatoMapper campeonatoMapper;
 	
 	@Override
+	@Transactional
 	public Campeonato saveCampeonato(Campeonato campeonato) {
 		return campeonatoRepository.save(campeonato);
 	}
 
 	@Override
-	public List<Campeonato> findAllCampeonatos() {
-		return campeonatoRepository.findAll();
+	@Transactional
+	public List<CampeonatoDTO> findAllCampeonatos() {
+		return campeonatoRepository.findAll().stream()
+                .map(campeonatoMapper::toDto)
+                .collect(Collectors.toList());
 	}
 
 	@Override
-	public Optional<Campeonato> findCampeonatoById(Long id) {
-		return campeonatoRepository.findById(id);
+	@Transactional
+	public Optional<CampeonatoDTO> findCampeonatoById(Long id) {
+		Optional<Campeonato> campeonato = campeonatoRepository.findById(id);
+		return campeonato.map(campeonatoMapper::toDto);
 	}
 
 	@Override
+	@Transactional
 	public void deleteCampeonato(Long id) {
 		campeonatoRepository.deleteById(id);
 	}
 
 	@Override
-	public Campeonato createCampeonato(Campeonato campeonato) {
+	@Transactional
+	public CampeonatoDTO createCampeonato(CampeonatoDTO campeonatoDTO) {
 		List<Campeonato> campeonatosActivos = campeonatoRepository.findByYearAndCategoriaAndDivisionAndActivoTrue(
-	            campeonato.getYear(), campeonato.getCategoria(), campeonato.getDivision());
+	            campeonatoDTO.getYear(), campeonatoDTO.getCategoria(), campeonatoDTO.getDivision());
 
 	    if (!campeonatosActivos.isEmpty()) {
 	        throw new IllegalStateException("Ya existe un campeonato activo para esta categoría y división en el mismo año.");
 	    }
 
-	    return campeonatoRepository.save(campeonato);
+	    Campeonato campeonato = campeonatoMapper.toEntity(campeonatoDTO);
+        saveCampeonato(campeonato);
+        return campeonatoMapper.toDto(campeonato);
 	}
 
 	@Override
-	public Campeonato updateCampeonato(Long id, Campeonato campeonatoDetails) {
+	@Transactional
+	public CampeonatoDTO updateCampeonato(Long id, CampeonatoDTO campeonatoDetails) {
 		Campeonato campeonato = campeonatoRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Campeonato", "id", id));
 
@@ -61,17 +79,20 @@ public class CampeonatoServiceImpl implements CampeonatoService{
         campeonato.setActivo(campeonatoDetails.getActivo());
         campeonato.setPuntosPorVictoria(campeonatoDetails.getPuntosPorVictoria());
         campeonato.setPuntosPorDerrota(campeonatoDetails.getPuntosPorDerrota());
-
-        return campeonatoRepository.save(campeonato);
+        
+        saveCampeonato(campeonato);
+        
+        return campeonatoMapper.toDto(campeonato);
 	}
 
 	@Override
+	@Transactional
 	public void cambiarEstadoCampeonato(Long id, String nuevoEstado) {
 		Campeonato campeonato = campeonatoRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Campeonato", "id", id));
 
         campeonato.setEstado(nuevoEstado);
-        campeonatoRepository.save(campeonato);
+        saveCampeonato(campeonato);
 	}
 
 }

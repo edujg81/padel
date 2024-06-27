@@ -56,7 +56,7 @@ public class Campeonato implements Serializable {
     private Integer puntosPorVictoria = 2; // Valor predeterminado
     private Integer puntosPorDerrota = 0;  // Valor predeterminado
     
-    @OneToMany(mappedBy = "campeonato", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "campeonato", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Jornada> jornadas;
     
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "campeonato", cascade = CascadeType.ALL, orphanRemoval = true)

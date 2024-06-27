@@ -2,22 +2,28 @@ package es.laspalmeras.padel.business.service.mapper;
 
 import es.laspalmeras.padel.business.service.dto.CampeonatoDTO;
 import es.laspalmeras.padel.business.service.dto.InscripcionDTO;
+import es.laspalmeras.padel.business.service.dto.JornadaDTO;
 import es.laspalmeras.padel.business.service.dto.JugadorDTO;
 import es.laspalmeras.padel.business.service.model.Campeonato;
 import es.laspalmeras.padel.business.service.model.Inscripcion;
+import es.laspalmeras.padel.business.service.model.Jornada;
 import es.laspalmeras.padel.business.service.model.Jugador;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.processing.Generated;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-06-27T13:06:41+0200",
+    date = "2024-06-27T15:27:02+0200",
     comments = "version: 1.5.2.Final, compiler: Eclipse JDT (IDE) 3.38.0.v20240524-2033, environment: Java 21.0.3 (Eclipse Adoptium)"
 )
 @Component
 public class CampeonatoMapperImpl implements CampeonatoMapper {
+
+    @Autowired
+    private JornadaMapper jornadaMapper;
 
     @Override
     public CampeonatoDTO toDto(Campeonato campeonato) {
@@ -27,6 +33,7 @@ public class CampeonatoMapperImpl implements CampeonatoMapper {
 
         CampeonatoDTO campeonatoDTO = new CampeonatoDTO();
 
+        campeonatoDTO.setJornadas( jornadaListToJornadaDTOList( campeonato.getJornadas() ) );
         campeonatoDTO.setActivo( campeonato.getActivo() );
         campeonatoDTO.setCategoria( campeonato.getCategoria() );
         campeonatoDTO.setDivision( campeonato.getDivision() );
@@ -48,6 +55,7 @@ public class CampeonatoMapperImpl implements CampeonatoMapper {
 
         Campeonato campeonato = new Campeonato();
 
+        campeonato.setJornadas( jornadaDTOListToJornadaList( campeonatoDTO.getJornadas() ) );
         campeonato.setActivo( campeonatoDTO.getActivo() );
         campeonato.setCategoria( campeonatoDTO.getCategoria() );
         campeonato.setDivision( campeonatoDTO.getDivision() );
@@ -59,6 +67,19 @@ public class CampeonatoMapperImpl implements CampeonatoMapper {
         campeonato.setYear( campeonatoDTO.getYear() );
 
         return campeonato;
+    }
+
+    protected List<JornadaDTO> jornadaListToJornadaDTOList(List<Jornada> list) {
+        if ( list == null ) {
+            return null;
+        }
+
+        List<JornadaDTO> list1 = new ArrayList<JornadaDTO>( list.size() );
+        for ( Jornada jornada : list ) {
+            list1.add( jornadaMapper.toDto( jornada ) );
+        }
+
+        return list1;
     }
 
     protected JugadorDTO jugadorToJugadorDTO(Jugador jugador) {
@@ -104,6 +125,19 @@ public class CampeonatoMapperImpl implements CampeonatoMapper {
         List<InscripcionDTO> list1 = new ArrayList<InscripcionDTO>( list.size() );
         for ( Inscripcion inscripcion : list ) {
             list1.add( inscripcionToInscripcionDTO( inscripcion ) );
+        }
+
+        return list1;
+    }
+
+    protected List<Jornada> jornadaDTOListToJornadaList(List<JornadaDTO> list) {
+        if ( list == null ) {
+            return null;
+        }
+
+        List<Jornada> list1 = new ArrayList<Jornada>( list.size() );
+        for ( JornadaDTO jornadaDTO : list ) {
+            list1.add( jornadaMapper.toEntity( jornadaDTO ) );
         }
 
         return list1;

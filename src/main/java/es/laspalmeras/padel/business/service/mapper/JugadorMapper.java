@@ -8,8 +8,8 @@ import es.laspalmeras.padel.business.service.model.Jugador;
 
 @Mapper(componentModel = "spring")
 public interface JugadorMapper {
-
-    JugadorMapper INSTANCE = Mappers.getMapper(JugadorMapper.class);
+	
+	JugadorMapper INSTANCE = Mappers.getMapper(JugadorMapper.class);
 
     @Mapping(source = "id", target = "id")
     @Mapping(source = "dni", target = "dni")

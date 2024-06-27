@@ -2,6 +2,7 @@ package es.laspalmeras.padel.business.service.dto;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
@@ -37,8 +38,5 @@ public class JornadaDTO implements Serializable {
     @JoinColumn(name = "campeonato_id", nullable = false)
     private CampeonatoDTO campeonato;
 
-    /*@OneToMany(fetch = FetchType.EAGER, mappedBy = "jornada", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference
-    @JsonIgnoreProperties("jornada")
-    private List<PartidoDTO> partidos;*/
+    private List<PartidoDTO> partidos;
 }
