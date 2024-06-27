@@ -54,6 +54,6 @@ public interface PartidoMapper {
     @Mapping(source = "juegosGanadosEquipo2Set3", target = "juegosGanadosEquipo2Set3")
     @Mapping(source = "setsGanadosEquipo1", target = "setsGanadosEquipo1")
     @Mapping(source = "setsGanadosEquipo2", target = "setsGanadosEquipo2")
-    @Mapping(target = "jornada.partidos", ignore = true)  // Evita la recursión infinita
+    //@Mapping(target = "jornada.partidos", ignore = true)  // Evita la recursión infinita
     Partido toEntity(PartidoDTO partidoDTO);
 }

@@ -19,7 +19,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-06-27T10:20:41+0200",
+    date = "2024-06-27T13:03:02+0200",
     comments = "version: 1.5.2.Final, compiler: Eclipse JDT (IDE) 3.38.0.v20240524-2033, environment: Java 21.0.3 (Eclipse Adoptium)"
 )
 @Component
@@ -118,19 +118,6 @@ public class AusenciaMapperImpl implements AusenciaMapper {
         return list1;
     }
 
-    protected List<JornadaDTO> jornadaListToJornadaDTOList(List<Jornada> list) {
-        if ( list == null ) {
-            return null;
-        }
-
-        List<JornadaDTO> list1 = new ArrayList<JornadaDTO>( list.size() );
-        for ( Jornada jornada : list ) {
-            list1.add( jornadaToJornadaDTO( jornada ) );
-        }
-
-        return list1;
-    }
-
     protected CampeonatoDTO campeonatoToCampeonatoDTO(Campeonato campeonato) {
         if ( campeonato == null ) {
             return null;
@@ -144,7 +131,6 @@ public class AusenciaMapperImpl implements AusenciaMapper {
         campeonatoDTO.setEstado( campeonato.getEstado() );
         campeonatoDTO.setId( campeonato.getId() );
         campeonatoDTO.setInscripciones( inscripcionListToInscripcionDTOList( campeonato.getInscripciones() ) );
-        campeonatoDTO.setJornadas( jornadaListToJornadaDTOList( campeonato.getJornadas() ) );
         campeonatoDTO.setPuntosPorDerrota( campeonato.getPuntosPorDerrota() );
         campeonatoDTO.setPuntosPorVictoria( campeonato.getPuntosPorVictoria() );
         campeonatoDTO.setYear( campeonato.getYear() );
@@ -259,19 +245,6 @@ public class AusenciaMapperImpl implements AusenciaMapper {
         return list1;
     }
 
-    protected List<Jornada> jornadaDTOListToJornadaList(List<JornadaDTO> list) {
-        if ( list == null ) {
-            return null;
-        }
-
-        List<Jornada> list1 = new ArrayList<Jornada>( list.size() );
-        for ( JornadaDTO jornadaDTO : list ) {
-            list1.add( jornadaDTOToJornada( jornadaDTO ) );
-        }
-
-        return list1;
-    }
-
     protected Campeonato campeonatoDTOToCampeonato(CampeonatoDTO campeonatoDTO) {
         if ( campeonatoDTO == null ) {
             return null;
@@ -285,7 +258,6 @@ public class AusenciaMapperImpl implements AusenciaMapper {
         campeonato.setEstado( campeonatoDTO.getEstado() );
         campeonato.setId( campeonatoDTO.getId() );
         campeonato.setInscripciones( inscripcionDTOListToInscripcionList( campeonatoDTO.getInscripciones() ) );
-        campeonato.setJornadas( jornadaDTOListToJornadaList( campeonatoDTO.getJornadas() ) );
         campeonato.setPuntosPorDerrota( campeonatoDTO.getPuntosPorDerrota() );
         campeonato.setPuntosPorVictoria( campeonatoDTO.getPuntosPorVictoria() );
         campeonato.setYear( campeonatoDTO.getYear() );

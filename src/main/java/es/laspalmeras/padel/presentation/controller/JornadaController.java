@@ -49,8 +49,14 @@ public class JornadaController {
 
     @Operation(summary = "Obtener jornadas de un campeonato")
     @GetMapping("/campeonato/{campeonatoId}")
-    public List<JornadaDTO> getJornadasByCampeonato(@PathVariable Long campeonatoId) {
-        return jornadaService.findJornadasByCampeonato(campeonatoId);
+    public ResponseEntity<List<JornadaDTO>> getJornadasByCampeonato(@PathVariable Long campeonatoId) {
+    	List<JornadaDTO> jornadas = jornadaService.findJornadasByCampeonato(campeonatoId);
+        
+        if (jornadas.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        
+        return ResponseEntity.ok(jornadas);
     }
     
     @Operation(summary = "Borrar jornada por ID")

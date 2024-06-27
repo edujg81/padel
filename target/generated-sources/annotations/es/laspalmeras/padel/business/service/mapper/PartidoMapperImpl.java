@@ -1,14 +1,8 @@
 package es.laspalmeras.padel.business.service.mapper;
 
 import es.laspalmeras.padel.business.service.dto.AusenciaDTO;
-import es.laspalmeras.padel.business.service.dto.CampeonatoDTO;
-import es.laspalmeras.padel.business.service.dto.InscripcionDTO;
-import es.laspalmeras.padel.business.service.dto.JornadaDTO;
 import es.laspalmeras.padel.business.service.dto.PartidoDTO;
 import es.laspalmeras.padel.business.service.model.Ausencia;
-import es.laspalmeras.padel.business.service.model.Campeonato;
-import es.laspalmeras.padel.business.service.model.Inscripcion;
-import es.laspalmeras.padel.business.service.model.Jornada;
 import es.laspalmeras.padel.business.service.model.Partido;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +12,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-06-27T10:22:18+0200",
+    date = "2024-06-27T13:03:38+0200",
     comments = "version: 1.5.2.Final, compiler: Eclipse JDT (IDE) 3.38.0.v20240524-2033, environment: Java 21.0.3 (Eclipse Adoptium)"
 )
 @Component
@@ -71,13 +65,13 @@ public class PartidoMapperImpl implements PartidoMapper {
 
         Partido partido = new Partido();
 
-        partido.setJornada( jornadaDTOToJornada( partidoDTO.getJornada() ) );
         partido.setId( partidoDTO.getId() );
         partido.setFecha( partidoDTO.getFecha() );
         partido.setPista( partidoDTO.getPista() );
         partido.setResultado( partidoDTO.getResultado() );
         partido.setEquipoGanador( partidoDTO.getEquipoGanador() );
         partido.setRegistrado( partidoDTO.getRegistrado() );
+        partido.setJornada( jornadaMapper.toEntity( partidoDTO.getJornada() ) );
         partido.setEquipo1Jugador1( jugadorMapper.toEntity( partidoDTO.getEquipo1Jugador1() ) );
         partido.setEquipo1Jugador2( jugadorMapper.toEntity( partidoDTO.getEquipo1Jugador2() ) );
         partido.setEquipo2Jugador1( jugadorMapper.toEntity( partidoDTO.getEquipo2Jugador1() ) );
@@ -106,82 +100,6 @@ public class PartidoMapperImpl implements PartidoMapper {
         }
 
         return list1;
-    }
-
-    protected Inscripcion inscripcionDTOToInscripcion(InscripcionDTO inscripcionDTO) {
-        if ( inscripcionDTO == null ) {
-            return null;
-        }
-
-        Inscripcion inscripcion = new Inscripcion();
-
-        inscripcion.setCampeonato( campeonatoDTOToCampeonato( inscripcionDTO.getCampeonato() ) );
-        inscripcion.setId( inscripcionDTO.getId() );
-        inscripcion.setJugador( jugadorMapper.toEntity( inscripcionDTO.getJugador() ) );
-
-        return inscripcion;
-    }
-
-    protected List<Inscripcion> inscripcionDTOListToInscripcionList(List<InscripcionDTO> list) {
-        if ( list == null ) {
-            return null;
-        }
-
-        List<Inscripcion> list1 = new ArrayList<Inscripcion>( list.size() );
-        for ( InscripcionDTO inscripcionDTO : list ) {
-            list1.add( inscripcionDTOToInscripcion( inscripcionDTO ) );
-        }
-
-        return list1;
-    }
-
-    protected List<Jornada> jornadaDTOListToJornadaList(List<JornadaDTO> list) {
-        if ( list == null ) {
-            return null;
-        }
-
-        List<Jornada> list1 = new ArrayList<Jornada>( list.size() );
-        for ( JornadaDTO jornadaDTO : list ) {
-            list1.add( jornadaMapper.toEntity( jornadaDTO ) );
-        }
-
-        return list1;
-    }
-
-    protected Campeonato campeonatoDTOToCampeonato(CampeonatoDTO campeonatoDTO) {
-        if ( campeonatoDTO == null ) {
-            return null;
-        }
-
-        Campeonato campeonato = new Campeonato();
-
-        campeonato.setActivo( campeonatoDTO.getActivo() );
-        campeonato.setCategoria( campeonatoDTO.getCategoria() );
-        campeonato.setDivision( campeonatoDTO.getDivision() );
-        campeonato.setEstado( campeonatoDTO.getEstado() );
-        campeonato.setId( campeonatoDTO.getId() );
-        campeonato.setInscripciones( inscripcionDTOListToInscripcionList( campeonatoDTO.getInscripciones() ) );
-        campeonato.setJornadas( jornadaDTOListToJornadaList( campeonatoDTO.getJornadas() ) );
-        campeonato.setPuntosPorDerrota( campeonatoDTO.getPuntosPorDerrota() );
-        campeonato.setPuntosPorVictoria( campeonatoDTO.getPuntosPorVictoria() );
-        campeonato.setYear( campeonatoDTO.getYear() );
-
-        return campeonato;
-    }
-
-    protected Jornada jornadaDTOToJornada(JornadaDTO jornadaDTO) {
-        if ( jornadaDTO == null ) {
-            return null;
-        }
-
-        Jornada jornada = new Jornada();
-
-        jornada.setCampeonato( campeonatoDTOToCampeonato( jornadaDTO.getCampeonato() ) );
-        jornada.setFechaInicio( jornadaDTO.getFechaInicio() );
-        jornada.setId( jornadaDTO.getId() );
-        jornada.setNumero( jornadaDTO.getNumero() );
-
-        return jornada;
     }
 
     protected List<Ausencia> ausenciaDTOListToAusenciaList(List<AusenciaDTO> list) {

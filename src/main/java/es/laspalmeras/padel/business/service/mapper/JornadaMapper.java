@@ -8,9 +8,11 @@ import es.laspalmeras.padel.business.service.model.Jornada;
 
 @Mapper(componentModel = "spring", uses = {PartidoMapper.class})
 public interface JornadaMapper {
-	@Mapping(target = "campeonato.jornadas", ignore = true)  // Evita la recursión infinita
+	//@Mapping(target = "campeonato.jornadas", ignore = true)  // Evita la recursión infinita
+	//@Mapping(source = "campeonato.id", target = "campeonato")
     JornadaDTO toDto(Jornada jornada);
 
     @Mapping(target = "campeonato.jornadas", ignore = true)  // Evita la recursión infinita
+    @Mapping(source = "campeonato.id", target = "campeonato.id")
     Jornada toEntity(JornadaDTO jornadaDTO);
 }

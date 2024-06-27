@@ -11,9 +11,7 @@ import org.springframework.stereotype.Service;
 
 import es.laspalmeras.padel.business.service.JornadaService;
 import es.laspalmeras.padel.business.service.dto.JornadaDTO;
-import es.laspalmeras.padel.business.service.dto.PartidoDTO;
 import es.laspalmeras.padel.business.service.mapper.JornadaMapper;
-import es.laspalmeras.padel.business.service.mapper.PartidoMapper;
 import es.laspalmeras.padel.business.service.model.Campeonato;
 import es.laspalmeras.padel.business.service.model.Inscripcion;
 import es.laspalmeras.padel.business.service.model.Jornada;
@@ -43,10 +41,12 @@ public class JornadaServiceImpl implements JornadaService {
 	
 	@Autowired
 	private JornadaMapper jornadaMapper;
-	
-	@Autowired
-	private PartidoMapper partidoMapper;
 
+	public JornadaServiceImpl(JornadaRepository jornadaRepository, JornadaMapper jornadaMapper) {
+        this.jornadaRepository = jornadaRepository;
+        this.jornadaMapper = jornadaMapper;
+    }
+	
     @Override
     @Transactional
     public List<JornadaDTO> findAllJornadas() {
@@ -98,7 +98,7 @@ public class JornadaServiceImpl implements JornadaService {
         nuevaJornada.setCampeonato(campeonato);
         nuevaJornada.setFechaInicio(fechaInicio);
         nuevaJornada.setNumero((int) (jornadaRepository.countByCampeonatoId(campeonatoId) + 1));
-        nuevaJornada.setPartidos(partidos);
+        /*nuevaJornada.setPartidos(partidos);*/
 
         Jornada savedJornada = jornadaRepository.save(nuevaJornada);
 
@@ -138,6 +138,7 @@ public class JornadaServiceImpl implements JornadaService {
         return dto;
     }
     
+    /*
     private PartidoDTO convertToDTO(Partido partido) {
         PartidoDTO dto = new PartidoDTO();
         dto.setId(partido.getId());
@@ -147,5 +148,5 @@ public class JornadaServiceImpl implements JornadaService {
         dto.setEquipoGanador(partido.getEquipoGanador());
         dto.setRegistrado(partido.getRegistrado());
         return dto;
-    }
+    }*/
 }
