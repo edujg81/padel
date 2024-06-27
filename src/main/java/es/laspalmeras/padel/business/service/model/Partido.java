@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.CascadeType;
@@ -44,6 +45,7 @@ public class Partido implements Serializable {
     private Boolean registrado = false;
 
     @ManyToOne
+    @JsonBackReference
     @JoinColumn(name = "jornada_id", nullable = false)
     private Jornada jornada;
 

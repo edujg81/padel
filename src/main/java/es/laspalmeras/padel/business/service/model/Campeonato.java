@@ -3,9 +3,12 @@ package es.laspalmeras.padel.business.service.model;
 import java.io.Serializable;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -56,6 +59,7 @@ public class Campeonato implements Serializable {
     @OneToMany(mappedBy = "campeonato", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Jornada> jornadas;
     
-    @OneToMany(mappedBy = "campeonato", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "campeonato", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnoreProperties("inscripcion")
     private List<Inscripcion> inscripciones;
 }

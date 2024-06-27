@@ -19,7 +19,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-06-27T08:27:16+0200",
+    date = "2024-06-27T10:20:41+0200",
     comments = "version: 1.5.2.Final, compiler: Eclipse JDT (IDE) 3.38.0.v20240524-2033, environment: Java 21.0.3 (Eclipse Adoptium)"
 )
 @Component
@@ -152,19 +152,6 @@ public class AusenciaMapperImpl implements AusenciaMapper {
         return campeonatoDTO;
     }
 
-    protected List<PartidoDTO> partidoListToPartidoDTOList(List<Partido> list) {
-        if ( list == null ) {
-            return null;
-        }
-
-        List<PartidoDTO> list1 = new ArrayList<PartidoDTO>( list.size() );
-        for ( Partido partido : list ) {
-            list1.add( partidoToPartidoDTO( partido ) );
-        }
-
-        return list1;
-    }
-
     protected JornadaDTO jornadaToJornadaDTO(Jornada jornada) {
         if ( jornada == null ) {
             return null;
@@ -176,7 +163,6 @@ public class AusenciaMapperImpl implements AusenciaMapper {
         jornadaDTO.setFechaInicio( jornada.getFechaInicio() );
         jornadaDTO.setId( jornada.getId() );
         jornadaDTO.setNumero( jornada.getNumero() );
-        jornadaDTO.setPartidos( partidoListToPartidoDTOList( jornada.getPartidos() ) );
 
         return jornadaDTO;
     }
@@ -307,19 +293,6 @@ public class AusenciaMapperImpl implements AusenciaMapper {
         return campeonato;
     }
 
-    protected List<Partido> partidoDTOListToPartidoList(List<PartidoDTO> list) {
-        if ( list == null ) {
-            return null;
-        }
-
-        List<Partido> list1 = new ArrayList<Partido>( list.size() );
-        for ( PartidoDTO partidoDTO : list ) {
-            list1.add( partidoDTOToPartido( partidoDTO ) );
-        }
-
-        return list1;
-    }
-
     protected Jornada jornadaDTOToJornada(JornadaDTO jornadaDTO) {
         if ( jornadaDTO == null ) {
             return null;
@@ -331,7 +304,6 @@ public class AusenciaMapperImpl implements AusenciaMapper {
         jornada.setFechaInicio( jornadaDTO.getFechaInicio() );
         jornada.setId( jornadaDTO.getId() );
         jornada.setNumero( jornadaDTO.getNumero() );
-        jornada.setPartidos( partidoDTOListToPartidoList( jornadaDTO.getPartidos() ) );
 
         return jornada;
     }

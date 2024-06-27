@@ -4,7 +4,9 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -36,10 +38,13 @@ public class Jornada implements Serializable {
     private LocalDate fechaInicio;
 
     @ManyToOne
+    @JsonBackReference
     @JoinColumn(name = "campeonato_id", nullable = false)
     private Campeonato campeonato;
 
+    
     @OneToMany(mappedBy = "jornada", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     @JsonIgnoreProperties("jornada")
     private List<Partido> partidos;
 }

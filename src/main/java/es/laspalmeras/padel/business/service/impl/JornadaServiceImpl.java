@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 import es.laspalmeras.padel.business.service.JornadaService;
 import es.laspalmeras.padel.business.service.dto.JornadaDTO;
 import es.laspalmeras.padel.business.service.dto.PartidoDTO;
+import es.laspalmeras.padel.business.service.mapper.JornadaMapper;
+import es.laspalmeras.padel.business.service.mapper.PartidoMapper;
 import es.laspalmeras.padel.business.service.model.Campeonato;
 import es.laspalmeras.padel.business.service.model.Inscripcion;
 import es.laspalmeras.padel.business.service.model.Jornada;
@@ -27,39 +29,43 @@ import jakarta.transaction.Transactional;
 @Service
 public class JornadaServiceImpl implements JornadaService {
 
-    @Autowired
-    private JornadaRepository jornadaRepository;
-    
-    @Autowired
-    private CampeonatoRepository campeonatoRepository;
-
-    @Autowired
-    private PartidoRepository partidoRepository;
-
-    @Autowired
-    private InscripcionRepository inscripcionRepository;
+	@Autowired
+	private JornadaRepository jornadaRepository;
+	
+	@Autowired
+	private CampeonatoRepository campeonatoRepository;
+	
+	@Autowired
+	private PartidoRepository partidoRepository;
+	
+	@Autowired
+	private InscripcionRepository inscripcionRepository;
+	
+	@Autowired
+	private JornadaMapper jornadaMapper;
+	
+	@Autowired
+	private PartidoMapper partidoMapper;
 
     @Override
     @Transactional
     public List<JornadaDTO> findAllJornadas() {
     	List<Jornada> jornadas = jornadaRepository.findAll();
-       
     	return jornadas.stream().map(this::convertToDTO).collect(Collectors.toList());
     }
     
     @Override
-    //@Transactional
+    @Transactional
     public Optional<JornadaDTO> findJornadaById(Long id) {
         Optional<Jornada> jornada = jornadaRepository.findById(id);
-              //  .orElseThrow(() -> new ResourceNotFoundException("Jornada no encontrada con id: " + id)));
-        
         return jornada.map(this::convertToDTO);
     }
 
     @Override
-    //@Transactional
-    public List<Jornada> findJornadasByCampeonato(Long campeonatoId) {
-        return jornadaRepository.findByCampeonatoId(campeonatoId);
+    @Transactional
+    public List<JornadaDTO> findJornadasByCampeonato(Long campeonatoId) {
+    	List<Jornada> jornadas = jornadaRepository.findByCampeonatoId(campeonatoId);
+        return jornadas.stream().map(jornadaMapper::toDto).collect(Collectors.toList());
     }
 
     @Override
@@ -70,7 +76,7 @@ public class JornadaServiceImpl implements JornadaService {
     
     @Override
     @Transactional
-    public Jornada createJornada(Long campeonatoId, LocalDate fechaInicio) {
+    public JornadaDTO createJornada(Long campeonatoId, LocalDate fechaInicio) {
         Campeonato campeonato = campeonatoRepository.findById(campeonatoId)
                 .orElseThrow(() -> new ResourceNotFoundException("Campeonato no encontrado con id: " + campeonatoId));
 
@@ -86,7 +92,7 @@ public class JornadaServiceImpl implements JornadaService {
         int numInscritos = inscripciones.size();
         int numPartidos = numInscritos / 4;
 
-        List<Partido> partidos = generarPartidos(campeonato, inscripciones, numPartidos);
+        List<Partido> partidos = generarPartidos(inscripciones, numPartidos);
 
         Jornada nuevaJornada = new Jornada();
         nuevaJornada.setCampeonato(campeonato);
@@ -101,17 +107,16 @@ public class JornadaServiceImpl implements JornadaService {
             partidoRepository.save(partido);
         });
 
-        return savedJornada;
+        return jornadaMapper.toDto(savedJornada);
     }
     
     @Transactional
-    private List<Partido> generarPartidos(Campeonato campeonato, List<Inscripcion> inscripciones, int numPartidos) {
+    private List<Partido> generarPartidos(List<Inscripcion> inscripciones, int numPartidos) {
         List<Partido> partidos = new ArrayList<>();
         List<Jugador> jugadores = inscripciones.stream()
                 .map(Inscripcion::getJugador)
                 .collect(Collectors.toList());
 
-        // Algoritmo para generar emparejamientos
         for (int i = 0; i < numPartidos; i++) {
             Partido partido = new Partido();
             partido.setEquipo1Jugador1(jugadores.get(i * 4));
@@ -122,13 +127,14 @@ public class JornadaServiceImpl implements JornadaService {
         }
         return partidos;
     }
+  
     
     private JornadaDTO convertToDTO(Jornada jornada) {
         JornadaDTO dto = new JornadaDTO();
         dto.setId(jornada.getId());
         dto.setNumero(jornada.getNumero());
         dto.setFechaInicio(jornada.getFechaInicio());
-        dto.setPartidos(jornada.getPartidos().stream().map(this::convertToDTO).collect(Collectors.toList()));
+        //dto.setPartidos(jornada.getPartidos().stream().map(this::convertToDTO).collect(Collectors.toList()));
         return dto;
     }
     

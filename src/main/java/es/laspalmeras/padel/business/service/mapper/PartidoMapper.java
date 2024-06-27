@@ -7,7 +7,7 @@ import org.mapstruct.factory.Mappers;
 import es.laspalmeras.padel.business.service.dto.PartidoDTO;
 import es.laspalmeras.padel.business.service.model.Partido;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = {JugadorMapper.class, JornadaMapper.class, AusenciaMapper.class})
 public interface PartidoMapper {
     PartidoMapper INSTANCE = Mappers.getMapper(PartidoMapper.class);
     
@@ -31,6 +31,7 @@ public interface PartidoMapper {
     @Mapping(source = "juegosGanadosEquipo2Set3", target = "juegosGanadosEquipo2Set3")
     @Mapping(source = "setsGanadosEquipo1", target = "setsGanadosEquipo1")
     @Mapping(source = "setsGanadosEquipo2", target = "setsGanadosEquipo2")
+    //@Mapping(target = "jornada.partidos", ignore = true)  // Evita la recursión infinita
     PartidoDTO toDto(Partido partido);
     
     @Mapping(source = "id", target = "id")
@@ -53,5 +54,6 @@ public interface PartidoMapper {
     @Mapping(source = "juegosGanadosEquipo2Set3", target = "juegosGanadosEquipo2Set3")
     @Mapping(source = "setsGanadosEquipo1", target = "setsGanadosEquipo1")
     @Mapping(source = "setsGanadosEquipo2", target = "setsGanadosEquipo2")
+    @Mapping(target = "jornada.partidos", ignore = true)  // Evita la recursión infinita
     Partido toEntity(PartidoDTO partidoDTO);
 }

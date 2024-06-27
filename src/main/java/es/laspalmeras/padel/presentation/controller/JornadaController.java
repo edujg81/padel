@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import es.laspalmeras.padel.business.service.JornadaService;
 import es.laspalmeras.padel.business.service.dto.JornadaDTO;
-import es.laspalmeras.padel.business.service.model.Jornada;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
@@ -30,8 +29,8 @@ public class JornadaController {
 
     @Operation(summary = "Crear jornada de un campeonato")
     @PostMapping
-    public ResponseEntity<Jornada> createJornada(@RequestParam Long campeonatoId, @RequestParam LocalDate fechaInicio) {
-        Jornada jornada = jornadaService.createJornada(campeonatoId, fechaInicio);
+    public ResponseEntity<JornadaDTO> createJornada(@RequestParam Long campeonatoId, @RequestParam LocalDate fechaInicio) {
+        JornadaDTO jornada = jornadaService.createJornada(campeonatoId, fechaInicio);
         return ResponseEntity.ok(jornada);
     }
 
@@ -50,7 +49,7 @@ public class JornadaController {
 
     @Operation(summary = "Obtener jornadas de un campeonato")
     @GetMapping("/campeonato/{campeonatoId}")
-    public List<Jornada> getJornadasByCampeonato(@PathVariable Long campeonatoId) {
+    public List<JornadaDTO> getJornadasByCampeonato(@PathVariable Long campeonatoId) {
         return jornadaService.findJornadasByCampeonato(campeonatoId);
     }
     
