@@ -3,15 +3,14 @@ package es.laspalmeras.padel.business.service.mapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
+
 import es.laspalmeras.padel.business.service.dto.JugadorDTO;
 import es.laspalmeras.padel.business.service.model.Jugador;
 
-@Mapper(componentModel = "spring")
+@Mapper
 public interface JugadorMapper {
-	
-	JugadorMapper INSTANCE = Mappers.getMapper(JugadorMapper.class);
+    JugadorMapper INSTANCE = Mappers.getMapper(JugadorMapper.class);
 
-    @Mapping(source = "id", target = "id")
     @Mapping(source = "dni", target = "dni")
     @Mapping(source = "nombreCompleto", target = "nombreCompleto")
     @Mapping(source = "telefono", target = "telefono")
@@ -23,7 +22,6 @@ public interface JugadorMapper {
     @Mapping(source = "fechaBaja", target = "fechaBaja")
     JugadorDTO toDto(Jugador jugador);
 
-    @Mapping(source = "id", target = "id")
     @Mapping(source = "dni", target = "dni")
     @Mapping(source = "nombreCompleto", target = "nombreCompleto")
     @Mapping(source = "telefono", target = "telefono")

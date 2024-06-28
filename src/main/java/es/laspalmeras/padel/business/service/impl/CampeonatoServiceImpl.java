@@ -41,8 +41,7 @@ public class CampeonatoServiceImpl implements CampeonatoService{
 	@Override
 	@Transactional
 	public Optional<CampeonatoDTO> findCampeonatoById(Long id) {
-		Optional<Campeonato> campeonato = campeonatoRepository.findById(id);
-		return campeonato.map(campeonatoMapper::toDto);
+		return campeonatoRepository.findById(id).map(campeonatoMapper::toDto);
 	}
 
 	@Override

@@ -7,18 +7,13 @@ import org.mapstruct.factory.Mappers;
 import es.laspalmeras.padel.business.service.dto.JornadaDTO;
 import es.laspalmeras.padel.business.service.model.Jornada;
 
-@Mapper(componentModel = "spring", uses = {PartidoMapper.class})
+@Mapper(uses = {PartidoMapper.class})
 public interface JornadaMapper {
-	
-	JornadaMapper INSTANCE = Mappers.getMapper(JornadaMapper.class);
-	
-	@Mapping(target = "campeonato.jornadas", ignore = true)  // Evita la recursión infinita
-	@Mapping(source = "campeonato.id", target = "campeonato")
-	@Mapping(source = "partidos", target = "partidos")
+    JornadaMapper INSTANCE = Mappers.getMapper(JornadaMapper.class);
+
+    @Mapping(source = "campeonato.id", target = "campeonatoId")
     JornadaDTO toDto(Jornada jornada);
 
-    @Mapping(target = "campeonato.jornadas", ignore = true)  // Evita la recursión infinita
-    @Mapping(source = "campeonato.id", target = "campeonato.id")
-    @Mapping(source = "partidos", target = "partidos")
+    @Mapping(source = "campeonatoId", target = "campeonato.id")
     Jornada toEntity(JornadaDTO jornadaDTO);
 }

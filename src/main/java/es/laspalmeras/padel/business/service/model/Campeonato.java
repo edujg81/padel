@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -46,7 +47,7 @@ public class Campeonato implements Serializable {
     private String categoria; // "Masculino", "Femenino", "Mixto"
     
     @NotBlank
-    @Pattern(regexp = "?", message = "División debe ser un número entero")
+    @Pattern(regexp = "\\d+", message = "División debe ser un número entero")
     private Integer division; // 1, 2, 3...
     
     @Pattern(regexp = "Sin iniciar|En curso|Finalizado", message = "Estado debe ser 'Sin iniciar', 'En curso' o 'Finalizado'")
@@ -57,9 +58,11 @@ public class Campeonato implements Serializable {
     private Integer puntosPorDerrota = 0;  // Valor predeterminado
     
     @OneToMany(mappedBy = "campeonato", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonManagedReference
+    @JsonIgnoreProperties("campeonato")
     private List<Jornada> jornadas;
     
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "campeonato", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnoreProperties("inscripcion")
+    @OneToMany(mappedBy = "campeonato", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnoreProperties("campeonato")
     private List<Inscripcion> inscripciones;
 }

@@ -1,44 +1,28 @@
 package es.laspalmeras.padel.business.service.dto;
 
-import java.io.Serializable;
-
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import es.laspalmeras.padel.business.service.model.Ausencia;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
 
-@SuppressWarnings("serial")
-@Getter
-@Setter
-@EqualsAndHashCode(of = "id")
-@ToString
 @Data
-@NoArgsConstructor
-@Entity
-@Table(name = "AUSENCIA")
-public class AusenciaDTO implements Serializable{
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class AusenciaDTO {
     private Long id;
+    private Long partidoId;
+    private Long ausenteId;
+    private Long sustitutoId;
 
-    @ManyToOne
-    @JoinColumn(name = "partido_id", nullable = false)
-    private PartidoDTO partido;
+    public static AusenciaDTO fromEntity(Ausencia ausencia) {
+        AusenciaDTO dto = new AusenciaDTO();
+        dto.setId(ausencia.getId());
+        dto.setPartidoId(ausencia.getPartido().getId());
+        dto.setAusenteId(ausencia.getAusente().getId());
+        dto.setSustitutoId(ausencia.getSustituto().getId());
+        return dto;
+    }
 
-    @ManyToOne
-    @JoinColumn(name = "ausente_id", nullable = false)
-    private JugadorDTO ausente;
-
-    @ManyToOne
-    @JoinColumn(name = "sustituto_id", nullable = false)
-    private JugadorDTO sustituto;
+    public Ausencia toEntity() {
+        Ausencia ausencia = new Ausencia();
+        ausencia.setId(id);
+        // Aquí se deberían setear los objetos completos de Partido, Ausente y Sustituto si es necesario
+        return ausencia;
+    }
 }

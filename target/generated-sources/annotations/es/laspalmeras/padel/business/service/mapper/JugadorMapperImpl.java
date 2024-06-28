@@ -3,14 +3,12 @@ package es.laspalmeras.padel.business.service.mapper;
 import es.laspalmeras.padel.business.service.dto.JugadorDTO;
 import es.laspalmeras.padel.business.service.model.Jugador;
 import javax.annotation.processing.Generated;
-import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-06-27T15:29:56+0200",
+    date = "2024-06-28T14:02:05+0200",
     comments = "version: 1.5.2.Final, compiler: Eclipse JDT (IDE) 3.38.0.v20240524-2033, environment: Java 21.0.3 (Eclipse Adoptium)"
 )
-@Component
 public class JugadorMapperImpl implements JugadorMapper {
 
     @Override
@@ -21,7 +19,6 @@ public class JugadorMapperImpl implements JugadorMapper {
 
         JugadorDTO jugadorDTO = new JugadorDTO();
 
-        jugadorDTO.setId( jugador.getId() );
         jugadorDTO.setDni( jugador.getDni() );
         jugadorDTO.setNombreCompleto( jugador.getNombreCompleto() );
         jugadorDTO.setTelefono( jugador.getTelefono() );
@@ -31,6 +28,7 @@ public class JugadorMapperImpl implements JugadorMapper {
         jugadorDTO.setLesionado( jugador.getLesionado() );
         jugadorDTO.setFechaAlta( jugador.getFechaAlta() );
         jugadorDTO.setFechaBaja( jugador.getFechaBaja() );
+        jugadorDTO.setId( jugador.getId() );
 
         return jugadorDTO;
     }
@@ -43,7 +41,6 @@ public class JugadorMapperImpl implements JugadorMapper {
 
         Jugador jugador = new Jugador();
 
-        jugador.setId( jugadorDTO.getId() );
         jugador.setDni( jugadorDTO.getDni() );
         jugador.setNombreCompleto( jugadorDTO.getNombreCompleto() );
         jugador.setTelefono( jugadorDTO.getTelefono() );
@@ -53,6 +50,7 @@ public class JugadorMapperImpl implements JugadorMapper {
         jugador.setLesionado( jugadorDTO.getLesionado() );
         jugador.setFechaAlta( jugadorDTO.getFechaAlta() );
         jugador.setFechaBaja( jugadorDTO.getFechaBaja() );
+        jugador.setId( jugadorDTO.getId() );
 
         return jugador;
     }

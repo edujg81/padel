@@ -1,98 +1,34 @@
 package es.laspalmeras.padel.business.service.dto;
 
-import java.io.Serializable;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.time.LocalDate;
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
-
-@SuppressWarnings("serial")
-@Getter
-@Setter
-@EqualsAndHashCode(of="id")
-@ToString
 @Data
 @NoArgsConstructor
-@Entity
-@Table(name="PARTIDO")
-public class PartidoDTO implements Serializable {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class PartidoDTO {
     private Long id;
-
     private LocalDate fecha;
-    private String pista = "Sin asignar";
-    private String resultado = "No jugado"; // Ej: "6-4, 5-7, 6-3"
-    private String equipoGanador = "Ninguno";
-    private Boolean registrado = false;
-
-    @ManyToOne
-    @JsonBackReference
-    @JoinColumn(name = "jornada_id", nullable = false)
-    private JornadaDTO jornada;
-
-    @ManyToOne
-    @JoinColumn(name = "equipo1_jugador1_id", nullable = false)
-    private JugadorDTO equipo1Jugador1;
-
-    @ManyToOne
-    @JoinColumn(name = "equipo1_jugador2_id", nullable = false)
-    private JugadorDTO equipo1Jugador2;
-
-    @ManyToOne
-    @JoinColumn(name = "equipo2_jugador1_id", nullable = false)
-    private JugadorDTO equipo2Jugador1;
-
-    @ManyToOne
-    @JoinColumn(name = "equipo2_jugador2_id", nullable = false)
-    private JugadorDTO equipo2Jugador2;
-    
-    @OneToMany(mappedBy = "partido", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnoreProperties("partido")
+    private String pista;
+    private String resultado;
+    private String equipoGanador;
+    private Boolean registrado;
+    private Long jornadaId; // ID de la jornada a la que pertenece el partido
+    private Long equipo1Jugador1Id; // ID del jugador 1 del equipo 1
+    private Long equipo1Jugador2Id; // ID del jugador 2 del equipo 1
+    private Long equipo2Jugador1Id; // ID del jugador 1 del equipo 2
+    private Long equipo2Jugador2Id; // ID del jugador 2 del equipo 2
     private List<AusenciaDTO> ausencias;
 
-    
     /* Juegos ganados por equipos en cada set */
-    
-    @Column(name = "juegos_ganados_equipo1_set1")
     private Integer juegosGanadosEquipo1Set1;
-    
-    @Column(name = "juegos_ganados_equipo2_set1")
     private Integer juegosGanadosEquipo2Set1;
-
-    @Column(name = "juegos_ganados_equipo1_set2")
     private Integer juegosGanadosEquipo1Set2;
-    
-    @Column(name = "juegos_ganados_equipo2_set2")
     private Integer juegosGanadosEquipo2Set2;
-
-    @Column(name = "juegos_ganados_equipo1_set3")
     private Integer juegosGanadosEquipo1Set3;
-    
-    @Column(name = "juegos_ganados_equipo2_set3")
     private Integer juegosGanadosEquipo2Set3;
-    
-    @Column(name = "sets_ganados_equipo1")
     private Integer setsGanadosEquipo1;
-    
-    @Column(name = "sets_ganados_equipo2")
     private Integer setsGanadosEquipo2;
 }

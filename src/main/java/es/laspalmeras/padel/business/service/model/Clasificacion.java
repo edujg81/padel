@@ -1,14 +1,32 @@
 package es.laspalmeras.padel.business.service.model;
 
-import jakarta.persistence.*;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import java.io.Serializable;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
+@SuppressWarnings("serial")
 @Data
+@Getter
+@Setter
+@EqualsAndHashCode(of={"campeonato", "jugador"})
+@ToString
 @NoArgsConstructor
 @Entity
-@Table(name = "clasificacion")
-public class Clasificacion {
+@Table(name = "CLASIFICACION")
+public class Clasificacion implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -45,4 +63,7 @@ public class Clasificacion {
     
     @Column(name="juegos_perdidos")
     private int juegosPerdidos;
+
+    // Getters, setters, equals y hashCode generados automáticamente por Lombok
 }
+
