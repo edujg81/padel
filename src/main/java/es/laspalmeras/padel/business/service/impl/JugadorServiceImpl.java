@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import es.laspalmeras.padel.business.service.JugadorService;
 import es.laspalmeras.padel.business.service.dto.JugadorDTO;
@@ -22,9 +23,11 @@ public class JugadorServiceImpl implements JugadorService{
 	@Autowired
     private JugadorRepository jugadorRepository;
 	
-	private final JugadorMapper jugadorMapper = JugadorMapper.INSTANCE;
+	@Autowired
+	private JugadorMapper jugadorMapper;
 	
 	@Override
+	@Transactional
 	public Long create(JugadorDTO jugadorDTO) {
 		Jugador jugador = jugadorMapper.toEntity(jugadorDTO);
 		jugador.setFechaAlta(LocalDate.now());
@@ -34,6 +37,7 @@ public class JugadorServiceImpl implements JugadorService{
 	}
 
 	@Override
+	@Transactional
 	public void deleteJugador(Long id) {
 		jugadorRepository.deleteById(id);
 	}
@@ -58,6 +62,7 @@ public class JugadorServiceImpl implements JugadorService{
 	}
 
 	@Override
+	@Transactional
 	public JugadorDTO saveJugador(JugadorDTO jugadorDTO) {
 		Jugador jugador = jugadorMapper.toEntity(jugadorDTO);
 		jugador = jugadorRepository.save(jugador);
@@ -65,10 +70,11 @@ public class JugadorServiceImpl implements JugadorService{
 	}
 
 	@Override
+	@Transactional
     public JugadorDTO updateJugador(Long id, JugadorDTO jugadorDetails) {
-		Jugador jugador = jugadorMapper.toEntity(jugadorDetails);
-		jugador = jugadorRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Jugador no encontrado"));
-        jugador.setDni(jugadorDetails.getDni());
+		Jugador jugador = jugadorRepository.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("Jugador no encontrado"));
+		jugador.setDni(jugadorDetails.getDni());
         jugador.setNombreCompleto(jugadorDetails.getNombreCompleto());
         jugador.setTelefono(jugadorDetails.getTelefono());
         jugador.setEmail(jugadorDetails.getEmail());
@@ -79,28 +85,33 @@ public class JugadorServiceImpl implements JugadorService{
         return jugadorMapper.toDto(jugador);
     }
 	
-	@Override
-    public void darDeBajaJugadorPorId(Long id) {
-        Jugador jugador = jugadorRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Jugador no encontrado"));
-        if (jugador != null && jugador.getEstado().equals("Alta")) {
+    private void darDeBajaJugador(Jugador jugador) {
+        if (jugador != null && "Alta".equals(jugador.getEstado())) {
         	jugador.setEstado("Baja");
         	jugador.setFechaBaja(LocalDate.now());
+        	jugadorRepository.save(jugador);
         }
-        jugadorRepository.save(jugador);
     }
 	
 	@Override
+	@Transactional
+    public void darDeBajaJugadorPorId(Long id) {
+        Jugador jugador = jugadorRepository.findById(id)
+        		.orElseThrow(() -> new ResourceNotFoundException("Jugador no encontrado"));
+        darDeBajaJugador(jugador);
+    }
+	
+	@Override
+	@Transactional
     public void darDeBajaJugadorPorDni(String dni) {
-        Jugador jugador = jugadorRepository.findByDni(dni).orElseThrow(() -> new ResourceNotFoundException("Jugador no encontrado"));
-        if (jugador != null && jugador.getEstado().equals("Alta")) {
-        	jugador.setEstado("Baja");
-        	jugador.setFechaBaja(LocalDate.now());
-        }
-        jugadorRepository.save(jugador);
+        Jugador jugador = jugadorRepository.findByDni(dni)
+        		.orElseThrow(() -> new ResourceNotFoundException("Jugador no encontrado"));
+        darDeBajaJugador(jugador);
     }
 	
 	@Override
 	@Scheduled(cron = "0 0 0 * * ?")
+	@Transactional
     public void eliminarJugadoresBajaMasDeCincoAnios() {
         LocalDate cincoAniosAtras = LocalDate.now().minusYears(5);
         List<Jugador> jugadoresParaEliminar = jugadorRepository.findByFechaBajaBeforeAndEstado(cincoAniosAtras, "Baja");
