@@ -7,7 +7,7 @@ import org.mapstruct.factory.Mappers;
 import es.laspalmeras.padel.business.service.dto.JornadaDTO;
 import es.laspalmeras.padel.business.service.model.Jornada;
 
-@Mapper(uses = {PartidoMapper.class})
+@Mapper(componentModel = "spring", uses = {PartidoMapper.class})
 public interface JornadaMapper {
     JornadaMapper INSTANCE = Mappers.getMapper(JornadaMapper.class);
 

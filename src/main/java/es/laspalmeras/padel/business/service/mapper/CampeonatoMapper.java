@@ -8,13 +8,14 @@ import org.mapstruct.factory.Mappers;
 import es.laspalmeras.padel.business.service.dto.CampeonatoDTO;
 import es.laspalmeras.padel.business.service.model.Campeonato;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface CampeonatoMapper {
     
 	CampeonatoMapper INSTANCE = Mappers.getMapper(CampeonatoMapper.class);
 	
 	@Mappings({
-        @Mapping(source = "year", target = "year"),
+		@Mapping(source = "id", target = "id"),
+		@Mapping(source = "year", target = "year"),
         @Mapping(source = "categoria", target = "categoria"),
         @Mapping(source = "division", target = "division"),
         @Mapping(source = "estado", target = "estado"),
@@ -25,6 +26,7 @@ public interface CampeonatoMapper {
     CampeonatoDTO toDto(Campeonato campeonato);
     
 	@Mappings({
+		@Mapping(source = "id", target = "id"),
         @Mapping(source = "year", target = "year"),
         @Mapping(source = "categoria", target = "categoria"),
         @Mapping(source = "division", target = "division"),
