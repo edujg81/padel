@@ -53,13 +53,8 @@ public class CampeonatoServiceImpl implements CampeonatoService{
 	@Override
 	@Transactional
 	public CampeonatoDTO createCampeonato(CampeonatoDTO campeonatoDTO) {
-		List<Campeonato> campeonatosActivos = campeonatoRepository.findByYearAndCategoriaAndDivisionAndActivoTrue(
-	            campeonatoDTO.getYear(), campeonatoDTO.getCategoria(), campeonatoDTO.getDivision());
-
-	    if (!campeonatosActivos.isEmpty()) {
-	        throw new IllegalStateException("Ya existe un campeonato activo para esta categoría y división en el mismo año.");
-	    }
-
+		validarCampeonatoExistente(campeonatoDTO);
+		
 	    Campeonato campeonato = campeonatoMapper.toEntity(campeonatoDTO);
         saveCampeonato(campeonato);
         return campeonatoMapper.toDto(campeonato);
@@ -71,16 +66,8 @@ public class CampeonatoServiceImpl implements CampeonatoService{
 		Campeonato campeonato = campeonatoRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Campeonato", "id", id));
 
-        campeonato.setYear(campeonatoDetails.getYear());
-        campeonato.setCategoria(campeonatoDetails.getCategoria());
-        campeonato.setDivision(campeonatoDetails.getDivision());
-        campeonato.setEstado(campeonatoDetails.getEstado());
-        campeonato.setActivo(campeonatoDetails.getActivo());
-        campeonato.setPuntosPorVictoria(campeonatoDetails.getPuntosPorVictoria());
-        campeonato.setPuntosPorDerrota(campeonatoDetails.getPuntosPorDerrota());
-        
+        actualizarDatosCampeonato(campeonato, campeonatoDetails);
         saveCampeonato(campeonato);
-        
         return campeonatoMapper.toDto(campeonato);
 	}
 
@@ -94,4 +81,22 @@ public class CampeonatoServiceImpl implements CampeonatoService{
         saveCampeonato(campeonato);
 	}
 
+	private void validarCampeonatoExistente(CampeonatoDTO campeonatoDTO) {
+		List<Campeonato> campeonatosActivos = campeonatoRepository.findByYearAndCategoriaAndDivisionAndActivoTrue(
+	            campeonatoDTO.getYear(), campeonatoDTO.getCategoria(), campeonatoDTO.getDivision());
+
+	    if (!campeonatosActivos.isEmpty()) {
+	        throw new IllegalStateException("Ya existe un campeonato activo para esta categoría y división en el mismo año.");
+	    }
+	}
+	
+	private void actualizarDatosCampeonato(Campeonato campeonato, CampeonatoDTO campeonatoDetails) {
+        campeonato.setYear(campeonatoDetails.getYear());
+        campeonato.setCategoria(campeonatoDetails.getCategoria());
+        campeonato.setDivision(campeonatoDetails.getDivision());
+        campeonato.setEstado(campeonatoDetails.getEstado());
+        campeonato.setActivo(campeonatoDetails.getActivo());
+        campeonato.setPuntosPorVictoria(campeonatoDetails.getPuntosPorVictoria());
+        campeonato.setPuntosPorDerrota(campeonatoDetails.getPuntosPorDerrota());
+    }
 }
