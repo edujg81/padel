@@ -1,7 +1,6 @@
 package es.laspalmeras.padel.business.service.impl;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -42,30 +41,26 @@ public class JornadaServiceImpl implements JornadaService {
 	@Autowired
 	private JornadaMapper jornadaMapper;
 
-	public JornadaServiceImpl(JornadaRepository jornadaRepository, JornadaMapper jornadaMapper) {
-        this.jornadaRepository = jornadaRepository;
-        this.jornadaMapper = jornadaMapper;
-    }
-	
-    @Override
-    @Transactional
+	@Override
+	@Transactional
     public List<JornadaDTO> findAllJornadas() {
-    	List<Jornada> jornadas = jornadaRepository.findAll();
-    	return jornadas.stream().map(this::convertToDTO).collect(Collectors.toList());
+    	return jornadaRepository.findAll().stream()
+    			.map(jornadaMapper::toDto)
+    			.collect(Collectors.toList());
     }
     
     @Override
     @Transactional
     public Optional<JornadaDTO> findJornadaById(Long id) {
-        Optional<Jornada> jornada = jornadaRepository.findById(id);
-        return jornada.map(this::convertToDTO);
+        return jornadaRepository.findById(id).map(jornadaMapper::toDto);
     }
 
     @Override
     @Transactional
     public List<JornadaDTO> findJornadasByCampeonato(Long campeonatoId) {
-    	List<Jornada> jornadas = jornadaRepository.findByCampeonatoId(campeonatoId);
-        return jornadas.stream().map(jornadaMapper::toDto).collect(Collectors.toList());
+        return jornadaRepository.findByCampeonatoId(campeonatoId).stream()
+        		.map(jornadaMapper::toDto)
+        		.collect(Collectors.toList());
     }
 
     @Override
@@ -80,7 +75,7 @@ public class JornadaServiceImpl implements JornadaService {
         Campeonato campeonato = campeonatoRepository.findById(campeonatoId)
                 .orElseThrow(() -> new ResourceNotFoundException("Campeonato no encontrado con id: " + campeonatoId));
 
-        if (!campeonato.getEstado().equals("En curso")) {
+        if (!"En curso".equals(campeonato.getEstado())) {
             throw new IllegalArgumentException("El campeonato debe estar 'En curso' para crear jornadas.");
         }
 
@@ -98,8 +93,7 @@ public class JornadaServiceImpl implements JornadaService {
         nuevaJornada.setCampeonato(campeonato);
         nuevaJornada.setFechaInicio(fechaInicio);
         nuevaJornada.setNumero((int) (jornadaRepository.countByCampeonatoId(campeonatoId) + 1));
-        /*nuevaJornada.setPartidos(partidos);*/
-
+        
         Jornada savedJornada = jornadaRepository.save(nuevaJornada);
 
         partidos.forEach(partido -> {
@@ -112,41 +106,18 @@ public class JornadaServiceImpl implements JornadaService {
     
     @Transactional
     private List<Partido> generarPartidos(List<Inscripcion> inscripciones, int numPartidos) {
-        List<Partido> partidos = new ArrayList<>();
         List<Jugador> jugadores = inscripciones.stream()
                 .map(Inscripcion::getJugador)
                 .collect(Collectors.toList());
 
-        for (int i = 0; i < numPartidos; i++) {
-            Partido partido = new Partido();
-            partido.setEquipo1Jugador1(jugadores.get(i * 4));
-            partido.setEquipo1Jugador2(jugadores.get(i * 4 + 3));
-            partido.setEquipo2Jugador1(jugadores.get(i * 4 + 1));
-            partido.setEquipo2Jugador2(jugadores.get(i * 4 + 2));
-            partidos.add(partido);
-        }
-        return partidos;
+        return jugadores.stream().collect(Collectors.groupingBy(jugador -> jugadores.indexOf(jugador) / 4))
+        		.values().stream().map(jugadoresGrupo -> {
+        			Partido partido = new Partido();
+                    partido.setEquipo1Jugador1(jugadoresGrupo.get(0));
+                    partido.setEquipo1Jugador2(jugadores.get(3));
+                    partido.setEquipo2Jugador1(jugadores.get(1));
+                    partido.setEquipo2Jugador2(jugadores.get(2));
+                    return partido;
+        		}).collect(Collectors.toList());
     }
-  
-    
-    private JornadaDTO convertToDTO(Jornada jornada) {
-        JornadaDTO dto = new JornadaDTO();
-        dto.setId(jornada.getId());
-        dto.setNumero(jornada.getNumero());
-        dto.setFechaInicio(jornada.getFechaInicio());
-        //dto.setPartidos(jornada.getPartidos().stream().map(this::convertToDTO).collect(Collectors.toList()));
-        return dto;
-    }
-    
-    /*
-    private PartidoDTO convertToDTO(Partido partido) {
-        PartidoDTO dto = new PartidoDTO();
-        dto.setId(partido.getId());
-        dto.setResultado(partido.getResultado());
-        dto.setPista(partido.getPista());
-        dto.setFecha(partido.getFecha());
-        dto.setEquipoGanador(partido.getEquipoGanador());
-        dto.setRegistrado(partido.getRegistrado());
-        return dto;
-    }*/
 }
