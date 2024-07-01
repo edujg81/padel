@@ -67,7 +67,9 @@ public class PartidoServiceImpl implements PartidoService{
 
 	@Override
 	public List<PartidoDTO> getAllPartidos() {
-		return partidoRepository.findAll().stream().map(partidoMapper::toDto).collect(Collectors.toList());
+		return partidoRepository.findAll().stream()
+				.map(partidoMapper::toDto)
+				.collect(Collectors.toList());
 	}
 
 	@Override
@@ -94,7 +96,9 @@ public class PartidoServiceImpl implements PartidoService{
             partidos.add(partido);
         }
 
-        return partidoRepository.saveAll(partidos).stream().map(partidoMapper::toDto).collect(Collectors.toList());
+        return partidoRepository.saveAll(partidos).stream()
+        		.map(partidoMapper::toDto)
+        		.collect(Collectors.toList());
     }
 
 	@Override
@@ -105,7 +109,8 @@ public class PartidoServiceImpl implements PartidoService{
 
 	@Override
 	public PartidoDTO getPartidoById(Long id) {
-		return partidoRepository.findById(id).map(partidoMapper::toDto)
+		return partidoRepository.findById(id)
+				.map(partidoMapper::toDto)
                 .orElseThrow(() -> new ResourceNotFoundException("Partido no encontrado con id: " + id));
 	}
 
@@ -114,22 +119,14 @@ public class PartidoServiceImpl implements PartidoService{
     public PartidoDTO updatePartido(Long id, PartidoDTO partidoDetails) {
         Partido partido = partidoRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Partido no encontrado con id: " + id));
-
+        
+        // Actualización de los campos
         partido.setJuegosGanadosEquipo1Set1(partidoDetails.getJuegosGanadosEquipo1Set1());
         partido.setJuegosGanadosEquipo1Set2(partidoDetails.getJuegosGanadosEquipo1Set2());
         partido.setJuegosGanadosEquipo1Set3(partidoDetails.getJuegosGanadosEquipo1Set3());
         partido.setJuegosGanadosEquipo2Set1(partidoDetails.getJuegosGanadosEquipo2Set1());
         partido.setJuegosGanadosEquipo2Set2(partidoDetails.getJuegosGanadosEquipo2Set2());
         partido.setJuegosGanadosEquipo2Set3(partidoDetails.getJuegosGanadosEquipo2Set3());
-        /*partido.setAusencias(partidoDetails.getAusencias());
-        partido.setAusenteJugador1(partidoDetails.getAusenteJugador1());
-        partido.setAusenteJugador2(partidoDetails.getAusenteJugador2());
-        partido.setAusenteJugador3(partidoDetails.getAusenteJugador3());
-        partido.setAusenteJugador4(partidoDetails.getAusenteJugador4());
-        partido.setSustitutoJugador1(partidoDetails.getSustitutoJugador1());
-        partido.setSustitutoJugador2(partidoDetails.getSustitutoJugador2());
-        partido.setSustitutoJugador3(partidoDetails.getSustitutoJugador3());
-        partido.setSustitutoJugador4(partidoDetails.getSustitutoJugador4());*/
         partido.setPista(partidoDetails.getPista());
         partido.setResultado(partidoDetails.getResultado());
 
@@ -169,8 +166,7 @@ public class PartidoServiceImpl implements PartidoService{
         partido.setRegistrado(true);
 
         // Actualizar clasificación del campeonato
-        Campeonato campeonato = partido.getJornada().getCampeonato();
-        actualizarClasificacion(campeonato, partido);
+        actualizarClasificacion(partido.getJornada().getCampeonato(), partido);
 
         return partidoMapper.toDto(partidoRepository.save(partido));
     }
@@ -225,21 +221,28 @@ public class PartidoServiceImpl implements PartidoService{
 
 	@Override
     public List<PartidoDTO> getPartidosByJornada(Long jornadaId) {
-		return partidoRepository.findByJornadaId(jornadaId).stream().map(partidoMapper::toDto).collect(Collectors.toList());
+		return partidoRepository.findByJornadaId(jornadaId).stream()
+				.map(partidoMapper::toDto)
+				.collect(Collectors.toList());
     }
 	
 	@Override
 	@Transactional
 	public void registrarAusencia(Long partidoId, Long ausenteId, Long sustitutoId) {
 		Ausencia ausencia = new Ausencia();
-        ausencia.setPartido(partidoRepository.findById(partidoId).orElseThrow(() -> new ResourceNotFoundException("Partido", "id", partidoId)));
-        ausencia.setAusente(jugadorRepository.findById(ausenteId).orElseThrow(() -> new ResourceNotFoundException("Jugador", "id", ausenteId)));
-        ausencia.setSustituto(jugadorRepository.findById(sustitutoId).orElseThrow(() -> new ResourceNotFoundException("Jugador", "id", sustitutoId)));
+        ausencia.setPartido(partidoRepository.findById(partidoId)
+        		.orElseThrow(() -> new ResourceNotFoundException("Partido no encontrado con id:" + partidoId)));
+        ausencia.setAusente(jugadorRepository.findById(ausenteId)
+        		.orElseThrow(() -> new ResourceNotFoundException("Jugador ausente no encontrado con id:" + ausenteId)));
+        ausencia.setSustituto(jugadorRepository.findById(sustitutoId)
+        		.orElseThrow(() -> new ResourceNotFoundException("Jugador sustituto no encontrado con id:" + sustitutoId)));
         ausenciaRepository.save(ausencia);
 	}
 
 	@Override
 	public List<AusenciaDTO> getAusenciasByPartidoId(Long partidoId) {
-		return ausenciaRepository.findByPartidoId(partidoId).stream().map(AusenciaMapper.INSTANCE::toDto).collect(Collectors.toList());
+		return ausenciaRepository.findByPartidoId(partidoId).stream()
+				.map(AusenciaMapper.INSTANCE::toDto)
+				.collect(Collectors.toList());
 	}
 }
