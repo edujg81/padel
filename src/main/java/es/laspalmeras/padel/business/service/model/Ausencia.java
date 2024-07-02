@@ -16,6 +16,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+/**
+ * Representa una ausencia de un jugador a un partido.
+ */
 @SuppressWarnings("serial")
 @Getter
 @Setter

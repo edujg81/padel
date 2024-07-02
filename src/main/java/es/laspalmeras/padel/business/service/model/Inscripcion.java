@@ -17,6 +17,9 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+/**
+ * Representa una inscripción de un jugador a un campeonato.
+ */
 @SuppressWarnings("serial")
 @Getter
 @Setter

@@ -16,7 +16,7 @@ import es.laspalmeras.padel.integration.repository.CampeonatoRepository;
 import es.laspalmeras.padel.presentation.config.exception.ResourceNotFoundException;
 
 /**
- * Servicio para la gestión de campeonatos.
+ * Implementación del servicio de gestión de campeonatos.
  */
 @Service
 public class CampeonatoServiceImpl implements CampeonatoService{
@@ -39,6 +39,11 @@ public class CampeonatoServiceImpl implements CampeonatoService{
 		return campeonatoRepository.save(campeonato);
 	}
 
+	/**
+     * Obtiene todos los campeonatos.
+     *
+     * @return una lista de objetos CampeonatoDTO
+     */
 	@Override
 	@Transactional
 	public List<CampeonatoDTO> findAllCampeonatos() {
@@ -47,12 +52,23 @@ public class CampeonatoServiceImpl implements CampeonatoService{
                 .collect(Collectors.toList());
 	}
 
+	/**
+     * Obtiene un campeonato por su ID.
+     *
+     * @param id el ID del campeonato
+     * @return un Optional con el objeto CampeonatoDTO si se encuentra
+     */
 	@Override
 	@Transactional
 	public Optional<CampeonatoDTO> findCampeonatoById(Long id) {
 		return campeonatoRepository.findById(id).map(campeonatoMapper::toDto);
 	}
 
+	/**
+     * Elimina un campeonato por su ID.
+     *
+     * @param id el ID del campeonato
+     */
 	@Override
 	@Transactional
 	public void deleteCampeonato(Long id) {
@@ -60,11 +76,12 @@ public class CampeonatoServiceImpl implements CampeonatoService{
 	}
 
 	/**
-	 * Crea un nuevo campeonato.
-	 * @param campeonatoDTO Datos del campeonato a crear.
-	 * @return CampeonatoDTO del campeonato creado.
-	 * @throws IllegalStateException si ya existe un campeonato activo para esta categoría y división en el mismo año.
-	 */
+     * Crea un nuevo campeonato.
+     *
+     * @param campeonatoDTO el DTO del campeonato a crear
+     * @return el objeto CampeonatoDTO creado
+     * @throws IllegalStateException si ya existe un campeonato activo para la misma categoría y división en el mismo año
+     */
 	@Override
 	@Transactional
 	public CampeonatoDTO createCampeonato(CampeonatoDTO campeonatoDTO) {
@@ -75,6 +92,14 @@ public class CampeonatoServiceImpl implements CampeonatoService{
         return campeonatoMapper.toDto(campeonato);
 	}
 
+	/**
+     * Actualiza un campeonato existente.
+     *
+     * @param id el ID del campeonato a actualizar
+     * @param campeonatoDetails los detalles actualizados del campeonato
+     * @return el objeto CampeonatoDTO actualizado
+     * @throws ResourceNotFoundException si el campeonato no se encuentra
+     */
 	@Override
 	@Transactional
 	public CampeonatoDTO updateCampeonato(Long id, CampeonatoDTO campeonatoDetails) {
@@ -86,6 +111,13 @@ public class CampeonatoServiceImpl implements CampeonatoService{
         return campeonatoMapper.toDto(campeonato);
 	}
 
+	/**
+     * Cambia el estado de un campeonato.
+     *
+     * @param id el ID del campeonato
+     * @param nuevoEstado el nuevo estado del campeonato
+     * @throws ResourceNotFoundException si el campeonato no se encuentra
+     */
 	@Override
 	@Transactional
 	public void cambiarEstadoCampeonato(Long id, String nuevoEstado) {

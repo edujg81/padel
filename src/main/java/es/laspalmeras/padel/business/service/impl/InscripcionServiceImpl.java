@@ -17,7 +17,7 @@ import es.laspalmeras.padel.integration.repository.JugadorRepository;
 import es.laspalmeras.padel.presentation.config.exception.ResourceNotFoundException;
 
 /**
- * Servicio para gestionar las inscripciones.
+ * Implementación del servicio de gestión de inscripciones.
  */
 @Service
 public class InscripcionServiceImpl implements InscripcionService{
@@ -32,10 +32,10 @@ public class InscripcionServiceImpl implements InscripcionService{
     private JugadorRepository jugadorRepository;
     
     /**
-     * Inscribir un jugador en un campeonato.
+     * Inscribe un jugador en un campeonato.
      *
-     * @param campeonatoId el id del campeonato
-     * @param jugadorId el id del jugador
+     * @param campeonatoId el ID del campeonato
+     * @param jugadorId el ID del jugador
      * @return la inscripción creada
      * @throws ResourceNotFoundException si el campeonato o el jugador no se encuentran
      * @throws IllegalArgumentException si el jugador no puede ser inscrito
@@ -57,6 +57,11 @@ public class InscripcionServiceImpl implements InscripcionService{
         return inscripcionRepository.save(nuevaInscripcion);
     }
     
+    /**
+     * Elimina una inscripción por su ID.
+     *
+     * @param inscripcionId el ID de la inscripción
+     */
     @Override
     @Transactional
     public void desinscribirJugador(Long inscripcionId) {
@@ -65,36 +70,70 @@ public class InscripcionServiceImpl implements InscripcionService{
         inscripcionRepository.delete(inscripcion);
     }
     
+    /**
+     * Obtiene todas las inscripciones.
+     *
+     * @return una lista de inscripciones
+     */
     @Override
     @Transactional
     public List<Inscripcion> findAllInscripciones() {
         return inscripcionRepository.findAll();
     }
     
+    /**
+     * Obtiene una inscripción por su ID.
+     *
+     * @param id el ID de la inscripción
+     * @return un Optional con la inscripción si se encuentra
+     */
     @Override
     @Transactional
     public Optional<Inscripcion> findInscripcionById(Long id) {
         return inscripcionRepository.findById(id);
     }
-
+    
+    /**
+     * Obtiene las inscripciones a un campeonato por su ID.
+     *
+     * @param campeonatoId el ID del campeonato
+     * @return una Lista con las inscripciones al campeonato
+     */
     @Override
     @Transactional
     public List<Inscripcion> findInscripcionesByCampeonato(Long campeonatoId) {
         return inscripcionRepository.findByCampeonatoId(campeonatoId);
     }
 
+    /**
+     * Obtiene las inscripciones de un jugador por su ID.
+     *
+     * @param jugadorId el ID del jugador
+     * @return una Lista con las inscripciones del jugador
+     */
     @Override
     @Transactional
     public List<Inscripcion> findInscripcionesByJugador(Long jugadorId) {
         return inscripcionRepository.findByJugadorId(jugadorId);
     }
     
+    /**
+     * Guarda una inscripción
+     *
+     * @param inscripcion el objeto con la inscripción que se va a guardar
+     * @return un objeto Inscripcion con la inscripción guardada
+     */
     @Override
     @Transactional
     public Inscripcion saveInscripcion(Inscripcion inscripcion) {
         return inscripcionRepository.save(inscripcion);
     }
 
+    /**
+     * Borra una inscripción
+     *
+     * @param id el ID de la inscripcion
+     */
     @Override
     @Transactional
     public void deleteInscripcion(Long id) {

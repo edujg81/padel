@@ -23,6 +23,9 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+/**
+ * Representa una jornada de un campeonato.
+ */
 @SuppressWarnings("serial")
 @Getter
 @Setter

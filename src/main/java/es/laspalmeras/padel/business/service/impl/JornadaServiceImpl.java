@@ -24,7 +24,7 @@ import es.laspalmeras.padel.presentation.config.exception.ResourceNotFoundExcept
 import jakarta.transaction.Transactional;
 
 /**
- * Servicio para gestionar las jornadas de un campeonato.
+ * Implementación del servicio de gestión de jornadas.
  */
 @Service
 public class JornadaServiceImpl implements JornadaService {
@@ -45,9 +45,20 @@ public class JornadaServiceImpl implements JornadaService {
 	private JornadaMapper jornadaMapper;
 	
 	/**
-     * Encuentra todas las jornadas.
+     * Constructor de la clase JornadaServiceImpl.
      *
-     * @return una lista de DTOs de jornadas.
+     * @param jornadaRepository el repositorio de jornadas
+     * @param jornadaMapper el mapper de jornadas
+     */
+    public JornadaServiceImpl(JornadaRepository jornadaRepository, JornadaMapper jornadaMapper) {
+        this.jornadaRepository = jornadaRepository;
+        this.jornadaMapper = jornadaMapper;
+    }
+	
+    /**
+     * Obtiene todas las jornadas.
+     *
+     * @return una lista de objetos JornadaDTO
      */
 	@Override
 	@Transactional
@@ -58,10 +69,10 @@ public class JornadaServiceImpl implements JornadaService {
     }
     
 	/**
-     * Encuentra una jornada
+     * Obtiene una jornada por su ID.
      *
-     * @param id de la jornada (Long).
-     * @return DTO de la jornada, si la encuentra.
+     * @param id el ID de la jornada
+     * @return un Optional con el objeto JornadaDTO si se encuentra
      */
     @Override
     @Transactional
@@ -70,10 +81,10 @@ public class JornadaServiceImpl implements JornadaService {
     }
     
     /**
-     * Encuentra jornadas de un campeonato
+     * Obtiene las jornadas de un campeonato específico.
      *
-     * @param campeonatoId (Long)
-     * @return una lista de DTOs de jornadas.
+     * @param campeonatoId el ID del campeonato
+     * @return una lista de objetos JornadaDTO
      */
     @Override
     @Transactional
@@ -84,9 +95,9 @@ public class JornadaServiceImpl implements JornadaService {
     }
     
     /**
-     * Borra una jornada
+     * Elimina una jornada por su ID.
      *
-     * @param Long id
+     * @param id el ID de la jornada
      */
     @Override
     @Transactional
@@ -95,10 +106,11 @@ public class JornadaServiceImpl implements JornadaService {
     }
     
     /**
-     * Crea una jornada
+     * Crea una nueva jornada.
      *
-     * @param Long campeonatoId, LocalDate fechaInicio
-     * @return DTO de la jornada creada.
+     * @param campeonatoId el ID del campeonato
+     * @param fechaInicio la fecha de inicio de la jornada
+     * @return el objeto JornadaDTO creado
      */
     @Override
     @Transactional
@@ -136,10 +148,11 @@ public class JornadaServiceImpl implements JornadaService {
     }
     
     /**
-     * Genera los partidos de una jornada
+     * Genera los partidos para una jornada.
      *
-     * @param Lista de inscripciones, número de partidos a generar (int).
-     * @return Lista de partidos generados.
+     * @param inscripciones la lista de inscripciones
+     * @param numPartidos el número de partidos a generar
+     * @return una lista de objetos Partido
      */
     @Transactional
     private List<Partido> generarPartidos(List<Inscripcion> inscripciones, int numPartidos) {

@@ -27,13 +27,25 @@ public class JornadaController {
     @Autowired
     private JornadaService jornadaService;
 
+    /**
+     * Crea una nueva jornada en un campeonato
+     * 
+     * @param campeonatoId ID del campeonato
+     * @param fechaInicio fecha de inicio de la jornada
+     * @return objeto DTO de la jornada creada
+     */
     @Operation(summary = "Crear jornada de un campeonato")
     @PostMapping
     public ResponseEntity<JornadaDTO> createJornada(@RequestParam Long campeonatoId, @RequestParam LocalDate fechaInicio) {
         JornadaDTO jornada = jornadaService.createJornada(campeonatoId, fechaInicio);
         return ResponseEntity.ok(jornada);
     }
-
+    
+    /**
+     * Obtiene todas las jornadas
+     * 
+     * @return Lista de objetos DTO de jornada
+     */
     @Operation(summary = "Obtener todas las jornadas")
     @GetMapping
     public ResponseEntity<List<JornadaDTO>> getAllJornadas() {

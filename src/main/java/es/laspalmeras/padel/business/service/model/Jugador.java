@@ -18,6 +18,9 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+/**
+ * Representa a un jugador registrado en el Club de Padel
+ */
 @SuppressWarnings("serial")
 @Getter
 @Setter

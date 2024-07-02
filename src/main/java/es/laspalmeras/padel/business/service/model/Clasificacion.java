@@ -17,6 +17,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+/**
+ * Representa la clasificación de un jugador en un campeonato.
+ */
 @SuppressWarnings("serial")
 @Data
 @Getter

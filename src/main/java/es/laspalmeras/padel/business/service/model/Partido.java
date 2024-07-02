@@ -24,6 +24,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+/**
+ * Representa a un partido.
+ */
 @SuppressWarnings("serial")
 @Getter
 @Setter
