@@ -13,8 +13,8 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-07-01T09:34:42+0200",
-    comments = "version: 1.5.2.Final, compiler: Eclipse JDT (IDE) 3.38.0.v20240524-2033, environment: Java 21.0.3 (Eclipse Adoptium)"
+    date = "2024-07-02T10:16:11+0200",
+    comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.3 (Eclipse Adoptium)"
 )
 @Component
 public class JornadaMapperImpl implements JornadaMapper {
@@ -31,10 +31,10 @@ public class JornadaMapperImpl implements JornadaMapper {
         JornadaDTO jornadaDTO = new JornadaDTO();
 
         jornadaDTO.setCampeonatoId( jornadaCampeonatoId( jornada ) );
-        jornadaDTO.setFechaInicio( jornada.getFechaInicio() );
         jornadaDTO.setId( jornada.getId() );
         jornadaDTO.setNumero( jornada.getNumero() );
-        jornadaDTO.setPartidos( partidoListToPartidoDTOList( jornada.getPartidos() ) );
+        jornadaDTO.setFechaInicio( jornada.getFechaInicio() );
+        jornadaDTO.setPartidos( toPartidoDTOs( jornada.getPartidos() ) );
 
         return jornadaDTO;
     }
@@ -48,12 +48,40 @@ public class JornadaMapperImpl implements JornadaMapper {
         Jornada jornada = new Jornada();
 
         jornada.setCampeonato( jornadaDTOToCampeonato( jornadaDTO ) );
-        jornada.setFechaInicio( jornadaDTO.getFechaInicio() );
         jornada.setId( jornadaDTO.getId() );
         jornada.setNumero( jornadaDTO.getNumero() );
-        jornada.setPartidos( partidoDTOListToPartidoList( jornadaDTO.getPartidos() ) );
+        jornada.setFechaInicio( jornadaDTO.getFechaInicio() );
+        jornada.setPartidos( toPartidos( jornadaDTO.getPartidos() ) );
 
         return jornada;
+    }
+
+    @Override
+    public List<PartidoDTO> toPartidoDTOs(List<Partido> partidos) {
+        if ( partidos == null ) {
+            return null;
+        }
+
+        List<PartidoDTO> list = new ArrayList<PartidoDTO>( partidos.size() );
+        for ( Partido partido : partidos ) {
+            list.add( partidoMapper.toDto( partido ) );
+        }
+
+        return list;
+    }
+
+    @Override
+    public List<Partido> toPartidos(List<PartidoDTO> partidoDTOs) {
+        if ( partidoDTOs == null ) {
+            return null;
+        }
+
+        List<Partido> list = new ArrayList<Partido>( partidoDTOs.size() );
+        for ( PartidoDTO partidoDTO : partidoDTOs ) {
+            list.add( partidoMapper.toEntity( partidoDTO ) );
+        }
+
+        return list;
     }
 
     private Long jornadaCampeonatoId(Jornada jornada) {
@@ -71,19 +99,6 @@ public class JornadaMapperImpl implements JornadaMapper {
         return id;
     }
 
-    protected List<PartidoDTO> partidoListToPartidoDTOList(List<Partido> list) {
-        if ( list == null ) {
-            return null;
-        }
-
-        List<PartidoDTO> list1 = new ArrayList<PartidoDTO>( list.size() );
-        for ( Partido partido : list ) {
-            list1.add( partidoMapper.toDto( partido ) );
-        }
-
-        return list1;
-    }
-
     protected Campeonato jornadaDTOToCampeonato(JornadaDTO jornadaDTO) {
         if ( jornadaDTO == null ) {
             return null;
@@ -94,18 +109,5 @@ public class JornadaMapperImpl implements JornadaMapper {
         campeonato.setId( jornadaDTO.getCampeonatoId() );
 
         return campeonato;
-    }
-
-    protected List<Partido> partidoDTOListToPartidoList(List<PartidoDTO> list) {
-        if ( list == null ) {
-            return null;
-        }
-
-        List<Partido> list1 = new ArrayList<Partido>( list.size() );
-        for ( PartidoDTO partidoDTO : list ) {
-            list1.add( partidoMapper.toEntity( partidoDTO ) );
-        }
-
-        return list1;
     }
 }

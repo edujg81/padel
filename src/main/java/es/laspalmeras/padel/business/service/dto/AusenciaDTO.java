@@ -22,7 +22,9 @@ public class AusenciaDTO {
     public Ausencia toEntity() {
         Ausencia ausencia = new Ausencia();
         ausencia.setId(id);
-        // Aquí se deberían setear los objetos completos de Partido, Ausente y Sustituto si es necesario
+        ausencia.getPartido().setId(partidoId);
+        ausencia.getAusente().setId(ausenteId);
+        ausencia.getSustituto().setId(sustitutoId);
         return ausencia;
     }
 }

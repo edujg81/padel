@@ -9,8 +9,8 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-07-01T09:34:42+0200",
-    comments = "version: 1.5.2.Final, compiler: Eclipse JDT (IDE) 3.38.0.v20240524-2033, environment: Java 21.0.3 (Eclipse Adoptium)"
+    date = "2024-07-02T10:16:12+0200",
+    comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.3 (Eclipse Adoptium)"
 )
 @Component
 public class PartidoMapperImpl implements PartidoMapper {
@@ -28,18 +28,18 @@ public class PartidoMapperImpl implements PartidoMapper {
         partidoDTO.setEquipo1Jugador2Id( partidoEquipo1Jugador2Id( partido ) );
         partidoDTO.setEquipo2Jugador1Id( partidoEquipo2Jugador1Id( partido ) );
         partidoDTO.setEquipo2Jugador2Id( partidoEquipo2Jugador2Id( partido ) );
-        partidoDTO.setEquipoGanador( partido.getEquipoGanador() );
-        partidoDTO.setFecha( partido.getFecha() );
         partidoDTO.setId( partido.getId() );
-        partidoDTO.setJuegosGanadosEquipo1Set1( partido.getJuegosGanadosEquipo1Set1() );
-        partidoDTO.setJuegosGanadosEquipo1Set2( partido.getJuegosGanadosEquipo1Set2() );
-        partidoDTO.setJuegosGanadosEquipo1Set3( partido.getJuegosGanadosEquipo1Set3() );
-        partidoDTO.setJuegosGanadosEquipo2Set1( partido.getJuegosGanadosEquipo2Set1() );
-        partidoDTO.setJuegosGanadosEquipo2Set2( partido.getJuegosGanadosEquipo2Set2() );
-        partidoDTO.setJuegosGanadosEquipo2Set3( partido.getJuegosGanadosEquipo2Set3() );
+        partidoDTO.setFecha( partido.getFecha() );
         partidoDTO.setPista( partido.getPista() );
-        partidoDTO.setRegistrado( partido.getRegistrado() );
         partidoDTO.setResultado( partido.getResultado() );
+        partidoDTO.setEquipoGanador( partido.getEquipoGanador() );
+        partidoDTO.setRegistrado( partido.getRegistrado() );
+        partidoDTO.setJuegosGanadosEquipo1Set1( partido.getJuegosGanadosEquipo1Set1() );
+        partidoDTO.setJuegosGanadosEquipo2Set1( partido.getJuegosGanadosEquipo2Set1() );
+        partidoDTO.setJuegosGanadosEquipo1Set2( partido.getJuegosGanadosEquipo1Set2() );
+        partidoDTO.setJuegosGanadosEquipo2Set2( partido.getJuegosGanadosEquipo2Set2() );
+        partidoDTO.setJuegosGanadosEquipo1Set3( partido.getJuegosGanadosEquipo1Set3() );
+        partidoDTO.setJuegosGanadosEquipo2Set3( partido.getJuegosGanadosEquipo2Set3() );
         partidoDTO.setSetsGanadosEquipo1( partido.getSetsGanadosEquipo1() );
         partidoDTO.setSetsGanadosEquipo2( partido.getSetsGanadosEquipo2() );
 
@@ -59,18 +59,18 @@ public class PartidoMapperImpl implements PartidoMapper {
         partido.setEquipo1Jugador2( partidoDTOToJugador1( partidoDTO ) );
         partido.setEquipo2Jugador1( partidoDTOToJugador2( partidoDTO ) );
         partido.setEquipo2Jugador2( partidoDTOToJugador3( partidoDTO ) );
-        partido.setEquipoGanador( partidoDTO.getEquipoGanador() );
-        partido.setFecha( partidoDTO.getFecha() );
         partido.setId( partidoDTO.getId() );
-        partido.setJuegosGanadosEquipo1Set1( partidoDTO.getJuegosGanadosEquipo1Set1() );
-        partido.setJuegosGanadosEquipo1Set2( partidoDTO.getJuegosGanadosEquipo1Set2() );
-        partido.setJuegosGanadosEquipo1Set3( partidoDTO.getJuegosGanadosEquipo1Set3() );
-        partido.setJuegosGanadosEquipo2Set1( partidoDTO.getJuegosGanadosEquipo2Set1() );
-        partido.setJuegosGanadosEquipo2Set2( partidoDTO.getJuegosGanadosEquipo2Set2() );
-        partido.setJuegosGanadosEquipo2Set3( partidoDTO.getJuegosGanadosEquipo2Set3() );
+        partido.setFecha( partidoDTO.getFecha() );
         partido.setPista( partidoDTO.getPista() );
-        partido.setRegistrado( partidoDTO.getRegistrado() );
         partido.setResultado( partidoDTO.getResultado() );
+        partido.setEquipoGanador( partidoDTO.getEquipoGanador() );
+        partido.setRegistrado( partidoDTO.getRegistrado() );
+        partido.setJuegosGanadosEquipo1Set1( partidoDTO.getJuegosGanadosEquipo1Set1() );
+        partido.setJuegosGanadosEquipo2Set1( partidoDTO.getJuegosGanadosEquipo2Set1() );
+        partido.setJuegosGanadosEquipo1Set2( partidoDTO.getJuegosGanadosEquipo1Set2() );
+        partido.setJuegosGanadosEquipo2Set2( partidoDTO.getJuegosGanadosEquipo2Set2() );
+        partido.setJuegosGanadosEquipo1Set3( partidoDTO.getJuegosGanadosEquipo1Set3() );
+        partido.setJuegosGanadosEquipo2Set3( partidoDTO.getJuegosGanadosEquipo2Set3() );
         partido.setSetsGanadosEquipo1( partidoDTO.getSetsGanadosEquipo1() );
         partido.setSetsGanadosEquipo2( partidoDTO.getSetsGanadosEquipo2() );
 

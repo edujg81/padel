@@ -1,13 +1,11 @@
 package es.laspalmeras.padel.business.service.dto;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
 import java.time.LocalDate;
 import java.util.List;
 
+import lombok.Data;
+
 @Data
-@NoArgsConstructor
 public class PartidoDTO {
     private Long id;
     private LocalDate fecha;

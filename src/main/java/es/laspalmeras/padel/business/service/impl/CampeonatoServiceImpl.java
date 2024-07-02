@@ -15,6 +15,9 @@ import es.laspalmeras.padel.business.service.model.Campeonato;
 import es.laspalmeras.padel.integration.repository.CampeonatoRepository;
 import es.laspalmeras.padel.presentation.config.exception.ResourceNotFoundException;
 
+/**
+ * Servicio para la gestión de campeonatos.
+ */
 @Service
 public class CampeonatoServiceImpl implements CampeonatoService{
 	
@@ -24,6 +27,12 @@ public class CampeonatoServiceImpl implements CampeonatoService{
     @Autowired
     private CampeonatoMapper campeonatoMapper;
 	
+    /**
+     * Guarda un campeonato.
+     * 
+     * @param campeonato el campeonato a guardar.
+     * @return el campeonato guardado.
+     */
 	@Override
 	@Transactional
 	public Campeonato saveCampeonato(Campeonato campeonato) {
@@ -50,6 +59,12 @@ public class CampeonatoServiceImpl implements CampeonatoService{
 		campeonatoRepository.deleteById(id);
 	}
 
+	/**
+	 * Crea un nuevo campeonato.
+	 * @param campeonatoDTO Datos del campeonato a crear.
+	 * @return CampeonatoDTO del campeonato creado.
+	 * @throws IllegalStateException si ya existe un campeonato activo para esta categoría y división en el mismo año.
+	 */
 	@Override
 	@Transactional
 	public CampeonatoDTO createCampeonato(CampeonatoDTO campeonatoDTO) {
