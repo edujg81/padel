@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>es.laspalmeras</groupId>
 	<artifactId>padel</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0-STABLE</version>
 	<name>padel</name>
 	<description>Gestión de campeonatos de padel</description>
 	<url/>
@@ -28,6 +28,7 @@
 	</scm>
 	<properties>
 		<java.version>17</java.version>
+		<org.mapstruct.version>1.5.5.Final</org.mapstruct.version>
 	</properties>
 	
 	<dependencies>
@@ -98,13 +99,7 @@
 		<dependency>
 	        <groupId>org.mapstruct</groupId>
 	        <artifactId>mapstruct</artifactId>
-	        <version>1.5.5.Final</version>
-	    </dependency>
-	    <dependency>
-	        <groupId>org.mapstruct</groupId>
-	        <artifactId>mapstruct-processor</artifactId>
-	        <version>1.5.5.Final</version>
-	        <scope>provided</scope>
+	        <version>${org.mapstruct.version}</version>
 	    </dependency>
 	</dependencies>
 
@@ -127,6 +122,15 @@
 	            <artifactId>maven-compiler-plugin</artifactId>
 	            <version>3.8.1</version><!--$NO-MVN-MAN-VER$-->
 	            <configuration>
+	            	<source>1.8</source>
+	                <target>1.8</target>
+	                <annotationProcessorPaths>
+	                    <path>
+	                        <groupId>org.mapstruct</groupId>
+	                        <artifactId>mapstruct-processor</artifactId>
+	                        <version>${org.mapstruct.version}</version>
+	                    </path>
+	                </annotationProcessorPaths>
             	</configuration>
         	</plugin>
 		</plugins>

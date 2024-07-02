@@ -9,8 +9,8 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-07-02T10:16:11+0200",
-    comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.3 (Eclipse Adoptium)"
+    date = "2024-07-02T10:25:11+0200",
+    comments = "version: 1.5.5.Final, compiler: Eclipse JDT (IDE) 3.38.0.v20240524-2033, environment: Java 21.0.3 (Eclipse Adoptium)"
 )
 @Component
 public class ClasificacionMapperImpl implements ClasificacionMapper {
@@ -26,15 +26,15 @@ public class ClasificacionMapperImpl implements ClasificacionMapper {
         clasificacionDTO.setCampeonatoId( clasificacionCampeonatoId( clasificacion ) );
         clasificacionDTO.setJugadorId( clasificacionJugadorId( clasificacion ) );
         clasificacionDTO.setId( clasificacion.getId() );
-        clasificacionDTO.setPosicion( clasificacion.getPosicion() );
-        clasificacionDTO.setPuntos( clasificacion.getPuntos() );
-        clasificacionDTO.setPartidosJugados( clasificacion.getPartidosJugados() );
-        clasificacionDTO.setPartidosGanados( clasificacion.getPartidosGanados() );
-        clasificacionDTO.setPartidosPerdidos( clasificacion.getPartidosPerdidos() );
-        clasificacionDTO.setSetsGanados( clasificacion.getSetsGanados() );
-        clasificacionDTO.setSetsPerdidos( clasificacion.getSetsPerdidos() );
         clasificacionDTO.setJuegosGanados( clasificacion.getJuegosGanados() );
         clasificacionDTO.setJuegosPerdidos( clasificacion.getJuegosPerdidos() );
+        clasificacionDTO.setPartidosGanados( clasificacion.getPartidosGanados() );
+        clasificacionDTO.setPartidosJugados( clasificacion.getPartidosJugados() );
+        clasificacionDTO.setPartidosPerdidos( clasificacion.getPartidosPerdidos() );
+        clasificacionDTO.setPosicion( clasificacion.getPosicion() );
+        clasificacionDTO.setPuntos( clasificacion.getPuntos() );
+        clasificacionDTO.setSetsGanados( clasificacion.getSetsGanados() );
+        clasificacionDTO.setSetsPerdidos( clasificacion.getSetsPerdidos() );
 
         return clasificacionDTO;
     }
@@ -50,15 +50,15 @@ public class ClasificacionMapperImpl implements ClasificacionMapper {
         clasificacion.setCampeonato( clasificacionDTOToCampeonato( clasificacionDTO ) );
         clasificacion.setJugador( clasificacionDTOToJugador( clasificacionDTO ) );
         clasificacion.setId( clasificacionDTO.getId() );
-        clasificacion.setPosicion( clasificacionDTO.getPosicion() );
-        clasificacion.setPuntos( clasificacionDTO.getPuntos() );
-        clasificacion.setPartidosJugados( clasificacionDTO.getPartidosJugados() );
-        clasificacion.setPartidosGanados( clasificacionDTO.getPartidosGanados() );
-        clasificacion.setPartidosPerdidos( clasificacionDTO.getPartidosPerdidos() );
-        clasificacion.setSetsGanados( clasificacionDTO.getSetsGanados() );
-        clasificacion.setSetsPerdidos( clasificacionDTO.getSetsPerdidos() );
         clasificacion.setJuegosGanados( clasificacionDTO.getJuegosGanados() );
         clasificacion.setJuegosPerdidos( clasificacionDTO.getJuegosPerdidos() );
+        clasificacion.setPartidosGanados( clasificacionDTO.getPartidosGanados() );
+        clasificacion.setPartidosJugados( clasificacionDTO.getPartidosJugados() );
+        clasificacion.setPartidosPerdidos( clasificacionDTO.getPartidosPerdidos() );
+        clasificacion.setPosicion( clasificacionDTO.getPosicion() );
+        clasificacion.setPuntos( clasificacionDTO.getPuntos() );
+        clasificacion.setSetsGanados( clasificacionDTO.getSetsGanados() );
+        clasificacion.setSetsPerdidos( clasificacionDTO.getSetsPerdidos() );
 
         return clasificacion;
     }
