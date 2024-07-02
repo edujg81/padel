@@ -1,0 +1,38 @@
+name: Generate Documentation
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  generate-docs:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up JDK 17
+      uses: actions/setup-java@v2
+      with:
+        java-version: '17'
+
+    - name: Generate Javadoc
+      run: mvn javadoc:javadoc
+
+    - name: Generate OpenAPI documentation
+      run: mvn spring-boot:run &
+      run: sleep 60 && curl http://localhost:8080/v3/api-docs -o openapi.json
+
+    - name: Upload documentation artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: javadoc
+        path: target/site/apidocs
+
+    - name: Upload OpenAPI spec
+      uses: actions/upload-artifact@v2
+      with:
+        name: openapi
+        path: openapi.json

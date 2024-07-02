@@ -23,6 +23,9 @@ import es.laspalmeras.padel.integration.repository.PartidoRepository;
 import es.laspalmeras.padel.presentation.config.exception.ResourceNotFoundException;
 import jakarta.transaction.Transactional;
 
+/**
+ * Servicio para gestionar las jornadas de un campeonato.
+ */
 @Service
 public class JornadaServiceImpl implements JornadaService {
 
@@ -40,7 +43,12 @@ public class JornadaServiceImpl implements JornadaService {
 	
 	@Autowired
 	private JornadaMapper jornadaMapper;
-
+	
+	/**
+     * Encuentra todas las jornadas.
+     *
+     * @return una lista de DTOs de jornadas.
+     */
 	@Override
 	@Transactional
     public List<JornadaDTO> findAllJornadas() {
@@ -49,12 +57,24 @@ public class JornadaServiceImpl implements JornadaService {
     			.collect(Collectors.toList());
     }
     
+	/**
+     * Encuentra una jornada
+     *
+     * @param id de la jornada (Long).
+     * @return DTO de la jornada, si la encuentra.
+     */
     @Override
     @Transactional
     public Optional<JornadaDTO> findJornadaById(Long id) {
         return jornadaRepository.findById(id).map(jornadaMapper::toDto);
     }
-
+    
+    /**
+     * Encuentra jornadas de un campeonato
+     *
+     * @param campeonatoId (Long)
+     * @return una lista de DTOs de jornadas.
+     */
     @Override
     @Transactional
     public List<JornadaDTO> findJornadasByCampeonato(Long campeonatoId) {
@@ -62,13 +82,24 @@ public class JornadaServiceImpl implements JornadaService {
         		.map(jornadaMapper::toDto)
         		.collect(Collectors.toList());
     }
-
+    
+    /**
+     * Borra una jornada
+     *
+     * @param Long id
+     */
     @Override
     @Transactional
     public void deleteJornada(Long id) {
         jornadaRepository.deleteById(id);
     }
     
+    /**
+     * Crea una jornada
+     *
+     * @param Long campeonatoId, LocalDate fechaInicio
+     * @return DTO de la jornada creada.
+     */
     @Override
     @Transactional
     public JornadaDTO createJornada(Long campeonatoId, LocalDate fechaInicio) {
@@ -104,6 +135,12 @@ public class JornadaServiceImpl implements JornadaService {
         return jornadaMapper.toDto(savedJornada);
     }
     
+    /**
+     * Genera los partidos de una jornada
+     *
+     * @param Lista de inscripciones, número de partidos a generar (int).
+     * @return Lista de partidos generados.
+     */
     @Transactional
     private List<Partido> generarPartidos(List<Inscripcion> inscripciones, int numPartidos) {
         List<Jugador> jugadores = inscripciones.stream()

@@ -21,7 +21,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
 @RequestMapping("/jornadas")
-@Tag(name = "Gestión de Jornada", description = "Operaciones pertenecientes a jornadas en Club de Padel")
+@Tag(name = "Jornadas", description = "Gestión de las jornadas de un campeonato")
 public class JornadaController {
 
     @Autowired

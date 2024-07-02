@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>es.laspalmeras</groupId>
 	<artifactId>padel</artifactId>
-	<version>1.0.0-STABLE</version>
+	<version>1.0.1-SNAPSHOT</version>
 	<name>padel</name>
 	<description>Gestión de campeonatos de padel</description>
 	<url/>

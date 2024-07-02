@@ -16,6 +16,9 @@ import es.laspalmeras.padel.integration.repository.InscripcionRepository;
 import es.laspalmeras.padel.integration.repository.JugadorRepository;
 import es.laspalmeras.padel.presentation.config.exception.ResourceNotFoundException;
 
+/**
+ * Servicio para gestionar las inscripciones.
+ */
 @Service
 public class InscripcionServiceImpl implements InscripcionService{
 
@@ -28,6 +31,15 @@ public class InscripcionServiceImpl implements InscripcionService{
     @Autowired
     private JugadorRepository jugadorRepository;
     
+    /**
+     * Inscribir un jugador en un campeonato.
+     *
+     * @param campeonatoId el id del campeonato
+     * @param jugadorId el id del jugador
+     * @return la inscripción creada
+     * @throws ResourceNotFoundException si el campeonato o el jugador no se encuentran
+     * @throws IllegalArgumentException si el jugador no puede ser inscrito
+     */
     @Override
     @Transactional
     public Inscripcion inscribirJugador(Long campeonatoId, Long jugadorId) {

@@ -1,0 +1,10 @@
+es.laspalmeras.padel
+es.laspalmeras.padel.business.service
+es.laspalmeras.padel.business.service.dto
+es.laspalmeras.padel.business.service.impl
+es.laspalmeras.padel.business.service.mapper
+es.laspalmeras.padel.business.service.model
+es.laspalmeras.padel.config
+es.laspalmeras.padel.integration.repository
+es.laspalmeras.padel.presentation.config.exception
+es.laspalmeras.padel.presentation.controller
