@@ -17,13 +17,11 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Configurar JDK 17
-        uses: actions/setup-java@v2
+        uses: actions/setup-java@v2.5.0
         with:
           java-version: 17
           distribution: 'zulu'
-
-      - name: Compilar con Maven
-        run: mvn clean package
+          server-id: github
 
       - name: Generar Javadoc
         run: mvn javadoc:javadoc
