@@ -1,4 +1,4 @@
-name: Documentation Workflow
+name: Generate Documentation
 
 on:
   push:
@@ -20,6 +20,11 @@ jobs:
         uses: actions/setup-java@v2
         with:
           java-version: 17
+      
+      - name: Generate Documentation
+        uses: some-action/some-action
+        with:
+          distribution: ${{ github.event.inputs.distribution }}
 
       - name: Build with Maven
         run: mvn clean package
