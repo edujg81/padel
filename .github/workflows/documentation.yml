@@ -1,4 +1,4 @@
-name: Generate Documentation
+name: Generar Documentación
 
 on:
   push:
@@ -9,30 +9,25 @@ on:
       - main
 
 jobs:
-  generate-docs:
+  generar-documentacion:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Repository
+      - name: Obtener Repositorio
         uses: actions/checkout@v2
 
-      - name: Set up JDK 17
+      - name: Configurar JDK 17
         uses: actions/setup-java@v2
         with:
           java-version: 17
-      
-      - name: Generate Documentation
-        uses: some-action/some-action
-        with:
-          distribution: ${{ github.event.inputs.distribution }}
 
-      - name: Build with Maven
+      - name: Compilar con Maven
         run: mvn clean package
 
-      - name: Generate Javadoc
+      - name: Generar Javadoc
         run: mvn javadoc:javadoc
 
-      - name: Deploy Documentation
+      - name: Desplegar Documentación
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
