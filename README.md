@@ -7,4 +7,5 @@ Padel Las Palmeras es una aplicación para gestionar campeonatos de padel, inclu
 1. Clona el repositorio:
    ```bash
    git clone https://github.com/edujg81/laspalmeras-padel.git# padel
-Aplicación para gestionar campeonatos de padel
+
+

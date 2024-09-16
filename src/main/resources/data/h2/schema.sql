@@ -32,7 +32,7 @@ CREATE TABLE INSCRIPCION (
     campeonato_id BIGINT,
     jugador_id BIGINT,
     FOREIGN KEY (campeonato_id) REFERENCES CAMPEONATO(id),
-    FOREIGN KEY (jugador_id) REFERENCES JUGADOR(id),
+    FOREIGN KEY (jugador_id) REFERENCES JUGADOR(id) ON DELETE CASCADE,
     UNIQUE (campeonato_id, jugador_id)
 );
 

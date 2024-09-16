@@ -61,14 +61,14 @@ public class JugadorController {
 	}
 	
 	@Operation(summary = "Dar de baja un jugador por ID")
-	@PostMapping("/baja/{id}")
+	@PutMapping("/baja/{id}")
     public ResponseEntity<Void> darDeBajaJugadorPorId(@PathVariable Long id) {
         jugadorService.darDeBajaJugadorPorId(id);
         return ResponseEntity.noContent().build();
     }
 
 	@Operation(summary = "Dar de baja un jugador por DNI")
-    @PostMapping("/baja/dni/{dni}")
+    @PutMapping("/baja/dni/{dni}")
     public ResponseEntity<Void> darDeBajaJugadorPorDni(@PathVariable String dni) {
         jugadorService.darDeBajaJugadorPorDni(dni);
         return ResponseEntity.noContent().build();
