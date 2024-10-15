@@ -39,10 +39,10 @@ public class JugadorServiceImpl implements JugadorService{
 	@Override
 	@Transactional
 	public void deleteJugador(Long id) {
-		//jugadorRepository.deleteById(id);
-		Jugador jugador = jugadorRepository.findById(id)
+		jugadorRepository.deleteById(id);
+		/*Jugador jugador = jugadorRepository.findById(id)
         		.orElseThrow(() -> new ResourceNotFoundException("Jugador no encontrado"));
-		darDeBajaJugador(jugador);
+		darDeBajaJugador(jugador);*/
 	}
 
 	@Override

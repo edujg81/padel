@@ -1,3 +1,6 @@
+INSERT INTO jugador (id, dni, nombre_completo, telefono, email, sexo, estado, lesionado, fecha_alta, fecha_baja) VALUES
+(-1, '99999999A', 'Desconocido/a', null, null, null, 'Alta', false, '2024-01-01', null);
+
 -- Insertar jugadores de ejemplo
 INSERT INTO jugador (dni, nombre_completo, telefono, email, sexo, estado, lesionado, fecha_alta, fecha_baja) VALUES
 ('12345678A', 'Juan Pérez', '600000001', 'juan.perez@example.com', 'Masculino', 'Alta', false, '2024-01-01', null),
