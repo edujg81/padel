@@ -34,9 +34,16 @@ public class InscripcionController {
     }
 
     @Operation(summary = "Desinscribir jugador de campeonato")
+    @DeleteMapping("/{campeonatoId}/{jugadorId}")
+    public ResponseEntity<Void> desinscribirJugador(@PathVariable Long campeonatoId, @PathVariable Long jugadorId) {
+        inscripcionService.desinscribirJugador(campeonatoId, jugadorId);
+        return ResponseEntity.noContent().build();
+    }
+    
+    @Operation(summary = "Borrar inscripción por ID")
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> desinscribirJugador(@PathVariable Long id) {
-        inscripcionService.desinscribirJugador(id);
+    public ResponseEntity<Void> deleteInscripcion(@PathVariable Long id) {
+        inscripcionService.deleteInscripcion(id);
         return ResponseEntity.noContent().build();
     }
 

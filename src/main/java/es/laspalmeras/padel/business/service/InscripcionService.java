@@ -15,7 +15,7 @@ public interface InscripcionService {
     
     Inscripcion inscribirJugador(Long campeonatoId, Long jugadorId);
 
-    void desinscribirJugador(Long inscripcionId);
+    void desinscribirJugador(Long campeonatoId, Long jugadorId);
 
     Optional<Inscripcion> findInscripcionById(Long id);
 

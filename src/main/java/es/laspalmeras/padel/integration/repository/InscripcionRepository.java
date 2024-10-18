@@ -1,6 +1,7 @@
 package es.laspalmeras.padel.integration.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -19,5 +20,7 @@ public interface InscripcionRepository extends JpaRepository<Inscripcion, Long> 
     List<Inscripcion> findByJugadorId(Long jugadorId);
 
 	List<Inscripcion> findByJugadorIdAndCampeonatoYearAndCampeonatoCategoria(Long jugadorId, Integer year, String categoria);
+
+	Optional<Inscripcion> findByCampeonatoIdAndJugadorId(Long campeonatoId, Long jugadorId);
 	
 }

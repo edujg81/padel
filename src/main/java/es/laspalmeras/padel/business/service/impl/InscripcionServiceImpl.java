@@ -64,9 +64,9 @@ public class InscripcionServiceImpl implements InscripcionService{
      */
     @Override
     @Transactional
-    public void desinscribirJugador(Long inscripcionId) {
-        Inscripcion inscripcion = inscripcionRepository.findById(inscripcionId)
-                .orElseThrow(() -> new ResourceNotFoundException("Inscripción no encontrada con id: " + inscripcionId));
+    public void desinscribirJugador(Long campeonatoId, Long jugadorId) {
+        Inscripcion inscripcion = inscripcionRepository.findByCampeonatoIdAndJugadorId(campeonatoId, jugadorId)
+                .orElseThrow(() -> new ResourceNotFoundException("Inscripción no encontrada con id de campeonato: " + campeonatoId + " e id de jugador: " + jugadorId));
         inscripcionRepository.delete(inscripcion);
     }
     
