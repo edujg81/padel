@@ -11,7 +11,7 @@ import lombok.Data;
 
 @Data
 public class JugadorDTO {
-    private Long id;
+	private Long id;
 
     @NotBlank
     @Size(max = 9)
@@ -41,4 +41,9 @@ public class JugadorDTO {
 
     private LocalDate fechaAlta;
     private LocalDate fechaBaja;
+    
+    public JugadorDTO(Long id, String nombreCompleto) {
+    	this.id = id;
+        this.nombreCompleto = nombreCompleto;
+	}
 }

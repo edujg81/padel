@@ -13,7 +13,9 @@ import org.springframework.transaction.annotation.Transactional;
 import es.laspalmeras.padel.business.service.JugadorService;
 import es.laspalmeras.padel.business.service.dto.JugadorDTO;
 import es.laspalmeras.padel.business.service.mapper.JugadorMapper;
+import es.laspalmeras.padel.business.service.model.Campeonato;
 import es.laspalmeras.padel.business.service.model.Jugador;
+import es.laspalmeras.padel.integration.repository.CampeonatoRepository;
 import es.laspalmeras.padel.integration.repository.JugadorRepository;
 import es.laspalmeras.padel.presentation.config.exception.ResourceNotFoundException;
 
@@ -22,6 +24,9 @@ public class JugadorServiceImpl implements JugadorService{
 
 	@Autowired
     private JugadorRepository jugadorRepository;
+	
+	@Autowired
+	private CampeonatoRepository campeonatoRepository;
 	
 	@Autowired
 	private JugadorMapper jugadorMapper;
@@ -126,4 +131,25 @@ public class JugadorServiceImpl implements JugadorService{
 		Optional<Jugador> jugador = jugadorRepository.findById(id);
         return Optional.ofNullable(jugador.map(jugadorMapper::toDto).orElse(null));
 	}
+
+	@Override
+	public List<JugadorDTO> getJugadoresDisponiblesParaCampeonato(Long campeonatoId) {
+        // Obtener el campeonato por id
+        Optional<Campeonato> campeonato = campeonatoRepository.findById(campeonatoId);
+        
+        // Verificar si el campeonato está presente
+        if (campeonato.isPresent()) {
+        	// Obtener jugadores que no están inscritos en campeonatos activos de la misma categoría y año
+            List<Jugador> jugadoresDisponibles = jugadorRepository.findJugadoresDisponiblesParaCampeonato(
+                    campeonato.get().getCategoria(), campeonato.get().getYear());
+            
+            // Convertir a DTO
+            return jugadoresDisponibles.stream()
+                    .map(jugador -> new JugadorDTO(jugador.getId(), jugador.getNombreCompleto()))
+                    .collect(Collectors.toList());
+        }
+        else {
+        	throw new RuntimeException("Campeonato no encontrado");
+        }
+    }
 }

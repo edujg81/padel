@@ -34,4 +34,6 @@ public interface JugadorService {
 	JugadorDTO saveJugador(JugadorDTO jugadorDTO);
 
 	Optional<JugadorDTO> read(Long id);
+
+	List<JugadorDTO> getJugadoresDisponiblesParaCampeonato(Long campeonatoId);
 }

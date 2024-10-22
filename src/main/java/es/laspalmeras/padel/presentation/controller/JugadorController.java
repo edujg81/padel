@@ -80,4 +80,10 @@ public class JugadorController {
         jugadorService.eliminarJugadoresBajaMasDeCincoAnios();
         return ResponseEntity.noContent().build();
     }
+	
+	@Operation(summary = "Obtener jugadores disponibles para campeonato(ID)")
+    @GetMapping("/disponibles/{campeonatoId}")
+    public List<JugadorDTO> getJugadoresDisponiblesParaCampeonato(@PathVariable Long campeonatoId) {
+		return jugadorService.getJugadoresDisponiblesParaCampeonato(campeonatoId);
+	}
 }
