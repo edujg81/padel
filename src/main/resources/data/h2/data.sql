@@ -38,9 +38,7 @@ INSERT INTO campeonato (anio, categoria, division, estado, activo, puntos_por_vi
 
 -- Insertar inscripciones de ejemplo
 INSERT INTO inscripcion (campeonato_id, jugador_id) VALUES
-(1, 1), (1, 3), (1, 5), (1, 7), (1, 9), (1, 11), (1, 13), (1, 15),
-(2, 2), (2, 4), (2, 6), (2, 8), (2, 10), (2, 12), (2, 14), (2, 16),
-(3, 1), (3, 2), (3, 3), (3, 4), (3, 5), (3, 6), (3, 7), (3, 8);
+(1, 1), (1, 3);
 
 -- Insertar jornadas de ejemplo
 

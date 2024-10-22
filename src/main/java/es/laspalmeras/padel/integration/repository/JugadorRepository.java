@@ -16,7 +16,8 @@ public interface JugadorRepository extends JpaRepository<Jugador, Long> {
 	
 	List<Jugador> findByFechaBajaBeforeAndEstado(LocalDate date, String estado);
 	
-	@Query( "SELECT p FROM Jugador p WHERE p.id > 0 AND p.lesionado = false AND p NOT IN (" +
+	@Query( "SELECT p FROM Jugador p WHERE p.id > 0 AND p.lesionado = false " +
+			"AND (p.sexo = :categoria OR :categoria = 'MIXTO') AND p NOT IN (" +
             "SELECT DISTINCT p FROM Jugador p, Inscripcion i, Campeonato c " +
             "WHERE p = i.jugador AND i.campeonato = c AND c.categoria = :categoria AND c.year = :year AND c.activo = true)")
 	List<Jugador> findJugadoresDisponiblesParaCampeonato(String categoria, int year);
