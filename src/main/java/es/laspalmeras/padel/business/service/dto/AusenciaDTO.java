@@ -3,6 +3,10 @@ package es.laspalmeras.padel.business.service.dto;
 import es.laspalmeras.padel.business.service.model.Ausencia;
 import lombok.Data;
 
+/**
+ * DTO de tabla de ausencias.
+ *
+ */
 @Data
 public class AusenciaDTO {
     private Long id;
