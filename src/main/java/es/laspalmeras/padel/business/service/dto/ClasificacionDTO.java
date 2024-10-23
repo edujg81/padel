@@ -2,6 +2,10 @@ package es.laspalmeras.padel.business.service.dto;
 
 import lombok.Data;
 
+/**
+ * DTO de tabla Clasificacion.
+ *
+ */
 @Data
 public class ClasificacionDTO {
     private Long id;

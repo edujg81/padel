@@ -4,6 +4,10 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import lombok.Data;
 
+/**
+ * DTO de tabla de campeonatos.
+ *
+ */
 @Data
 public class CampeonatoDTO {
     private Long id;
