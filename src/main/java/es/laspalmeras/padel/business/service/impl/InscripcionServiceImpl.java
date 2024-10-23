@@ -58,9 +58,10 @@ public class InscripcionServiceImpl implements InscripcionService{
     }
     
     /**
-     * Elimina una inscripción por su ID.
+     * Elimina la inscripción a un campeonato de un jugador por sus IDs .
      *
-     * @param inscripcionId el ID de la inscripción
+     * @param campeonatoId el ID del campeonato
+     * @param jugadorId el ID del jugador
      */
     @Override
     @Transactional

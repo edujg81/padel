@@ -27,6 +27,8 @@
 		<url/>
 	</scm>
 	<properties>
+    <configuration-showWarnings>true</configuration-showWarnings>
+    <configuration-additionalparam>-Xdoclint:none</configuration-additionalparam>
 		<java.version>17</java.version>
 		<org.mapstruct.version>1.5.5.Final</org.mapstruct.version>
 	</properties>
@@ -135,8 +137,11 @@
         	<plugin>
       			<groupId>org.apache.maven.plugins</groupId>
       			<artifactId>maven-javadoc-plugin</artifactId>
-     			<configuration>
+      			<configuration>
         			<source>17</source>
+        			<!-- No fallar si falta documentación Javadoc -->
+        			<failOnError>false</failOnError>
+        			<additionalJOptions>-Xdoclint:none</additionalJOptions>
       			</configuration>
     		</plugin>
 		</plugins>
