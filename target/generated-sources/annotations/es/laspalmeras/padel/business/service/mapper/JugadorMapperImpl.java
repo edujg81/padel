@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-07-02T12:35:04+0200",
+    date = "2024-10-22T13:29:25+0200",
     comments = "version: 1.5.5.Final, compiler: Eclipse JDT (IDE) 3.38.0.v20240524-2033, environment: Java 21.0.3 (Eclipse Adoptium)"
 )
 @Component
@@ -19,10 +19,15 @@ public class JugadorMapperImpl implements JugadorMapper {
             return null;
         }
 
-        JugadorDTO jugadorDTO = new JugadorDTO();
+        String nombreCompleto = null;
+        Long id = null;
+
+        nombreCompleto = jugador.getNombreCompleto();
+        id = jugador.getId();
+
+        JugadorDTO jugadorDTO = new JugadorDTO( id, nombreCompleto );
 
         jugadorDTO.setDni( jugador.getDni() );
-        jugadorDTO.setNombreCompleto( jugador.getNombreCompleto() );
         jugadorDTO.setTelefono( jugador.getTelefono() );
         jugadorDTO.setEmail( jugador.getEmail() );
         jugadorDTO.setSexo( jugador.getSexo() );
@@ -30,7 +35,6 @@ public class JugadorMapperImpl implements JugadorMapper {
         jugadorDTO.setLesionado( jugador.getLesionado() );
         jugadorDTO.setFechaAlta( jugador.getFechaAlta() );
         jugadorDTO.setFechaBaja( jugador.getFechaBaja() );
-        jugadorDTO.setId( jugador.getId() );
 
         return jugadorDTO;
     }

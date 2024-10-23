@@ -22,4 +22,6 @@ public interface InscripcionService {
     List<Inscripcion> findInscripcionesByCampeonato(Long campeonatoId);
 
     List<Inscripcion> findInscripcionesByJugador(Long jugadorId);
+
+	Optional<Inscripcion> findInscripcionByCampeonatoAndJugador(Long campeonatoId, Long jugadorId);
 }

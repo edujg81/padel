@@ -168,4 +168,15 @@ public class InscripcionServiceImpl implements InscripcionService{
             }
         }
     }
+
+    /**
+     * Obtiene una inscripción por campeonato(ID) y jugador(ID)
+     *
+     * @param campeonatoId el ID del campeonato
+     * @param jugadorId el ID del jugador
+     */
+	@Override
+	public Optional<Inscripcion> findInscripcionByCampeonatoAndJugador(Long campeonatoId, Long jugadorId) {
+		return inscripcionRepository.findByCampeonatoIdAndJugadorId(campeonatoId, jugadorId);
+	}
 }

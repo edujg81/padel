@@ -72,4 +72,12 @@ public class InscripcionController {
     public List<Inscripcion> getInscripcionesByJugador(@PathVariable Long jugadorId) {
         return inscripcionService.findInscripcionesByJugador(jugadorId);
     }
+    
+    @Operation(summary = "Obtener inscripción por campeonato(ID) y jugador(ID)")
+    @GetMapping("/campeonato/{campeonatoId}/jugador/{jugadorId}")
+    public ResponseEntity<Inscripcion> getInscripcionByCampeonatoAndJugador(@PathVariable Long campeonatoId, @PathVariable Long jugadorId) {
+        Inscripcion inscripcion = inscripcionService.findInscripcionByCampeonatoAndJugador(campeonatoId, jugadorId)
+        		.orElseThrow(() -> new ResourceNotFoundException("Inscripción no encontrada para Id de campeonato: " + campeonatoId + " e Id de jugador: " + jugadorId));
+        return ResponseEntity.ok(inscripcion);
+    }
 }
