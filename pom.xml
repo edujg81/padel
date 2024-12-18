@@ -103,6 +103,13 @@
 	        <artifactId>mapstruct</artifactId>
 	        <version>${org.mapstruct.version}</version>
 	    </dependency>
+	    
+	    <!-- Fluent validation -->
+	    <dependency>
+    		<groupId>com.github.mvallim</groupId>
+    		<artifactId>java-fluent-validator</artifactId>
+    		<version>1.10.0</version>
+		</dependency>
 	</dependencies>
 
 	<build>

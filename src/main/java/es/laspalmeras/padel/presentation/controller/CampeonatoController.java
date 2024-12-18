@@ -46,6 +46,7 @@ public class CampeonatoController {
     @GetMapping("/{id}")
     public ResponseEntity<CampeonatoDTO> getCampeonatoById(@PathVariable Long id) {
         Optional<CampeonatoDTO> campeonato = campeonatoService.findCampeonatoById(id);
+    	//CampeonatoDTO campeonato = campeonatoService.findCampeonatoById(id);
         return campeonato.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
     
