@@ -19,7 +19,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
-@RequestMapping("/partidos")
+@RequestMapping("/public/partidos")
 @Tag(name = "Gestión de Partido", description = "Operaciones pertenecientes a partidos en Club de Padel")
 public class PartidoController {
 

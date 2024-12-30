@@ -9,8 +9,8 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-12-30T11:27:54+0100",
-    comments = "version: 1.5.5.Final, compiler: Eclipse JDT (IDE) 3.40.0.v20241112-0530, environment: Java 21.0.5 (Eclipse Adoptium)"
+    date = "2024-12-30T13:14:57+0100",
+    comments = "version: 1.6.3, compiler: Eclipse JDT (IDE) 3.40.0.v20241112-0530, environment: Java 21.0.5 (Eclipse Adoptium)"
 )
 @Component
 public class AusenciaMapperImpl implements AusenciaMapper {
@@ -84,47 +84,26 @@ public class AusenciaMapperImpl implements AusenciaMapper {
     }
 
     private Long entityPartidoId(Ausencia ausencia) {
-        if ( ausencia == null ) {
-            return null;
-        }
         Partido partido = ausencia.getPartido();
         if ( partido == null ) {
             return null;
         }
-        Long id = partido.getId();
-        if ( id == null ) {
-            return null;
-        }
-        return id;
+        return partido.getId();
     }
 
     private Long entityAusenteId(Ausencia ausencia) {
-        if ( ausencia == null ) {
-            return null;
-        }
         Jugador ausente = ausencia.getAusente();
         if ( ausente == null ) {
             return null;
         }
-        Long id = ausente.getId();
-        if ( id == null ) {
-            return null;
-        }
-        return id;
+        return ausente.getId();
     }
 
     private Long entitySustitutoId(Ausencia ausencia) {
-        if ( ausencia == null ) {
-            return null;
-        }
         Jugador sustituto = ausencia.getSustituto();
         if ( sustituto == null ) {
             return null;
         }
-        Long id = sustituto.getId();
-        if ( id == null ) {
-            return null;
-        }
-        return id;
+        return sustituto.getId();
     }
 }

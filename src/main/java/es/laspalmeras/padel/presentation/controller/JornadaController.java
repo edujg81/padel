@@ -20,7 +20,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
-@RequestMapping("/jornadas")
+@RequestMapping("/public/jornadas")
 @Tag(name = "Jornadas", description = "Gestión de las jornadas de un campeonato")
 public class JornadaController {
 

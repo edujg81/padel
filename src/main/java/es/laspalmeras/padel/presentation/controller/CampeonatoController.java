@@ -21,7 +21,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
-@RequestMapping("/campeonatos")
+@RequestMapping("/public/campeonatos")
 @Tag(name = "Gestión de Campeonato", description = "Operaciones pertenecientes a campeonatos en Club de Padel")
 public class CampeonatoController {
 

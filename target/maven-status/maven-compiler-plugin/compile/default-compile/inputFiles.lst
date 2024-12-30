@@ -30,6 +30,8 @@ C:\Users\Usuario\Documents\Spring\desarrollo\padel\src\main\java\es\laspalmeras\
 C:\Users\Usuario\Documents\Spring\desarrollo\padel\src\main\java\es\laspalmeras\padel\business\service\model\Partido.java
 C:\Users\Usuario\Documents\Spring\desarrollo\padel\src\main\java\es\laspalmeras\padel\business\service\PartidoService.java
 C:\Users\Usuario\Documents\Spring\desarrollo\padel\src\main\java\es\laspalmeras\padel\config\OpenApiConfig.java
+C:\Users\Usuario\Documents\Spring\desarrollo\padel\src\main\java\es\laspalmeras\padel\config\validator\ErrorResponse.java
+C:\Users\Usuario\Documents\Spring\desarrollo\padel\src\main\java\es\laspalmeras\padel\config\validator\ValidatorCore.java
 C:\Users\Usuario\Documents\Spring\desarrollo\padel\src\main\java\es\laspalmeras\padel\config\WebConfig.java
 C:\Users\Usuario\Documents\Spring\desarrollo\padel\src\main\java\es\laspalmeras\padel\integration\repository\AusenciaRepository.java
 C:\Users\Usuario\Documents\Spring\desarrollo\padel\src\main\java\es\laspalmeras\padel\integration\repository\CampeonatoRepository.java
@@ -39,10 +41,14 @@ C:\Users\Usuario\Documents\Spring\desarrollo\padel\src\main\java\es\laspalmeras\
 C:\Users\Usuario\Documents\Spring\desarrollo\padel\src\main\java\es\laspalmeras\padel\integration\repository\JugadorRepository.java
 C:\Users\Usuario\Documents\Spring\desarrollo\padel\src\main\java\es\laspalmeras\padel\integration\repository\PartidoRepository.java
 C:\Users\Usuario\Documents\Spring\desarrollo\padel\src\main\java\es\laspalmeras\padel\PadelApplication.java
+C:\Users\Usuario\Documents\Spring\desarrollo\padel\src\main\java\es\laspalmeras\padel\presentation\config\exception\BadRequestException.java
+C:\Users\Usuario\Documents\Spring\desarrollo\padel\src\main\java\es\laspalmeras\padel\presentation\config\exception\dto\ErrorDetails.java
 C:\Users\Usuario\Documents\Spring\desarrollo\padel\src\main\java\es\laspalmeras\padel\presentation\config\exception\GlobalExceptionHandler.java
 C:\Users\Usuario\Documents\Spring\desarrollo\padel\src\main\java\es\laspalmeras\padel\presentation\config\exception\ResourceNotFoundException.java
 C:\Users\Usuario\Documents\Spring\desarrollo\padel\src\main\java\es\laspalmeras\padel\presentation\controller\CampeonatoController.java
+C:\Users\Usuario\Documents\Spring\desarrollo\padel\src\main\java\es\laspalmeras\padel\presentation\controller\CustomErrorController.java
 C:\Users\Usuario\Documents\Spring\desarrollo\padel\src\main\java\es\laspalmeras\padel\presentation\controller\InscripcionController.java
 C:\Users\Usuario\Documents\Spring\desarrollo\padel\src\main\java\es\laspalmeras\padel\presentation\controller\JornadaController.java
 C:\Users\Usuario\Documents\Spring\desarrollo\padel\src\main\java\es\laspalmeras\padel\presentation\controller\JugadorController.java
 C:\Users\Usuario\Documents\Spring\desarrollo\padel\src\main\java\es\laspalmeras\padel\presentation\controller\PartidoController.java
+C:\Users\Usuario\Documents\Spring\desarrollo\padel\src\main\java\es\laspalmeras\padel\presentation\controller\RootRedirectController.java

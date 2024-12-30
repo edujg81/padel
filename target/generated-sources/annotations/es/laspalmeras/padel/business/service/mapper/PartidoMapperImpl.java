@@ -9,8 +9,8 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-12-30T11:27:55+0100",
-    comments = "version: 1.5.5.Final, compiler: Eclipse JDT (IDE) 3.40.0.v20241112-0530, environment: Java 21.0.5 (Eclipse Adoptium)"
+    date = "2024-12-30T13:14:58+0100",
+    comments = "version: 1.6.3, compiler: Eclipse JDT (IDE) 3.40.0.v20241112-0530, environment: Java 21.0.5 (Eclipse Adoptium)"
 )
 @Component
 public class PartidoMapperImpl implements PartidoMapper {
@@ -78,78 +78,43 @@ public class PartidoMapperImpl implements PartidoMapper {
     }
 
     private Long partidoJornadaId(Partido partido) {
-        if ( partido == null ) {
-            return null;
-        }
         Jornada jornada = partido.getJornada();
         if ( jornada == null ) {
             return null;
         }
-        Long id = jornada.getId();
-        if ( id == null ) {
-            return null;
-        }
-        return id;
+        return jornada.getId();
     }
 
     private Long partidoEquipo1Jugador1Id(Partido partido) {
-        if ( partido == null ) {
-            return null;
-        }
         Jugador equipo1Jugador1 = partido.getEquipo1Jugador1();
         if ( equipo1Jugador1 == null ) {
             return null;
         }
-        Long id = equipo1Jugador1.getId();
-        if ( id == null ) {
-            return null;
-        }
-        return id;
+        return equipo1Jugador1.getId();
     }
 
     private Long partidoEquipo1Jugador2Id(Partido partido) {
-        if ( partido == null ) {
-            return null;
-        }
         Jugador equipo1Jugador2 = partido.getEquipo1Jugador2();
         if ( equipo1Jugador2 == null ) {
             return null;
         }
-        Long id = equipo1Jugador2.getId();
-        if ( id == null ) {
-            return null;
-        }
-        return id;
+        return equipo1Jugador2.getId();
     }
 
     private Long partidoEquipo2Jugador1Id(Partido partido) {
-        if ( partido == null ) {
-            return null;
-        }
         Jugador equipo2Jugador1 = partido.getEquipo2Jugador1();
         if ( equipo2Jugador1 == null ) {
             return null;
         }
-        Long id = equipo2Jugador1.getId();
-        if ( id == null ) {
-            return null;
-        }
-        return id;
+        return equipo2Jugador1.getId();
     }
 
     private Long partidoEquipo2Jugador2Id(Partido partido) {
-        if ( partido == null ) {
-            return null;
-        }
         Jugador equipo2Jugador2 = partido.getEquipo2Jugador2();
         if ( equipo2Jugador2 == null ) {
             return null;
         }
-        Long id = equipo2Jugador2.getId();
-        if ( id == null ) {
-            return null;
-        }
-        return id;
+        return equipo2Jugador2.getId();
     }
 
     protected Jornada partidoDTOToJornada(PartidoDTO partidoDTO) {

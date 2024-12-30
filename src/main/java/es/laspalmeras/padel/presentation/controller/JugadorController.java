@@ -19,7 +19,7 @@ import es.laspalmeras.padel.business.service.JugadorService;
 import es.laspalmeras.padel.business.service.dto.JugadorDTO;
 
 @RestController
-@RequestMapping("/jugadores")
+@RequestMapping("/public/jugadores")
 @Tag(name = "Gestión de Jugador", description = "Operaciones pertenecientes a jugadores registrados en Club de Padel")
 public class JugadorController {
 

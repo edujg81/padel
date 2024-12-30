@@ -28,6 +28,7 @@
 	</scm>
 	<properties>
 		<java.version>21</java.version>
+		<org.mapstruct.version>1.6.3</org.mapstruct.version>
 	</properties>
 	<dependencies>	
 		<!-- Spring Boot Actuator -->
@@ -61,6 +62,11 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
+		</dependency>
+		<!-- Spring Boot Security -->
+		<dependency>
+    		<groupId>org.springframework.boot</groupId>
+    		<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
 		 <!-- H2 Database -->
 		<dependency>
@@ -97,13 +103,13 @@
 		<dependency>
 	        <groupId>org.mapstruct</groupId>
 	        <artifactId>mapstruct</artifactId>
-	        <version>1.6.3</version>
+	        <version>${org.mapstruct.version}</version>
 		</dependency>
 	    <dependency>
 		    <groupId>org.mapstruct</groupId>
 		    <artifactId>mapstruct-processor</artifactId>
-		    <scope>provided</scope>
-		    <version>1.6.3</version>
+		    <version>${org.mapstruct.version}</version>
+    		<scope>provided</scope> <!-- El scope asegura que se use solo en compilación -->
 	    </dependency>
 	</dependencies>
 	<build>
@@ -129,6 +135,7 @@
 	                    <path>
 	                        <groupId>org.mapstruct</groupId>
 	                        <artifactId>mapstruct-processor</artifactId>
+	                        <version>${org.mapstruct.version}</version>
 	                    </path>
 						<path>
 							<groupId>org.springframework.boot</groupId>
@@ -151,6 +158,17 @@
         			<additionalJOptions>-Xdoclint:none</additionalJOptions>
       			</configuration>
     		</plugin>
+    		<plugin>
+            	<groupId>org.apache.maven.plugins</groupId>
+            	<artifactId>maven-jar-plugin</artifactId>
+            	<configuration>
+                	<archive>
+                    	<manifest>
+                        	<mainClass>es.laspalmeras.padel.PadelApplication</mainClass>
+                    	</manifest>
+                	</archive>
+            	</configuration>
+        	</plugin>
 		</plugins>
 	</build>
 </project>
