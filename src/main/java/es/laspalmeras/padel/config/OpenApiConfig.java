@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
 public class OpenApiConfig {
 
     @Bean
-    public GroupedOpenApi publicApi() {
+    GroupedOpenApi publicApi() {
         return GroupedOpenApi.builder()
                 .group("public")
                 .pathsToMatch("/**")

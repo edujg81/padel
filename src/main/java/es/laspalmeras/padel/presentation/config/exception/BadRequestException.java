@@ -7,7 +7,8 @@ import es.laspalmeras.padel.config.validator.ErrorResponse;
 
 @SuppressWarnings("serial")
 public class BadRequestException extends RuntimeException {
-    private final List<ErrorResponse> errors;
+
+	private final List<ErrorResponse> errors;
     public BadRequestException(List<ErrorResponse> errors){
         this.errors = errors;
     }

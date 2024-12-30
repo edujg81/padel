@@ -20,7 +20,6 @@ import es.laspalmeras.padel.business.service.dto.CampeonatoDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
-//@Api(value = "Campeonato Controller", tags = {"Campeonato"})
 @RestController
 @RequestMapping("/campeonatos")
 @Tag(name = "Gestión de Campeonato", description = "Operaciones pertenecientes a campeonatos en Club de Padel")
@@ -46,7 +45,6 @@ public class CampeonatoController {
     @GetMapping("/{id}")
     public ResponseEntity<CampeonatoDTO> getCampeonatoById(@PathVariable Long id) {
         Optional<CampeonatoDTO> campeonato = campeonatoService.findCampeonatoById(id);
-    	//CampeonatoDTO campeonato = campeonatoService.findCampeonatoById(id);
         return campeonato.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
     
