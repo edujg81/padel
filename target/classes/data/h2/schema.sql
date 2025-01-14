@@ -49,7 +49,7 @@ CREATE TABLE JORNADA (
 -- Creación de la tabla Partido
 CREATE TABLE PARTIDO (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    fecha DATE NOT NULL,
+    fecha DATE,
     jornada_id BIGINT,
     equipo1_jugador1_id BIGINT NOT NULL DEFAULT -1,
     equipo1_jugador2_id BIGINT NOT NULL DEFAULT -1,
