@@ -42,52 +42,52 @@ INSERT INTO campeonato (anio, categoria, division, estado, activo, puntos_por_vi
 
 -- Insertar jornadas de ejemplo
 
-INSERT INTO jornada (campeonato_id, fecha_inicio, numero) VALUES
-(1, '2024-01-15', 1),
-(2, '2024-01-15', 1),
-(3, '2024-01-15', 1);
+--INSERT INTO jornada (campeonato_id, fecha_inicio, numero) VALUES
+--(1, '2024-01-15', 1),
+--(2, '2024-01-15', 1),
+--(3, '2024-01-15', 1);
 
 -- Insertar partidos de ejemplo
 -- Campeonato Masculino 2024, Jornada 1
-INSERT INTO partido (jornada_id, equipo1_jugador1_id, equipo1_jugador2_id, equipo2_jugador1_id, equipo2_jugador2_id, fecha) VALUES
-(1, 1, 7, 3, 5, '2024-01-15'), 
-(1, 9, 15, 11, 13, '2024-01-15');
+--INSERT INTO partido (jornada_id, equipo1_jugador1_id, equipo1_jugador2_id, equipo2_jugador1_id, equipo2_jugador2_id, fecha) VALUES
+--(1, 1, 7, 3, 5, '2024-01-15'), 
+--(1, 9, 15, 11, 13, '2024-01-15');
 
 -- Campeonato Femenino 2024, Jornada 1
-INSERT INTO partido (jornada_id, equipo1_jugador1_id, equipo1_jugador2_id, equipo2_jugador1_id, equipo2_jugador2_id, fecha) VALUES
-(2, 2, 8, 4, 6, '2024-01-15'), 
-(2, 10, 16, 12, 14, '2024-01-15');
+--INSERT INTO partido (jornada_id, equipo1_jugador1_id, equipo1_jugador2_id, equipo2_jugador1_id, equipo2_jugador2_id, fecha) VALUES
+--(2, 2, 8, 4, 6, '2024-01-15'), 
+--(2, 10, 16, 12, 14, '2024-01-15');
 
 -- Campeonato Mixto 2024, Jornada 1
-INSERT INTO partido (jornada_id, equipo1_jugador1_id, equipo1_jugador2_id, equipo2_jugador1_id, equipo2_jugador2_id, fecha) VALUES
-(3, 1, 4, 2, 3, '2024-01-15'), 
-(3, 5, 8, 6, 7, '2024-01-15');
+--INSERT INTO partido (jornada_id, equipo1_jugador1_id, equipo1_jugador2_id, equipo2_jugador1_id, equipo2_jugador2_id, fecha) VALUES
+--(3, 1, 4, 2, 3, '2024-01-15'), 
+--(3, 5, 8, 6, 7, '2024-01-15');
 
 -- Insertar clasificacion (inicial) de ejemplo
-INSERT INTO clasificacion (campeonato_id, jugador_id, posicion, puntos, partidos_jugados, partidos_ganados, partidos_perdidos, sets_ganados, sets_perdidos, juegos_ganados, juegos_perdidos) VALUES
-(1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0),
-(1, 3, 2, 0, 0, 0, 0, 0, 0, 0, 0),
-(1, 5, 3, 0, 0, 0, 0, 0, 0, 0, 0),
-(1, 7, 4, 0, 0, 0, 0, 0, 0, 0, 0),
-(1, 9, 5, 0, 0, 0, 0, 0, 0, 0, 0),
-(1, 11, 6, 0, 0, 0, 0, 0, 0, 0, 0),
-(1, 13, 7, 0, 0, 0, 0, 0, 0, 0, 0),
-(1, 15, 8, 0, 0, 0, 0, 0, 0, 0, 0),
-(2, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0),
-(2, 4, 2, 0, 0, 0, 0, 0, 0, 0, 0),
-(2, 6, 3, 0, 0, 0, 0, 0, 0, 0, 0),
-(2, 8, 4, 0, 0, 0, 0, 0, 0, 0, 0),
-(2, 10, 5, 0, 0, 0, 0, 0, 0, 0, 0),
-(2, 12, 6, 0, 0, 0, 0, 0, 0, 0, 0),
-(2, 14, 7, 0, 0, 0, 0, 0, 0, 0, 0),
-(2, 16, 8, 0, 0, 0, 0, 0, 0, 0, 0),
-(3, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0),
-(3, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0),
-(3, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0),
-(3, 4, 4, 0, 0, 0, 0, 0, 0, 0, 0),
-(3, 5, 5, 0, 0, 0, 0, 0, 0, 0, 0),
-(3, 6, 6, 0, 0, 0, 0, 0, 0, 0, 0),
-(3, 7, 7, 0, 0, 0, 0, 0, 0, 0, 0),
-(3, 8, 8, 0, 0, 0, 0, 0, 0, 0, 0);
+--INSERT INTO clasificacion (campeonato_id, jugador_id, posicion, puntos, partidos_jugados, partidos_ganados, partidos_perdidos, sets_ganados, sets_perdidos, juegos_ganados, juegos_perdidos) VALUES
+--(1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0),
+--(1, 3, 2, 0, 0, 0, 0, 0, 0, 0, 0),
+--(1, 5, 3, 0, 0, 0, 0, 0, 0, 0, 0),
+--(1, 7, 4, 0, 0, 0, 0, 0, 0, 0, 0),
+--(1, 9, 5, 0, 0, 0, 0, 0, 0, 0, 0),
+--(1, 11, 6, 0, 0, 0, 0, 0, 0, 0, 0),
+--(1, 13, 7, 0, 0, 0, 0, 0, 0, 0, 0),
+--(1, 15, 8, 0, 0, 0, 0, 0, 0, 0, 0),
+--(2, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0),
+--(2, 4, 2, 0, 0, 0, 0, 0, 0, 0, 0),
+--(2, 6, 3, 0, 0, 0, 0, 0, 0, 0, 0),
+--(2, 8, 4, 0, 0, 0, 0, 0, 0, 0, 0),
+--(2, 10, 5, 0, 0, 0, 0, 0, 0, 0, 0),
+--(2, 12, 6, 0, 0, 0, 0, 0, 0, 0, 0),
+--(2, 14, 7, 0, 0, 0, 0, 0, 0, 0, 0),
+--(2, 16, 8, 0, 0, 0, 0, 0, 0, 0, 0),
+--(3, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0),
+--(3, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0),
+--(3, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0),
+--(3, 4, 4, 0, 0, 0, 0, 0, 0, 0, 0),
+--(3, 5, 5, 0, 0, 0, 0, 0, 0, 0, 0),
+--(3, 6, 6, 0, 0, 0, 0, 0, 0, 0, 0),
+--(3, 7, 7, 0, 0, 0, 0, 0, 0, 0, 0),
+--(3, 8, 8, 0, 0, 0, 0, 0, 0, 0, 0);
 
 -- Puedes agregar más datos según sea necesario

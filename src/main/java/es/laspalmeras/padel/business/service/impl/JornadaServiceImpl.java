@@ -118,18 +118,31 @@ public class JornadaServiceImpl implements JornadaService {
         Campeonato campeonato = campeonatoRepository.findById(campeonatoId)
                 .orElseThrow(() -> new ResourceNotFoundException("Campeonato no encontrado con id: " + campeonatoId));
 
+        // Log de validación del estado
         if (!"En curso".equals(campeonato.getEstado())) {
-            throw new IllegalArgumentException("El campeonato debe estar 'En curso' para crear jornadas.");
+            String errorMsg = "El campeonato con id " + campeonatoId + " no está 'En curso'. Estado actual: " + campeonato.getEstado();
+            System.err.println(errorMsg);
+            throw new IllegalArgumentException(errorMsg);
         }
 
+        // Log de validación de duplicados
         if (jornadaRepository.existsByCampeonatoIdAndFechaInicio(campeonatoId, fechaInicio)) {
-            throw new IllegalArgumentException("Ya existe una jornada con la misma fecha de inicio para este campeonato.");
+            String errorMsg = "Ya existe una jornada con la fecha " + fechaInicio + " para el campeonato con id: " + campeonatoId;
+            System.err.println(errorMsg);
+            throw new IllegalArgumentException(errorMsg);
         }
 
+        // Log de inscripciones
         List<Inscripcion> inscripciones = inscripcionRepository.findByCampeonatoId(campeonatoId);
+        System.out.println("Inscripciones encontradas: " + inscripciones.size());
+        if (inscripciones.isEmpty()) {
+            throw new IllegalArgumentException("No hay jugadores inscritos en el campeonato con id: " + campeonatoId);
+        }
+        
         int numInscritos = inscripciones.size();
         int numPartidos = numInscritos / 4;
 
+        // Generar partidos
         List<Partido> partidos = generarPartidos(inscripciones, numPartidos);
 
         Jornada nuevaJornada = new Jornada();
@@ -139,11 +152,13 @@ public class JornadaServiceImpl implements JornadaService {
         
         Jornada savedJornada = jornadaRepository.save(nuevaJornada);
 
+        // Guardar partidos
         partidos.forEach(partido -> {
             partido.setJornada(savedJornada);
             partidoRepository.save(partido);
         });
 
+        System.out.println("Jornada creada con éxito: " + savedJornada.getId());
         return jornadaMapper.toDto(savedJornada);
     }
     
@@ -160,13 +175,17 @@ public class JornadaServiceImpl implements JornadaService {
                 .map(Inscripcion::getJugador)
                 .collect(Collectors.toList());
 
+        if (jugadores.size() < 4 || jugadores.size() % 4 != 0) {
+            throw new IllegalArgumentException("El número de jugadores inscritos no es suficiente para formar equipos. Se necesitan múltiplos de 4.");
+        }
+        
         return jugadores.stream().collect(Collectors.groupingBy(jugador -> jugadores.indexOf(jugador) / 4))
         		.values().stream().map(jugadoresGrupo -> {
         			Partido partido = new Partido();
                     partido.setEquipo1Jugador1(jugadoresGrupo.get(0));
-                    partido.setEquipo1Jugador2(jugadores.get(3));
-                    partido.setEquipo2Jugador1(jugadores.get(1));
-                    partido.setEquipo2Jugador2(jugadores.get(2));
+                    partido.setEquipo1Jugador2(jugadoresGrupo.get(3));
+                    partido.setEquipo2Jugador1(jugadoresGrupo.get(1));
+                    partido.setEquipo2Jugador2(jugadoresGrupo.get(2));
                     return partido;
         		}).collect(Collectors.toList());
     }
