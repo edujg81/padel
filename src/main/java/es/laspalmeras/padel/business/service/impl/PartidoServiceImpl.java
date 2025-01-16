@@ -173,7 +173,7 @@ public class PartidoServiceImpl implements PartidoService{
 	
 	@Transactional
     private void actualizarClasificacion(Campeonato campeonato, Partido partido) {
-    	List<Clasificacion> clasificaciones = clasificacionRepository.findByCampeonatoId(campeonato.getId());
+    	List<Clasificacion> clasificaciones = clasificacionRepository.findByCampeonatoIdOrderByPuntosDesc(campeonato.getId());
 
     	for (Clasificacion clasificacion : clasificaciones) {
             Jugador jugador = clasificacion.getJugador();

@@ -6,6 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface ClasificacionRepository extends JpaRepository<Clasificacion, Long> {
-    List<Clasificacion> findByCampeonatoId(Long campeonatoId);
+    List<Clasificacion> findByCampeonatoIdOrderByPuntosDesc(Long campeonatoId);
     Clasificacion findByCampeonatoIdAndJugadorId(Long campeonatoId, Long jugadorId);
 }
