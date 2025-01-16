@@ -12,7 +12,11 @@ import es.laspalmeras.padel.business.service.CampeonatoService;
 import es.laspalmeras.padel.business.service.dto.CampeonatoDTO;
 import es.laspalmeras.padel.business.service.mapper.CampeonatoMapper;
 import es.laspalmeras.padel.business.service.model.Campeonato;
+import es.laspalmeras.padel.business.service.model.Clasificacion;
+import es.laspalmeras.padel.business.service.model.Inscripcion;
 import es.laspalmeras.padel.integration.repository.CampeonatoRepository;
+import es.laspalmeras.padel.integration.repository.ClasificacionRepository;
+import es.laspalmeras.padel.integration.repository.InscripcionRepository;
 import es.laspalmeras.padel.presentation.config.exception.ResourceNotFoundException;
 
 /**
@@ -23,6 +27,12 @@ public class CampeonatoServiceImpl implements CampeonatoService{
 	
 	@Autowired
     private CampeonatoRepository campeonatoRepository;
+	
+	@Autowired
+    private ClasificacionRepository clasificacionRepository;
+	
+	@Autowired
+    private InscripcionRepository inscripcionRepository;
 
     @Autowired
     private CampeonatoMapper campeonatoMapper;
@@ -125,6 +135,12 @@ public class CampeonatoServiceImpl implements CampeonatoService{
                 .orElseThrow(() -> new ResourceNotFoundException("Campeonato", "id", id));
 
         campeonato.setEstado(nuevoEstado);
+        
+        // Si el estado es "En Curso", generar la clasificación inicial
+        if ("En Curso".equals(nuevoEstado)) {
+            generarClasificacionInicial(campeonato);
+        }
+        
         saveCampeonato(campeonato);
 	}
 
@@ -145,5 +161,37 @@ public class CampeonatoServiceImpl implements CampeonatoService{
         campeonato.setActivo(campeonatoDetails.getActivo());
         campeonato.setPuntosPorVictoria(campeonatoDetails.getPuntosPorVictoria());
         campeonato.setPuntosPorDerrota(campeonatoDetails.getPuntosPorDerrota());
+    }
+	
+	/**
+     * Genera la clasificación inicial para un campeonato.
+     *
+     * @param campeonato El campeonato para el que se generará la clasificación.
+     */
+    private void generarClasificacionInicial(Campeonato campeonato) {
+        // Obtener inscripciones asociadas al campeonato
+        List<Inscripcion> inscripciones = inscripcionRepository.findByCampeonatoId(campeonato.getId());
+
+        if (inscripciones.isEmpty()) {
+            throw new IllegalStateException("No hay jugadores inscritos en el campeonato.");
+        }
+
+        // Crear una entrada de clasificación para cada jugador inscrito
+        inscripciones.forEach(inscripcion -> {
+            Clasificacion clasificacion = new Clasificacion();
+            clasificacion.setCampeonato(campeonato);
+            clasificacion.setJugador(inscripcion.getJugador());
+            clasificacion.setPosicion(0); // Inicialmente sin posición
+            clasificacion.setPuntos(0);
+            clasificacion.setPartidosJugados(0);
+            clasificacion.setPartidosGanados(0);
+            clasificacion.setPartidosPerdidos(0);
+            clasificacion.setSetsGanados(0);
+            clasificacion.setSetsPerdidos(0);
+            clasificacion.setJuegosGanados(0);
+            clasificacion.setJuegosPerdidos(0);
+
+            clasificacionRepository.save(clasificacion);
+        });
     }
 }

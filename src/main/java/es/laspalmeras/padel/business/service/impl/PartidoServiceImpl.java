@@ -128,7 +128,8 @@ public class PartidoServiceImpl implements PartidoService{
         partido.setJuegosGanadosEquipo2Set2(partidoDetails.getJuegosGanadosEquipo2Set2());
         partido.setJuegosGanadosEquipo2Set3(partidoDetails.getJuegosGanadosEquipo2Set3());
         partido.setPista(partidoDetails.getPista());
-        partido.setResultado(partidoDetails.getResultado());
+        partido.setFecha(partidoDetails.getFecha());
+        //partido.setResultado(partidoDetails.getResultado());
 
         // Determine ganador
         int setsGanadosEquipo1 = 0;
@@ -145,7 +146,8 @@ public class PartidoServiceImpl implements PartidoService{
             setsGanadosEquipo2++;
         }
         
-        if (partido.getJuegosGanadosEquipo1Set3() != null && partido.getJuegosGanadosEquipo2Set3() != null) {
+        if ((partido.getJuegosGanadosEquipo1Set3() != null && (partido.getJuegosGanadosEquipo1Set3() != 0)) && 
+        	(partido.getJuegosGanadosEquipo2Set3() != null && (partido.getJuegosGanadosEquipo2Set3() != 0))) {
 	        if (partido.getJuegosGanadosEquipo1Set3() > partido.getJuegosGanadosEquipo2Set3()) {
 	            setsGanadosEquipo1++;
 	        } else {
@@ -155,6 +157,8 @@ public class PartidoServiceImpl implements PartidoService{
 
         partido.setSetsGanadosEquipo1(setsGanadosEquipo1);
         partido.setSetsGanadosEquipo2(setsGanadosEquipo2);
+        
+        partido.setResultado(setsGanadosEquipo1 + " - " + setsGanadosEquipo2);
         
         if (setsGanadosEquipo1 > setsGanadosEquipo2) {
             partido.setEquipoGanador("Equipo 1");
