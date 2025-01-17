@@ -12,11 +12,13 @@ import es.laspalmeras.padel.business.service.JornadaService;
 import es.laspalmeras.padel.business.service.dto.JornadaDTO;
 import es.laspalmeras.padel.business.service.mapper.JornadaMapper;
 import es.laspalmeras.padel.business.service.model.Campeonato;
+import es.laspalmeras.padel.business.service.model.Clasificacion;
 import es.laspalmeras.padel.business.service.model.Inscripcion;
 import es.laspalmeras.padel.business.service.model.Jornada;
 import es.laspalmeras.padel.business.service.model.Jugador;
 import es.laspalmeras.padel.business.service.model.Partido;
 import es.laspalmeras.padel.integration.repository.CampeonatoRepository;
+import es.laspalmeras.padel.integration.repository.ClasificacionRepository;
 import es.laspalmeras.padel.integration.repository.InscripcionRepository;
 import es.laspalmeras.padel.integration.repository.JornadaRepository;
 import es.laspalmeras.padel.integration.repository.PartidoRepository;
@@ -40,6 +42,9 @@ public class JornadaServiceImpl implements JornadaService {
 	
 	@Autowired
 	private InscripcionRepository inscripcionRepository;
+	
+	@Autowired
+	private ClasificacionRepository clasificacionRepository;
 	
 	@Autowired
 	private JornadaMapper jornadaMapper;
@@ -139,20 +144,34 @@ public class JornadaServiceImpl implements JornadaService {
             throw new IllegalArgumentException("No hay jugadores inscritos en el campeonato con id: " + campeonatoId);
         }
         
-        int numInscritos = inscripciones.size();
-        int numPartidos = numInscritos / 4;
+        // Obtener el número de jornada que se está generando
+        long numeroJornada = jornadaRepository.countByCampeonatoId(campeonatoId) + 1;
+
+        // Determinar los jugadores a utilizar para la generación de partidos
+        List<Jugador> jugadores = obtenerJugadoresParaJornada(campeonatoId, numeroJornada);
+
+        if (jugadores.size() < 4 || jugadores.size() % 4 != 0) {
+            throw new IllegalArgumentException("El número de jugadores no es suficiente para formar equipos. Se necesitan múltiplos de 4.");
+        }
+        
+        //int numInscritos = inscripciones.size();
+        //int numPartidos = numInscritos / 4;
+        
+        // Crear partidos a partir de los jugadores
+        int numPartidos = jugadores.size() / 4;
+        List<Partido> partidos = generarPartidos(jugadores, numPartidos);
 
         // Generar partidos
-        List<Partido> partidos = generarPartidos(inscripciones, numPartidos);
+        //List<Partido> partidos = generarPartidos(inscripciones, numPartidos);
 
         Jornada nuevaJornada = new Jornada();
         nuevaJornada.setCampeonato(campeonato);
         nuevaJornada.setFechaInicio(fechaInicio);
-        nuevaJornada.setNumero((int) (jornadaRepository.countByCampeonatoId(campeonatoId) + 1));
+        nuevaJornada.setNumero((int) numeroJornada);
         
         Jornada savedJornada = jornadaRepository.save(nuevaJornada);
 
-        // Guardar partidos
+        // Asociar y guardar los partidos de la jornada
         partidos.forEach(partido -> {
             partido.setJornada(savedJornada);
             partidoRepository.save(partido);
@@ -163,6 +182,29 @@ public class JornadaServiceImpl implements JornadaService {
     }
     
     /**
+     * Obtiene la lista de jugadores para la jornada, ordenada según el criterio definido:
+     * - Para la jornada 1, se usa el orden de inscripción.
+     * - Para jornadas sucesivas, se usa el orden de clasificación.
+     *
+     * @param campeonatoId El ID del campeonato
+     * @param numeroJornada El número de la jornada que se está generando
+     * @return Lista de jugadores ordenada
+     */
+    private List<Jugador> obtenerJugadoresParaJornada(Long campeonatoId, long numeroJornada) {
+        if (numeroJornada == 1) {
+            // Jornada 1: Ordenar jugadores según el orden de inscripción
+            return inscripcionRepository.findByCampeonatoId(campeonatoId).stream()
+                    .map(Inscripcion::getJugador)
+                    .collect(Collectors.toList());
+        } else {
+            // Jornadas sucesivas: Ordenar jugadores según la clasificación
+            return clasificacionRepository.findByCampeonatoIdOrderByPosicionAsc(campeonatoId).stream()
+                    .map(Clasificacion::getJugador)
+                    .collect(Collectors.toList());
+        }
+    }
+    
+    /**
      * Genera los partidos para una jornada.
      *
      * @param inscripciones la lista de inscripciones
@@ -170,17 +212,19 @@ public class JornadaServiceImpl implements JornadaService {
      * @return una lista de objetos Partido
      */
     @Transactional
-    private List<Partido> generarPartidos(List<Inscripcion> inscripciones, int numPartidos) {
-        List<Jugador> jugadores = inscripciones.stream()
-                .map(Inscripcion::getJugador)
-                .collect(Collectors.toList());
-
-        if (jugadores.size() < 4 || jugadores.size() % 4 != 0) {
-            throw new IllegalArgumentException("El número de jugadores inscritos no es suficiente para formar equipos. Se necesitan múltiplos de 4.");
-        }
+    private List<Partido> generarPartidos(List<Jugador> jugadores, int numPartidos) {
+//        List<Jugador> jugadores = inscripciones.stream()
+//                .map(Inscripcion::getJugador)
+//                .collect(Collectors.toList());
+//
+//        if (jugadores.size() < 4 || jugadores.size() % 4 != 0) {
+//            throw new IllegalArgumentException("El número de jugadores inscritos no es suficiente para formar equipos. Se necesitan múltiplos de 4.");
+//        }
         
-        return jugadores.stream().collect(Collectors.groupingBy(jugador -> jugadores.indexOf(jugador) / 4))
-        		.values().stream().map(jugadoresGrupo -> {
+        return jugadores.stream()
+        		.collect(Collectors.groupingBy(jugador -> jugadores.indexOf(jugador) / 4))
+        		.values().stream()
+        		.map(jugadoresGrupo -> {
         			Partido partido = new Partido();
                     partido.setEquipo1Jugador1(jugadoresGrupo.get(0));
                     partido.setEquipo1Jugador2(jugadoresGrupo.get(3));

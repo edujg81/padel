@@ -21,7 +21,7 @@ public class ClasificacionServiceImpl implements ClasificacionService {
     @Override
     @Transactional
     public List<ClasificacionDTO> findClasificacionByCampeonatoId(Long campeonatoId) {
-        return clasificacionRepository.findByCampeonatoIdOrderByPuntosDesc(campeonatoId)
+        return clasificacionRepository.findByCampeonatoIdOrderByPosicionAsc(campeonatoId)
                 .stream()
                 .map(this::toDto)
                 .collect(Collectors.toList());

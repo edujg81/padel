@@ -9,6 +9,6 @@ import java.util.List;
 @Repository
 public interface ClasificacionRepository extends JpaRepository<Clasificacion, Long> {
 	List<Clasificacion> findByCampeonatoId(Long campeonatoId);
-	List<Clasificacion> findByCampeonatoIdOrderByPuntosDesc(Long campeonatoId);
+	List<Clasificacion> findByCampeonatoIdOrderByPosicionAsc(Long campeonatoId);
     Clasificacion findByCampeonatoIdAndJugadorId(Long campeonatoId, Long jugadorId);
 }

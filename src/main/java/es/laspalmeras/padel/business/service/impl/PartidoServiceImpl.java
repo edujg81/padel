@@ -176,55 +176,85 @@ public class PartidoServiceImpl implements PartidoService{
     }
 	
 	@Transactional
-    private void actualizarClasificacion(Campeonato campeonato, Partido partido) {
-    	List<Clasificacion> clasificaciones = clasificacionRepository.findByCampeonatoIdOrderByPuntosDesc(campeonato.getId());
+	private void actualizarClasificacion(Campeonato campeonato, Partido partido) {
+	    // Obtener las clasificaciones actuales del campeonato
+	    List<Clasificacion> clasificaciones = clasificacionRepository.findByCampeonatoIdOrderByPosicionAsc(campeonato.getId());
 
-    	for (Clasificacion clasificacion : clasificaciones) {
-            Jugador jugador = clasificacion.getJugador();
-            int puntos = clasificacion.getPuntos();
-            
-            if (partido.getEquipoGanador().equals("Equipo 1") &&
-                    (jugador.equals(partido.getEquipo1Jugador1()) || jugador.equals(partido.getEquipo1Jugador2()))) {
-                puntos += campeonato.getPuntosPorVictoria();
-                clasificacion.setPartidosGanados(clasificacion.getPartidosGanados() + 1);
-                clasificacion.setSetsGanados(clasificacion.getSetsGanados() + partido.getSetsGanadosEquipo1());
-                clasificacion.setSetsPerdidos(clasificacion.getSetsPerdidos() + partido.getSetsGanadosEquipo2());
-                clasificacion.setJuegosGanados(clasificacion.getJuegosGanados() 
-                		+ partido.getJuegosGanadosEquipo1Set1() 
-                		+ partido.getJuegosGanadosEquipo1Set2() 
-                		+ partido.getJuegosGanadosEquipo1Set3());
-                clasificacion.setJuegosPerdidos(clasificacion.getJuegosPerdidos() 
-                		+ partido.getJuegosGanadosEquipo2Set1() 
-                		+ partido.getJuegosGanadosEquipo2Set2() 
-                		+ partido.getJuegosGanadosEquipo2Set3());
-            } else if (partido.getEquipoGanador().equals("Equipo 2") &&
-                    (jugador.equals(partido.getEquipo2Jugador1()) || jugador.equals(partido.getEquipo2Jugador2()))) {
-                puntos += campeonato.getPuntosPorVictoria();
-                clasificacion.setPartidosGanados(clasificacion.getPartidosGanados() + 1);
-                clasificacion.setSetsGanados(clasificacion.getSetsGanados() + partido.getSetsGanadosEquipo2());
-                clasificacion.setSetsPerdidos(clasificacion.getSetsPerdidos() + partido.getSetsGanadosEquipo1());
-                clasificacion.setJuegosGanados(clasificacion.getJuegosGanados() 
-                		+ partido.getJuegosGanadosEquipo2Set1() 
-                		+ partido.getJuegosGanadosEquipo2Set2() 
-                		+ partido.getJuegosGanadosEquipo2Set3());
-                clasificacion.setJuegosPerdidos(clasificacion.getJuegosPerdidos() 
-                		+ partido.getJuegosGanadosEquipo1Set1() 
-                		+ partido.getJuegosGanadosEquipo1Set2() 
-                		+ partido.getJuegosGanadosEquipo1Set3());
-            } else {
-                puntos += campeonato.getPuntosPorDerrota();
-                clasificacion.setPartidosPerdidos(clasificacion.getPartidosPerdidos() + 1);
-            }
+	    for (Clasificacion clasificacion : clasificaciones) {
+	        Jugador jugador = clasificacion.getJugador();
 
-            clasificacion.setPuntos(puntos);
-            clasificacion.setPartidosJugados(clasificacion.getPartidosJugados() + 1);
-            
-            clasificacionRepository.save(clasificacion);
-        }
-    	
-    	// Actualizar las posiciones en la clasificación
-        actualizarPosiciones(clasificaciones);
-    }
+	        // Verifica si el jugador participó en el partido
+	        boolean perteneceAEquipo1 = jugador.equals(partido.getEquipo1Jugador1()) || jugador.equals(partido.getEquipo1Jugador2());
+	        boolean perteneceAEquipo2 = jugador.equals(partido.getEquipo2Jugador1()) || jugador.equals(partido.getEquipo2Jugador2());
+
+	        if (perteneceAEquipo1 || perteneceAEquipo2) {
+	            int puntos = clasificacion.getPuntos();
+
+	            if (partido.getEquipoGanador().equals("Equipo 1") && perteneceAEquipo1) {
+	                puntos += campeonato.getPuntosPorVictoria();
+	                clasificacion.setPartidosGanados(clasificacion.getPartidosGanados() + 1);
+	                actualizarSetsYJuegos(clasificacion, partido, true);
+	            } else if (partido.getEquipoGanador().equals("Equipo 2") && perteneceAEquipo2) {
+	                puntos += campeonato.getPuntosPorVictoria();
+	                clasificacion.setPartidosGanados(clasificacion.getPartidosGanados() + 1);
+	                actualizarSetsYJuegos(clasificacion, partido, false);
+	            } else {
+	                // Jugador participó en el partido pero su equipo perdió
+	                puntos += campeonato.getPuntosPorDerrota();
+	                clasificacion.setPartidosPerdidos(clasificacion.getPartidosPerdidos() + 1);
+
+	                // Actualizar sets y juegos para el equipo perdedor
+	                if (perteneceAEquipo1) {
+	                    actualizarSetsYJuegos(clasificacion, partido, true);
+	                } else {
+	                    actualizarSetsYJuegos(clasificacion, partido, false);
+	                }
+	            }
+
+	            clasificacion.setPuntos(puntos);
+	            clasificacion.setPartidosJugados(clasificacion.getPartidosJugados() + 1);
+
+	            // Guardar los cambios en la clasificación
+	            clasificacionRepository.save(clasificacion);
+	        }
+	    }
+
+	    // Actualizar las posiciones en la clasificación
+	    actualizarPosiciones(clasificaciones);
+	}
+
+	/**
+	 * Método auxiliar para actualizar sets y juegos ganados/perdidos.
+	 *
+	 * @param clasificacion La clasificación del jugador
+	 * @param partido       El partido jugado
+	 * @param esEquipo1     Indica si el jugador pertenece al equipo 1
+	 */
+	private void actualizarSetsYJuegos(Clasificacion clasificacion, Partido partido, boolean esEquipo1) {
+	    if (esEquipo1) {
+	        clasificacion.setSetsGanados(clasificacion.getSetsGanados() + partido.getSetsGanadosEquipo1());
+	        clasificacion.setSetsPerdidos(clasificacion.getSetsPerdidos() + partido.getSetsGanadosEquipo2());
+	        clasificacion.setJuegosGanados(clasificacion.getJuegosGanados()
+	                + partido.getJuegosGanadosEquipo1Set1()
+	                + partido.getJuegosGanadosEquipo1Set2()
+	                + partido.getJuegosGanadosEquipo1Set3());
+	        clasificacion.setJuegosPerdidos(clasificacion.getJuegosPerdidos()
+	                + partido.getJuegosGanadosEquipo2Set1()
+	                + partido.getJuegosGanadosEquipo2Set2()
+	                + partido.getJuegosGanadosEquipo2Set3());
+	    } else {
+	        clasificacion.setSetsGanados(clasificacion.getSetsGanados() + partido.getSetsGanadosEquipo2());
+	        clasificacion.setSetsPerdidos(clasificacion.getSetsPerdidos() + partido.getSetsGanadosEquipo1());
+	        clasificacion.setJuegosGanados(clasificacion.getJuegosGanados()
+	                + partido.getJuegosGanadosEquipo2Set1()
+	                + partido.getJuegosGanadosEquipo2Set2()
+	                + partido.getJuegosGanadosEquipo2Set3());
+	        clasificacion.setJuegosPerdidos(clasificacion.getJuegosPerdidos()
+	                + partido.getJuegosGanadosEquipo1Set1()
+	                + partido.getJuegosGanadosEquipo1Set2()
+	                + partido.getJuegosGanadosEquipo1Set3());
+	    }
+	}
 	
 	/**
 	 * Actualiza las posiciones en la clasificación basándose en los criterios definidos:
