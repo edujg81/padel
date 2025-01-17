@@ -221,7 +221,55 @@ public class PartidoServiceImpl implements PartidoService{
             
             clasificacionRepository.save(clasificacion);
         }
+    	
+    	// Actualizar las posiciones en la clasificación
+        actualizarPosiciones(clasificaciones);
     }
+	
+	/**
+	 * Actualiza las posiciones en la clasificación basándose en los criterios definidos:
+	 * 1. Mayor puntuación
+	 * 2. Más partidos ganados
+	 * 3. Menos partidos perdidos
+	 * 4. Mayor diferencia de sets ganados y perdidos
+	 * 5. Mayor diferencia de juegos ganados y perdidos
+	 *
+	 * @param clasificaciones Lista de clasificaciones a ordenar y actualizar
+	 */
+	private void actualizarPosiciones(List<Clasificacion> clasificaciones) {
+	    // Ordenar las clasificaciones según los criterios
+	    clasificaciones.sort((c1, c2) -> {
+	        // 1. Comparar por puntos (mayor es mejor)
+	        int cmp = Integer.compare(c2.getPuntos(), c1.getPuntos());
+	        if (cmp != 0) return cmp;
+
+	        // 2. Comparar por partidos ganados (mayor es mejor)
+	        cmp = Integer.compare(c2.getPartidosGanados(), c1.getPartidosGanados());
+	        if (cmp != 0) return cmp;
+
+	        // 3. Comparar por partidos perdidos (menor es mejor)
+	        cmp = Integer.compare(c1.getPartidosPerdidos(), c2.getPartidosPerdidos());
+	        if (cmp != 0) return cmp;
+
+	        // 4. Comparar por diferencia de sets (mayor es mejor)
+	        int diferenciaSetsC1 = c1.getSetsGanados() - c1.getSetsPerdidos();
+	        int diferenciaSetsC2 = c2.getSetsGanados() - c2.getSetsPerdidos();
+	        cmp = Integer.compare(diferenciaSetsC2, diferenciaSetsC1);
+	        if (cmp != 0) return cmp;
+
+	        // 5. Comparar por diferencia de juegos (mayor es mejor)
+	        int diferenciaJuegosC1 = c1.getJuegosGanados() - c1.getJuegosPerdidos();
+	        int diferenciaJuegosC2 = c2.getJuegosGanados() - c2.getJuegosPerdidos();
+	        return Integer.compare(diferenciaJuegosC2, diferenciaJuegosC1);
+	    });
+
+	    // Actualizar las posiciones según el nuevo orden
+	    for (int i = 0; i < clasificaciones.size(); i++) {
+	        Clasificacion clasificacion = clasificaciones.get(i);
+	        clasificacion.setPosicion(i + 1); // La posición comienza en 1
+	        clasificacionRepository.save(clasificacion);
+	    }
+	}
 
 	@Override
     public List<PartidoDTO> getPartidosByJornada(Long jornadaId) {

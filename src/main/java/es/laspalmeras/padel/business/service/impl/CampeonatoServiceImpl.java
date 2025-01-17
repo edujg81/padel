@@ -137,7 +137,7 @@ public class CampeonatoServiceImpl implements CampeonatoService{
         campeonato.setEstado(nuevoEstado);
         
         // Si el estado es "En Curso", generar la clasificación inicial
-        if ("En Curso".equals(nuevoEstado)) {
+        if ("En curso".equals(nuevoEstado)) {
             generarClasificacionInicial(campeonato);
         }
         
@@ -177,11 +177,14 @@ public class CampeonatoServiceImpl implements CampeonatoService{
         }
 
         // Crear una entrada de clasificación para cada jugador inscrito
-        inscripciones.forEach(inscripcion -> {
+        // inscripciones.forEach(inscripcion -> {
+    	for (int i = 0; i < inscripciones.size(); i++) {
+            Inscripcion inscripcion = inscripciones.get(i);
+            
             Clasificacion clasificacion = new Clasificacion();
             clasificacion.setCampeonato(campeonato);
             clasificacion.setJugador(inscripcion.getJugador());
-            clasificacion.setPosicion(0); // Inicialmente sin posición
+            clasificacion.setPosicion(i+1); // Inicialmente sin posición
             clasificacion.setPuntos(0);
             clasificacion.setPartidosJugados(0);
             clasificacion.setPartidosGanados(0);
@@ -192,6 +195,6 @@ public class CampeonatoServiceImpl implements CampeonatoService{
             clasificacion.setJuegosPerdidos(0);
 
             clasificacionRepository.save(clasificacion);
-        });
+        };
     }
 }
