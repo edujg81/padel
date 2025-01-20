@@ -1,4 +1,5 @@
 C:\Users\Usuario\Documents\Spring\desarrollo\padel\src\main\java\es\laspalmeras\padel\business\service\CampeonatoService.java
+C:\Users\Usuario\Documents\Spring\desarrollo\padel\src\main\java\es\laspalmeras\padel\business\service\ClasificacionService.java
 C:\Users\Usuario\Documents\Spring\desarrollo\padel\src\main\java\es\laspalmeras\padel\business\service\dto\AusenciaDTO.java
 C:\Users\Usuario\Documents\Spring\desarrollo\padel\src\main\java\es\laspalmeras\padel\business\service\dto\CampeonatoDTO.java
 C:\Users\Usuario\Documents\Spring\desarrollo\padel\src\main\java\es\laspalmeras\padel\business\service\dto\ClasificacionDTO.java
@@ -7,6 +8,7 @@ C:\Users\Usuario\Documents\Spring\desarrollo\padel\src\main\java\es\laspalmeras\
 C:\Users\Usuario\Documents\Spring\desarrollo\padel\src\main\java\es\laspalmeras\padel\business\service\dto\JugadorDTO.java
 C:\Users\Usuario\Documents\Spring\desarrollo\padel\src\main\java\es\laspalmeras\padel\business\service\dto\PartidoDTO.java
 C:\Users\Usuario\Documents\Spring\desarrollo\padel\src\main\java\es\laspalmeras\padel\business\service\impl\CampeonatoServiceImpl.java
+C:\Users\Usuario\Documents\Spring\desarrollo\padel\src\main\java\es\laspalmeras\padel\business\service\impl\ClasificacionServiceImpl.java
 C:\Users\Usuario\Documents\Spring\desarrollo\padel\src\main\java\es\laspalmeras\padel\business\service\impl\InscripcionServiceImpl.java
 C:\Users\Usuario\Documents\Spring\desarrollo\padel\src\main\java\es\laspalmeras\padel\business\service\impl\JornadaServiceImpl.java
 C:\Users\Usuario\Documents\Spring\desarrollo\padel\src\main\java\es\laspalmeras\padel\business\service\impl\JugadorServiceImpl.java
@@ -30,6 +32,8 @@ C:\Users\Usuario\Documents\Spring\desarrollo\padel\src\main\java\es\laspalmeras\
 C:\Users\Usuario\Documents\Spring\desarrollo\padel\src\main\java\es\laspalmeras\padel\business\service\model\Partido.java
 C:\Users\Usuario\Documents\Spring\desarrollo\padel\src\main\java\es\laspalmeras\padel\business\service\PartidoService.java
 C:\Users\Usuario\Documents\Spring\desarrollo\padel\src\main\java\es\laspalmeras\padel\config\OpenApiConfig.java
+C:\Users\Usuario\Documents\Spring\desarrollo\padel\src\main\java\es\laspalmeras\padel\config\security\SecurityConfig.java
+C:\Users\Usuario\Documents\Spring\desarrollo\padel\src\main\java\es\laspalmeras\padel\config\security\UserConfig.java
 C:\Users\Usuario\Documents\Spring\desarrollo\padel\src\main\java\es\laspalmeras\padel\config\validator\ErrorResponse.java
 C:\Users\Usuario\Documents\Spring\desarrollo\padel\src\main\java\es\laspalmeras\padel\config\validator\ValidatorCore.java
 C:\Users\Usuario\Documents\Spring\desarrollo\padel\src\main\java\es\laspalmeras\padel\config\WebConfig.java
@@ -46,6 +50,7 @@ C:\Users\Usuario\Documents\Spring\desarrollo\padel\src\main\java\es\laspalmeras\
 C:\Users\Usuario\Documents\Spring\desarrollo\padel\src\main\java\es\laspalmeras\padel\presentation\config\exception\GlobalExceptionHandler.java
 C:\Users\Usuario\Documents\Spring\desarrollo\padel\src\main\java\es\laspalmeras\padel\presentation\config\exception\ResourceNotFoundException.java
 C:\Users\Usuario\Documents\Spring\desarrollo\padel\src\main\java\es\laspalmeras\padel\presentation\controller\CampeonatoController.java
+C:\Users\Usuario\Documents\Spring\desarrollo\padel\src\main\java\es\laspalmeras\padel\presentation\controller\ClasificacionController.java
 C:\Users\Usuario\Documents\Spring\desarrollo\padel\src\main\java\es\laspalmeras\padel\presentation\controller\CustomErrorController.java
 C:\Users\Usuario\Documents\Spring\desarrollo\padel\src\main\java\es\laspalmeras\padel\presentation\controller\InscripcionController.java
 C:\Users\Usuario\Documents\Spring\desarrollo\padel\src\main\java\es\laspalmeras\padel\presentation\controller\JornadaController.java

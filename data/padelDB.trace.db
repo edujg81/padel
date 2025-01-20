@@ -1,0 +1,8 @@
+2025-01-20 11:07:16.524539+01:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Tabla "JUGADOR" ya existe
+Table "JUGADOR" already exists; SQL statement:
+CREATE TABLE JUGADOR ( id BIGINT AUTO_INCREMENT PRIMARY KEY, dni VARCHAR(20) NOT NULL, nombre_completo VARCHAR(255) NOT NULL, telefono VARCHAR(20), email VARCHAR(100), sexo VARCHAR(10) CHECK (sexo IN ('Masculino', 'Femenino')), estado VARCHAR(10) CHECK (estado IN ('Alta', 'Baja')) NOT NULL, lesionado BOOLEAN NOT NULL DEFAULT false, fecha_alta DATE NOT NULL, fecha_baja DATE, UNIQUE(dni) ) [42101-232]
+2025-01-20 11:08:51.371082+01:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Tabla "JUGADOR" ya existe
+Table "JUGADOR" already exists; SQL statement:
+CREATE TABLE JUGADOR ( id BIGINT AUTO_INCREMENT PRIMARY KEY, dni VARCHAR(20) NOT NULL, nombre_completo VARCHAR(255) NOT NULL, telefono VARCHAR(20), email VARCHAR(100), sexo VARCHAR(10) CHECK (sexo IN ('Masculino', 'Femenino')), estado VARCHAR(10) CHECK (estado IN ('Alta', 'Baja')) NOT NULL, lesionado BOOLEAN NOT NULL DEFAULT false, fecha_alta DATE NOT NULL, fecha_baja DATE, UNIQUE(dni) ) [42101-232]
