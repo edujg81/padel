@@ -146,8 +146,8 @@ public class PartidoServiceImpl implements PartidoService{
             setsGanadosEquipo2++;
         }
         
-        if ((partido.getJuegosGanadosEquipo1Set3() != null && (partido.getJuegosGanadosEquipo1Set3() != 0)) && 
-        	(partido.getJuegosGanadosEquipo2Set3() != null && (partido.getJuegosGanadosEquipo2Set3() != 0))) {
+        if (setsGanadosEquipo1 == setsGanadosEquipo2) {
+        
 	        if (partido.getJuegosGanadosEquipo1Set3() > partido.getJuegosGanadosEquipo2Set3()) {
 	            setsGanadosEquipo1++;
 	        } else {
@@ -167,10 +167,13 @@ public class PartidoServiceImpl implements PartidoService{
             partido.setEquipoGanador("Equipo 2");
         }
 
-        partido.setRegistrado(true);
-
-        // Actualizar clasificación del campeonato
-        actualizarClasificacion(partido.getJornada().getCampeonato(), partido);
+        if (!partido.getRegistrado()) {
+	        // Actualizar clasificación del campeonato
+	        actualizarClasificacion(partido.getJornada().getCampeonato(), partido);
+	        partido.setRegistrado(true);
+        } else {
+	    	System.out.println("Este partido ya se encuentra registrado");
+	    }
 
         return partidoMapper.toDto(partidoRepository.save(partido));
     }
