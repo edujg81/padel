@@ -16,6 +16,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -41,7 +42,7 @@ public class Campeonato implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank
+    @NotNull
     @Column(name="anio")
     private Integer year;
     
@@ -49,7 +50,7 @@ public class Campeonato implements Serializable {
     @Pattern(regexp = "Masculino|Femenino|Mixto", message = "Categoría debe ser 'Masculino', 'Femenino' o 'Mixto'")
     private String categoria; // "Masculino", "Femenino", "Mixto"
     
-    @NotBlank
+    @NotNull
     @Pattern(regexp = "\\d+", message = "División debe ser un número entero")
     private Integer division; // 1, 2, 3...
     

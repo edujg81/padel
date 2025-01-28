@@ -7,5 +7,6 @@ import es.laspalmeras.padel.business.service.dto.ClasificacionDTO;
 public interface ClasificacionService {
 
 	List<ClasificacionDTO> findClasificacionByCampeonatoId(Long campeonatoId);
+	List<ClasificacionDTO> obtenerClasificacionOrdenada(Long campeonatoId);
 
 }

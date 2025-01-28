@@ -9,7 +9,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import es.laspalmeras.padel.business.service.ClasificacionService;
 import es.laspalmeras.padel.business.service.dto.ClasificacionDTO;
+import es.laspalmeras.padel.business.service.model.Campeonato;
 import es.laspalmeras.padel.business.service.model.Clasificacion;
+import es.laspalmeras.padel.business.service.model.Partido;
 import es.laspalmeras.padel.integration.repository.ClasificacionRepository;
 
 @Service
@@ -23,6 +25,13 @@ public class ClasificacionServiceImpl implements ClasificacionService {
     public List<ClasificacionDTO> findClasificacionByCampeonatoId(Long campeonatoId) {
         return clasificacionRepository.findByCampeonatoIdOrderByPosicionAsc(campeonatoId)
                 .stream()
+                .map(this::toDto)
+                .collect(Collectors.toList());
+    }
+    
+    public List<ClasificacionDTO> obtenerClasificacionOrdenada(Long campeonatoId) {
+        return clasificacionRepository.findClasificacionCompletaOrdenada(campeonatoId)
+        		.stream()
                 .map(this::toDto)
                 .collect(Collectors.toList());
     }
@@ -42,5 +51,26 @@ public class ClasificacionServiceImpl implements ClasificacionService {
         dto.setJuegosGanados(clasificacion.getJuegosGanados());
         dto.setJuegosPerdidos(clasificacion.getJuegosPerdidos());
         return dto;
+    }
+    
+    @Transactional
+    public void actualizarPosiciones(Campeonato campeonato) {
+        List<Clasificacion> clasificaciones = clasificacionRepository
+            .findClasificacionCompletaOrdenada(campeonato.getId());
+
+        int posicion = 1;
+        for (Clasificacion c : clasificaciones) {
+            c.setPosicion(posicion++);
+        }
+        
+        clasificacionRepository.saveAll(clasificaciones);
+    }
+    
+    // Método para usar después de actualizar resultados
+    @Transactional
+    public void procesarResultadoPartido(Partido partido) {
+        // 1. Actualizar estadísticas de los jugadores
+        // 2. Actualizar posiciones
+        actualizarPosiciones(partido.getJornada().getCampeonato());
     }
 }
