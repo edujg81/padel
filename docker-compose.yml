@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  mysql_db:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: padel_db
+    volumes:
+      - mysql_data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    networks:
+      - padel-network
+
+  padel-app:
+    build: .
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
+      DB_URL: mysql_db
+      DB_PORT: 3306
+      DB_NAME: padel_db
+      DB_USER: root
+      DB_PASSWORD: root
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mysql_db
+    networks:
+      - padel-network
+
+volumes:
+  mysql_data:
+
+networks:
+  padel-network:
+    driver: bridge
