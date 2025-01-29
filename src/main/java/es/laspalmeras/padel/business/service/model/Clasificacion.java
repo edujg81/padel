@@ -75,7 +75,7 @@ public class Clasificacion implements Serializable {
     @Column(name="juegos_perdidos")
     @Min(value = 0, message = "Los juegos perdidos no pueden ser negativos")
     private int juegosPerdidos;
-
+    
     // Método para actualizar posición
     @PreUpdate
     @PrePersist

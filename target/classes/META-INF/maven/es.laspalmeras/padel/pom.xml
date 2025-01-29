@@ -140,7 +140,7 @@
 			</plugin>
 			<plugin>
 	            <groupId>org.apache.maven.plugins</groupId>
-	            <artifactId>maven-compiler-plugin</artifactId><!--$NO-MVN-MAN-VER$-->
+	            <artifactId>maven-compiler-plugin</artifactId>
 	            <configuration>
 	                <annotationProcessorPaths>
 	                    <path>

@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-01-29T09:29:31+0100",
+    date = "2025-01-29T10:31:21+0100",
     comments = "version: 1.6.3, compiler: Eclipse JDT (IDE) 3.40.0.v20241112-0530, environment: Java 21.0.5 (Eclipse Adoptium)"
 )
 @Component
@@ -23,8 +23,20 @@ public class ClasificacionMapperImpl implements ClasificacionMapper {
 
         ClasificacionDTO clasificacionDTO = new ClasificacionDTO();
 
-        clasificacionDTO.setCampeonatoId( clasificacionCampeonatoId( clasificacion ) );
-        clasificacionDTO.setJugadorId( clasificacionJugadorId( clasificacion ) );
+        Long id = clasificacionCampeonatoId( clasificacion );
+        if ( id != null ) {
+            clasificacionDTO.setCampeonatoId( id );
+        }
+        else {
+            clasificacionDTO.setCampeonatoId( null );
+        }
+        Long id1 = clasificacionJugadorId( clasificacion );
+        if ( id1 != null ) {
+            clasificacionDTO.setJugadorId( id1 );
+        }
+        else {
+            clasificacionDTO.setJugadorId( null );
+        }
         clasificacionDTO.setId( clasificacion.getId() );
         clasificacionDTO.setJuegosGanados( clasificacion.getJuegosGanados() );
         clasificacionDTO.setJuegosPerdidos( clasificacion.getJuegosPerdidos() );
@@ -47,8 +59,8 @@ public class ClasificacionMapperImpl implements ClasificacionMapper {
 
         Clasificacion clasificacion = new Clasificacion();
 
-        clasificacion.setCampeonato( clasificacionDTOToCampeonato( clasificacionDTO ) );
-        clasificacion.setJugador( clasificacionDTOToJugador( clasificacionDTO ) );
+        clasificacion.setCampeonato( ClasificacionMapper.fromIdToCampeonato( clasificacionDTO.getCampeonatoId() ) );
+        clasificacion.setJugador( ClasificacionMapper.fromIdToJugador( clasificacionDTO.getJugadorId() ) );
         clasificacion.setId( clasificacionDTO.getId() );
         clasificacion.setJuegosGanados( clasificacionDTO.getJuegosGanados() );
         clasificacion.setJuegosPerdidos( clasificacionDTO.getJuegosPerdidos() );
@@ -77,29 +89,5 @@ public class ClasificacionMapperImpl implements ClasificacionMapper {
             return null;
         }
         return jugador.getId();
-    }
-
-    protected Campeonato clasificacionDTOToCampeonato(ClasificacionDTO clasificacionDTO) {
-        if ( clasificacionDTO == null ) {
-            return null;
-        }
-
-        Campeonato campeonato = new Campeonato();
-
-        campeonato.setId( clasificacionDTO.getCampeonatoId() );
-
-        return campeonato;
-    }
-
-    protected Jugador clasificacionDTOToJugador(ClasificacionDTO clasificacionDTO) {
-        if ( clasificacionDTO == null ) {
-            return null;
-        }
-
-        Jugador jugador = new Jugador();
-
-        jugador.setId( clasificacionDTO.getJugadorId() );
-
-        return jugador;
     }
 }

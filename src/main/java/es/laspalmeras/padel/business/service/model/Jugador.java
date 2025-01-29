@@ -60,4 +60,7 @@ public class Jugador implements Serializable {
     
     private LocalDate fechaAlta;
     private LocalDate fechaBaja;
+    
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 }
