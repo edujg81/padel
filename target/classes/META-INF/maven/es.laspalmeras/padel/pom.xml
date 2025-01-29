@@ -160,10 +160,15 @@
             	</configuration>
         	</plugin>
         	<plugin>
+	            <groupId>org.apache.maven.plugins</groupId>
+	            <artifactId>maven-site-plugin</artifactId>
+	            <version>3.12.1</version>
+        	</plugin>
+        	<plugin>
       			<groupId>org.apache.maven.plugins</groupId>
       			<artifactId>maven-javadoc-plugin</artifactId>
       			<configuration>
-        			<source>${java.version}</source>
+        			<source>3.5.0</source>
         			<!-- No fallar si falta documentación Javadoc -->
         			<failOnError>false</failOnError>
         			<additionalJOptions>-Xdoclint:none</additionalJOptions>
