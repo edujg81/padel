@@ -21,7 +21,9 @@ public interface CampeonatoMapper {
         @Mapping(source = "estado", target = "estado"),
         @Mapping(source = "activo", target = "activo"),
         @Mapping(source = "puntosPorVictoria", target = "puntosPorVictoria"),
-        @Mapping(source = "puntosPorDerrota", target = "puntosPorDerrota")
+        @Mapping(source = "puntosPorDerrota", target = "puntosPorDerrota"),
+		@Mapping(source = "jornadas", target = "jornadaIds", ignore = true),
+	    @Mapping(source = "inscripciones", target = "inscripcionIds", ignore = true)
     })
     CampeonatoDTO toDto(Campeonato campeonato);
     

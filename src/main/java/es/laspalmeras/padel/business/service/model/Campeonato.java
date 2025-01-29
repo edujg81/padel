@@ -18,27 +18,32 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
-import lombok.Data;
+//import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
+//import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
 /**
  * Representa un campeonato de padel.
  */
-@SuppressWarnings("serial")
+
+//@Data
+//@NoArgsConstructor
+@Entity
+@Table(name="CAMPEONATO")
 @Getter
 @Setter
 @EqualsAndHashCode(of={"year", "categoria", "division"})
 @ToString
-@Data
-@NoArgsConstructor
-@Entity
-@Table(name="CAMPEONATO")
 public class Campeonato implements Serializable {
-    @Id
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -67,7 +72,7 @@ public class Campeonato implements Serializable {
     private List<Jornada> jornadas;
     
     @OneToMany(mappedBy = "campeonato", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonIgnoreProperties("campeonato")
+    //@JsonIgnoreProperties("campeonato")
     private List<Inscripcion> inscripciones;
     
     public Long getId() { return id; }
