@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-01-29T10:31:21+0100",
+    date = "2025-01-29T12:17:34+0100",
     comments = "version: 1.6.3, compiler: Eclipse JDT (IDE) 3.40.0.v20241112-0530, environment: Java 21.0.5 (Eclipse Adoptium)"
 )
 @Component
@@ -19,22 +19,18 @@ public class JugadorMapperImpl implements JugadorMapper {
             return null;
         }
 
-        String nombreCompleto = null;
-        Long id = null;
-
-        nombreCompleto = jugador.getNombreCompleto();
-        id = jugador.getId();
-
-        JugadorDTO jugadorDTO = new JugadorDTO( id, nombreCompleto );
+        JugadorDTO jugadorDTO = new JugadorDTO();
 
         jugadorDTO.setDni( jugador.getDni() );
-        jugadorDTO.setTelefono( jugador.getTelefono() );
         jugadorDTO.setEmail( jugador.getEmail() );
-        jugadorDTO.setSexo( jugador.getSexo() );
         jugadorDTO.setEstado( jugador.getEstado() );
-        jugadorDTO.setLesionado( jugador.getLesionado() );
         jugadorDTO.setFechaAlta( jugador.getFechaAlta() );
         jugadorDTO.setFechaBaja( jugador.getFechaBaja() );
+        jugadorDTO.setId( jugador.getId() );
+        jugadorDTO.setLesionado( jugador.getLesionado() );
+        jugadorDTO.setNombreCompleto( jugador.getNombreCompleto() );
+        jugadorDTO.setSexo( jugador.getSexo() );
+        jugadorDTO.setTelefono( jugador.getTelefono() );
 
         return jugadorDTO;
     }
@@ -48,15 +44,15 @@ public class JugadorMapperImpl implements JugadorMapper {
         Jugador jugador = new Jugador();
 
         jugador.setDni( jugadorDTO.getDni() );
-        jugador.setNombreCompleto( jugadorDTO.getNombreCompleto() );
-        jugador.setTelefono( jugadorDTO.getTelefono() );
         jugador.setEmail( jugadorDTO.getEmail() );
-        jugador.setSexo( jugadorDTO.getSexo() );
         jugador.setEstado( jugadorDTO.getEstado() );
-        jugador.setLesionado( jugadorDTO.getLesionado() );
         jugador.setFechaAlta( jugadorDTO.getFechaAlta() );
         jugador.setFechaBaja( jugadorDTO.getFechaBaja() );
         jugador.setId( jugadorDTO.getId() );
+        jugador.setLesionado( jugadorDTO.getLesionado() );
+        jugador.setNombreCompleto( jugadorDTO.getNombreCompleto() );
+        jugador.setSexo( jugadorDTO.getSexo() );
+        jugador.setTelefono( jugadorDTO.getTelefono() );
 
         return jugador;
     }

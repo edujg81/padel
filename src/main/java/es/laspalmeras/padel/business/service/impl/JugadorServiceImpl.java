@@ -17,13 +17,14 @@ import es.laspalmeras.padel.business.service.model.Campeonato;
 import es.laspalmeras.padel.business.service.model.Jugador;
 import es.laspalmeras.padel.integration.repository.CampeonatoRepository;
 import es.laspalmeras.padel.integration.repository.JugadorRepository;
+import es.laspalmeras.padel.presentation.config.exception.DNIDuplicadoException;
 import es.laspalmeras.padel.presentation.config.exception.ResourceNotFoundException;
 
 @Service
 public class JugadorServiceImpl implements JugadorService{
 
 	@Autowired
-    private JugadorRepository jugadorRepository;
+	private JugadorRepository jugadorRepository;
 	
 	@Autowired
 	private CampeonatoRepository campeonatoRepository;
@@ -31,9 +32,18 @@ public class JugadorServiceImpl implements JugadorService{
 	@Autowired
 	private JugadorMapper jugadorMapper;
 	
+	public JugadorServiceImpl(JugadorRepository jugadorRepo, CampeonatoRepository campRepo, JugadorMapper jugadorMap) {
+	    this.jugadorRepository = jugadorRepo;
+	    this.campeonatoRepository = campRepo;
+	    this.jugadorMapper = jugadorMap;
+	}
+	
 	@Override
 	@Transactional
 	public Long create(JugadorDTO jugadorDTO) {
+		if (jugadorRepository.findByDni(jugadorDTO.getDni()) != null) {
+	        throw new DNIDuplicadoException(jugadorDTO.getDni());
+	    }
 		Jugador jugador = jugadorMapper.toEntity(jugadorDTO);
 		jugador.setFechaAlta(LocalDate.now());
 	    jugador.setEstado("Alta");
@@ -58,9 +68,9 @@ public class JugadorServiceImpl implements JugadorService{
 	}
 
 	@Override
-	public JugadorDTO getJugadorById(Long id) {
+	public Optional<JugadorDTO> getJugadorById(Long id) {
 		Optional<Jugador> jugador = jugadorRepository.findById(id);
-        return jugador.map(jugadorMapper::toDto).orElse(null);
+        return Optional.ofNullable(jugador.map(jugadorMapper::toDto).orElse(null));
 	}
 	
 	@Override
@@ -126,12 +136,15 @@ public class JugadorServiceImpl implements JugadorService{
         jugadorRepository.deleteAll(jugadoresParaEliminar);
     }
 
-	@Override
-	public Optional<JugadorDTO> read(Long id) {
-		Optional<Jugador> jugador = jugadorRepository.findById(id);
-        return Optional.ofNullable(jugador.map(jugadorMapper::toDto).orElse(null));
-	}
+//	@Override
+//	public Optional<JugadorDTO> read(Long id) {
+//		Optional<Jugador> jugador = jugadorRepository.findById(id);
+//        return Optional.ofNullable(jugador.map(jugadorMapper::toDto).orElse(null));
+//	}
 
+	/**
+	 *
+	 */
 	@Override
 	public List<JugadorDTO> getJugadoresDisponiblesParaCampeonato(Long campeonatoId) {
         // Obtener el campeonato por id

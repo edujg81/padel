@@ -1,5 +1,6 @@
 package es.laspalmeras.padel.presentation.controller;
 
+import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import es.laspalmeras.padel.business.service.JugadorService;
 import es.laspalmeras.padel.business.service.dto.JugadorDTO;
 
@@ -28,15 +30,18 @@ public class JugadorController {
 
 	@Operation(summary = "Crear un nuevo jugador")
 	@PostMapping
-	public ResponseEntity<Long> createJugador(@RequestBody JugadorDTO jugador) {
-        Long id = jugadorService.create(jugador);
-        return ResponseEntity.ok(id);
+	public ResponseEntity<Long> createJugador(@Valid @RequestBody JugadorDTO jugador) {
+//        Long id = jugadorService.create(jugador);
+//        return ResponseEntity.ok(id);
+		return ResponseEntity
+		        .created(URI.create("/jugadores/" + jugador.getId()))
+		        .body(jugadorService.create(jugador));
     }
 
 	@Operation(summary = "Obtener un jugador por ID")
 	@GetMapping("/{id}")
 	public ResponseEntity<JugadorDTO> getJugadorById(@PathVariable Long id) {
-		Optional<JugadorDTO> jugador = jugadorService.read(id);
+		Optional<JugadorDTO> jugador = jugadorService.getJugadorById(id);
         return jugador.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
 	}
 	

@@ -2,7 +2,13 @@ package es.laspalmeras.padel.business.service.model;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+
+//import org.springframework.data.annotation.CreatedDate;
+//import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
 import jakarta.persistence.Entity;
+import jakarta.persistence.EntityListeners;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -20,15 +26,20 @@ import lombok.ToString;
 /**
  * Representa a un jugador registrado en el Club de Padel
  */
-@SuppressWarnings("serial")
+@Entity
+@Table(name="JUGADOR")
 @Getter
 @Setter
 @EqualsAndHashCode(of="dni")
 @ToString
-@Entity
-@Table(name="JUGADOR")
+@EntityListeners(AuditingEntityListener.class)
 public class Jugador implements Serializable {
-    @Id
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -60,6 +71,12 @@ public class Jugador implements Serializable {
     
     private LocalDate fechaAlta;
     private LocalDate fechaBaja;
+    
+//    @CreatedDate
+//    private LocalDate fechaCreacion;
+//    
+//    @LastModifiedDate
+//    private LocalDate fechaModificacion;
     
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }

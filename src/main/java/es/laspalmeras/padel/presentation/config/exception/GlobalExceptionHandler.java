@@ -19,6 +19,15 @@ public class GlobalExceptionHandler {
         );
         return new ResponseEntity<>(errorDetails, HttpStatus.NOT_FOUND);
     }
+    
+    @ExceptionHandler(DNIDuplicadoException.class)
+    public ResponseEntity<ErrorDetails> dniDuplicadoException(DNIDuplicadoException ex, WebRequest request) {
+        ErrorDetails errorDetails = new ErrorDetails(
+            ex.getMessage(),
+            request.getDescription(false)
+        );
+        return new ResponseEntity<>(errorDetails, HttpStatus.FOUND);
+    }
 
     @ExceptionHandler(BadRequestException.class)
     public ResponseEntity<ErrorDetails> badRequestException(BadRequestException ex, WebRequest request) {

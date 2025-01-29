@@ -42,6 +42,8 @@ public class JugadorDTO {
     private LocalDate fechaAlta;
     private LocalDate fechaBaja;
     
+    public JugadorDTO() {}
+    
     public JugadorDTO(Long id, String nombreCompleto) {
     	this.id = id;
         this.nombreCompleto = nombreCompleto;

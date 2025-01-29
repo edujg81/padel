@@ -46,6 +46,7 @@ C:\Users\Usuario\Documents\Spring\desarrollo\padel\src\main\java\es\laspalmeras\
 C:\Users\Usuario\Documents\Spring\desarrollo\padel\src\main\java\es\laspalmeras\padel\integration\repository\PartidoRepository.java
 C:\Users\Usuario\Documents\Spring\desarrollo\padel\src\main\java\es\laspalmeras\padel\PadelApplication.java
 C:\Users\Usuario\Documents\Spring\desarrollo\padel\src\main\java\es\laspalmeras\padel\presentation\config\exception\BadRequestException.java
+C:\Users\Usuario\Documents\Spring\desarrollo\padel\src\main\java\es\laspalmeras\padel\presentation\config\exception\DNIDuplicadoException.java
 C:\Users\Usuario\Documents\Spring\desarrollo\padel\src\main\java\es\laspalmeras\padel\presentation\config\exception\dto\ErrorDetails.java
 C:\Users\Usuario\Documents\Spring\desarrollo\padel\src\main\java\es\laspalmeras\padel\presentation\config\exception\GlobalExceptionHandler.java
 C:\Users\Usuario\Documents\Spring\desarrollo\padel\src\main\java\es\laspalmeras\padel\presentation\config\exception\ResourceNotFoundException.java
