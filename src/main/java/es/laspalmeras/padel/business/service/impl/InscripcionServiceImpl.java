@@ -10,11 +10,11 @@ import org.springframework.transaction.annotation.Transactional;
 import es.laspalmeras.padel.business.service.InscripcionService;
 import es.laspalmeras.padel.business.service.model.Campeonato;
 import es.laspalmeras.padel.business.service.model.Inscripcion;
-import es.laspalmeras.padel.business.service.model.Jugador;
+import es.laspalmeras.padel.exception.ResourceNotFoundException;
 import es.laspalmeras.padel.integration.repository.CampeonatoRepository;
 import es.laspalmeras.padel.integration.repository.InscripcionRepository;
-import es.laspalmeras.padel.integration.repository.JugadorRepository;
-import es.laspalmeras.padel.presentation.config.exception.ResourceNotFoundException;
+import es.laspalmeras.padel.jugador.Jugador;
+import es.laspalmeras.padel.jugador.JugadorRepository;
 
 /**
  * Implementación del servicio de gestión de inscripciones.

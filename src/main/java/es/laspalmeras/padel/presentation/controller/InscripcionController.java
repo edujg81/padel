@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import es.laspalmeras.padel.business.service.InscripcionService;
 import es.laspalmeras.padel.business.service.model.Inscripcion;
-import es.laspalmeras.padel.presentation.config.exception.ResourceNotFoundException;
+import es.laspalmeras.padel.exception.ResourceNotFoundException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 

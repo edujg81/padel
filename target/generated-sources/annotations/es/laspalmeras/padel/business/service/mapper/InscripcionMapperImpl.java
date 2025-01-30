@@ -3,13 +3,13 @@ package es.laspalmeras.padel.business.service.mapper;
 import es.laspalmeras.padel.business.service.dto.InscripcionDTO;
 import es.laspalmeras.padel.business.service.model.Campeonato;
 import es.laspalmeras.padel.business.service.model.Inscripcion;
-import es.laspalmeras.padel.business.service.model.Jugador;
+import es.laspalmeras.padel.jugador.Jugador;
 import javax.annotation.processing.Generated;
 import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-01-29T15:09:23+0100",
+    date = "2025-01-30T15:50:15+0100",
     comments = "version: 1.6.3, compiler: Eclipse JDT (IDE) 3.40.0.v20241112-0530, environment: Java 21.0.5 (Eclipse Adoptium)"
 )
 @Component

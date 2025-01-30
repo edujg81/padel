@@ -14,10 +14,10 @@ import es.laspalmeras.padel.business.service.mapper.CampeonatoMapper;
 import es.laspalmeras.padel.business.service.model.Campeonato;
 import es.laspalmeras.padel.business.service.model.Clasificacion;
 import es.laspalmeras.padel.business.service.model.Inscripcion;
+import es.laspalmeras.padel.exception.ResourceNotFoundException;
 import es.laspalmeras.padel.integration.repository.CampeonatoRepository;
 import es.laspalmeras.padel.integration.repository.ClasificacionRepository;
 import es.laspalmeras.padel.integration.repository.InscripcionRepository;
-import es.laspalmeras.padel.presentation.config.exception.ResourceNotFoundException;
 
 /**
  * Implementación del servicio de gestión de campeonatos.

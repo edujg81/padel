@@ -10,6 +10,7 @@ import es.laspalmeras.padel.business.service.dto.JornadaDTO;
 import es.laspalmeras.padel.business.service.dto.PartidoDTO;
 import es.laspalmeras.padel.business.service.model.Jornada;
 import es.laspalmeras.padel.business.service.model.Partido;
+import es.laspalmeras.padel.jugador.JugadorMapper;
 
 @Mapper(componentModel = "spring", uses = {JugadorMapper.class, PartidoMapper.class})
 public interface JornadaMapper {

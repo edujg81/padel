@@ -2,6 +2,7 @@ package es.laspalmeras.padel.business.service.model;
 
 import java.io.Serializable;
 
+import es.laspalmeras.padel.jugador.Jugador;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;

@@ -15,14 +15,14 @@ import es.laspalmeras.padel.business.service.model.Campeonato;
 import es.laspalmeras.padel.business.service.model.Clasificacion;
 import es.laspalmeras.padel.business.service.model.Inscripcion;
 import es.laspalmeras.padel.business.service.model.Jornada;
-import es.laspalmeras.padel.business.service.model.Jugador;
 import es.laspalmeras.padel.business.service.model.Partido;
+import es.laspalmeras.padel.exception.ResourceNotFoundException;
 import es.laspalmeras.padel.integration.repository.CampeonatoRepository;
 import es.laspalmeras.padel.integration.repository.ClasificacionRepository;
 import es.laspalmeras.padel.integration.repository.InscripcionRepository;
 import es.laspalmeras.padel.integration.repository.JornadaRepository;
 import es.laspalmeras.padel.integration.repository.PartidoRepository;
-import es.laspalmeras.padel.presentation.config.exception.ResourceNotFoundException;
+import es.laspalmeras.padel.jugador.Jugador;
 import jakarta.transaction.Transactional;
 
 /**

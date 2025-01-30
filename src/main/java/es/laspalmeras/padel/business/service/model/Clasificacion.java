@@ -2,6 +2,7 @@ package es.laspalmeras.padel.business.service.model;
 
 import java.io.Serializable;
 
+import es.laspalmeras.padel.jugador.Jugador;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
