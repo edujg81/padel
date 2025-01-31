@@ -5,8 +5,10 @@ import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 import org.mapstruct.factory.Mappers;
 
-import es.laspalmeras.padel.campeonato.Campeonato;
-import es.laspalmeras.padel.jugador.Jugador;
+import es.laspalmeras.padel.campeonato.model.Campeonato;
+import es.laspalmeras.padel.clasificacion.model.Clasificacion;
+import es.laspalmeras.padel.clasificacion.model.dto.ClasificacionDTO;
+import es.laspalmeras.padel.jugador.model.Jugador;
 
 @Mapper(componentModel = "spring")
 public interface ClasificacionMapper {

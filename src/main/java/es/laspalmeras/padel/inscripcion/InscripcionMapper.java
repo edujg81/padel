@@ -4,6 +4,9 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
+import es.laspalmeras.padel.inscripcion.model.Inscripcion;
+import es.laspalmeras.padel.inscripcion.model.dto.InscripcionDTO;
+
 @Mapper(componentModel = "spring")
 public interface InscripcionMapper {
     InscripcionMapper INSTANCE = Mappers.getMapper(InscripcionMapper.class);

@@ -3,7 +3,8 @@ package es.laspalmeras.padel.partido;
 import java.util.List;
 import java.util.Optional;
 
-import es.laspalmeras.padel.ausencia.AusenciaDTO;
+import es.laspalmeras.padel.ausencia.model.dto.AusenciaDTO;
+import es.laspalmeras.padel.partido.model.dto.PartidoDTO;
 
 public interface PartidoService {
 	

@@ -7,8 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import es.laspalmeras.padel.campeonato.Campeonato;
-import es.laspalmeras.padel.partido.Partido;
+import es.laspalmeras.padel.campeonato.model.Campeonato;
+import es.laspalmeras.padel.clasificacion.model.Clasificacion;
+import es.laspalmeras.padel.clasificacion.model.dto.ClasificacionDTO;
+import es.laspalmeras.padel.partido.model.Partido;
 
 @Service
 public class ClasificacionServiceImpl implements ClasificacionService {

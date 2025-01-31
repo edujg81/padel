@@ -1,4 +1,4 @@
-package es.laspalmeras.padel.jugador;
+package es.laspalmeras.padel.jugador.model.dto;
 
 import java.time.LocalDate;
 

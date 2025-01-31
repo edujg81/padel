@@ -3,6 +3,8 @@ package es.laspalmeras.padel.inscripcion;
 import java.util.List;
 import java.util.Optional;
 
+import es.laspalmeras.padel.inscripcion.model.Inscripcion;
+
 public interface InscripcionService {
 
     Inscripcion saveInscripcion(Inscripcion inscripcion);

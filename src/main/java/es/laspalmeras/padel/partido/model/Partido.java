@@ -1,4 +1,4 @@
-package es.laspalmeras.padel.partido;
+package es.laspalmeras.padel.partido.model;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -7,9 +7,9 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import es.laspalmeras.padel.ausencia.Ausencia;
-import es.laspalmeras.padel.jornada.Jornada;
-import es.laspalmeras.padel.jugador.Jugador;
+import es.laspalmeras.padel.ausencia.model.Ausencia;
+import es.laspalmeras.padel.jornada.model.Jornada;
+import es.laspalmeras.padel.jugador.model.Jugador;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

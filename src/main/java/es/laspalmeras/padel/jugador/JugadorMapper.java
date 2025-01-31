@@ -4,6 +4,9 @@ import org.mapstruct.Mapper;
 //import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
+import es.laspalmeras.padel.jugador.model.Jugador;
+import es.laspalmeras.padel.jugador.model.dto.JugadorDTO;
+
 @Mapper(componentModel = "spring")
 public interface JugadorMapper {
     JugadorMapper INSTANCE = Mappers.getMapper(JugadorMapper.class);

@@ -7,11 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import es.laspalmeras.padel.campeonato.Campeonato;
 import es.laspalmeras.padel.campeonato.CampeonatoRepository;
+import es.laspalmeras.padel.campeonato.model.Campeonato;
 import es.laspalmeras.padel.exception.ResourceNotFoundException;
-import es.laspalmeras.padel.jugador.Jugador;
+import es.laspalmeras.padel.inscripcion.model.Inscripcion;
 import es.laspalmeras.padel.jugador.JugadorRepository;
+import es.laspalmeras.padel.jugador.model.Jugador;
 
 /**
  * Implementación del servicio de gestión de inscripciones.

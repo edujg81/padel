@@ -1,9 +1,9 @@
-package es.laspalmeras.padel.clasificacion;
+package es.laspalmeras.padel.clasificacion.model;
 
 import java.io.Serializable;
 
-import es.laspalmeras.padel.campeonato.Campeonato;
-import es.laspalmeras.padel.jugador.Jugador;
+import es.laspalmeras.padel.campeonato.model.Campeonato;
+import es.laspalmeras.padel.jugador.model.Jugador;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;

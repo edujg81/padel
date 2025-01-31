@@ -1,4 +1,4 @@
-package es.laspalmeras.padel.campeonato;
+package es.laspalmeras.padel.campeonato.model;
 
 import java.io.Serializable;
 import java.util.List;
@@ -6,8 +6,8 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
-import es.laspalmeras.padel.inscripcion.Inscripcion;
-import es.laspalmeras.padel.jornada.Jornada;
+import es.laspalmeras.padel.inscripcion.model.Inscripcion;
+import es.laspalmeras.padel.jornada.model.Jornada;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

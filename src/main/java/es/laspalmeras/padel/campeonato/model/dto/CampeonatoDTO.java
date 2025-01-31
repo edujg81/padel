@@ -1,4 +1,4 @@
-package es.laspalmeras.padel.campeonato;
+package es.laspalmeras.padel.campeonato.model.dto;
 
 import java.util.List;
 

@@ -8,6 +8,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import es.laspalmeras.padel.jugador.model.Jugador;
+
 @Repository
 public interface JugadorRepository extends JpaRepository<Jugador, Long> {
 	Optional<Jugador> findByDni(String dni);

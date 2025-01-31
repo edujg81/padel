@@ -8,16 +8,18 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import es.laspalmeras.padel.campeonato.Campeonato;
 import es.laspalmeras.padel.campeonato.CampeonatoRepository;
-import es.laspalmeras.padel.clasificacion.Clasificacion;
+import es.laspalmeras.padel.campeonato.model.Campeonato;
 import es.laspalmeras.padel.clasificacion.ClasificacionRepository;
+import es.laspalmeras.padel.clasificacion.model.Clasificacion;
 import es.laspalmeras.padel.exception.ResourceNotFoundException;
-import es.laspalmeras.padel.inscripcion.Inscripcion;
 import es.laspalmeras.padel.inscripcion.InscripcionRepository;
-import es.laspalmeras.padel.jugador.Jugador;
-import es.laspalmeras.padel.partido.Partido;
+import es.laspalmeras.padel.inscripcion.model.Inscripcion;
+import es.laspalmeras.padel.jornada.model.Jornada;
+import es.laspalmeras.padel.jornada.model.dto.JornadaDTO;
+import es.laspalmeras.padel.jugador.model.Jugador;
 import es.laspalmeras.padel.partido.PartidoRepository;
+import es.laspalmeras.padel.partido.model.Partido;
 import jakarta.transaction.Transactional;
 
 /**

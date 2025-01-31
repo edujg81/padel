@@ -6,10 +6,12 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
+import es.laspalmeras.padel.jornada.model.Jornada;
+import es.laspalmeras.padel.jornada.model.dto.JornadaDTO;
 import es.laspalmeras.padel.jugador.JugadorMapper;
-import es.laspalmeras.padel.partido.Partido;
-import es.laspalmeras.padel.partido.PartidoDTO;
 import es.laspalmeras.padel.partido.PartidoMapper;
+import es.laspalmeras.padel.partido.model.Partido;
+import es.laspalmeras.padel.partido.model.dto.PartidoDTO;
 
 @Mapper(componentModel = "spring", uses = {JugadorMapper.class, PartidoMapper.class})
 public interface JornadaMapper {

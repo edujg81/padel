@@ -3,6 +3,9 @@ package es.laspalmeras.padel.campeonato;
 import java.util.List;
 import java.util.Optional;
 
+import es.laspalmeras.padel.campeonato.model.Campeonato;
+import es.laspalmeras.padel.campeonato.model.dto.CampeonatoDTO;
+
 public interface CampeonatoService {
 
     Campeonato saveCampeonato(Campeonato campeonato);

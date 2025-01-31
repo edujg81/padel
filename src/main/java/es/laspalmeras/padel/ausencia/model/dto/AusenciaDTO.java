@@ -1,5 +1,6 @@
-package es.laspalmeras.padel.ausencia;
+package es.laspalmeras.padel.ausencia.model.dto;
 
+import es.laspalmeras.padel.ausencia.model.Ausencia;
 import lombok.Data;
 
 /**

@@ -1,9 +1,9 @@
-package es.laspalmeras.padel.ausencia;
+package es.laspalmeras.padel.ausencia.model;
 
 import java.io.Serializable;
 
-import es.laspalmeras.padel.jugador.Jugador;
-import es.laspalmeras.padel.partido.Partido;
+import es.laspalmeras.padel.jugador.model.Jugador;
+import es.laspalmeras.padel.partido.model.Partido;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;

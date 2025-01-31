@@ -1,4 +1,4 @@
-package es.laspalmeras.padel.inscripcion;
+package es.laspalmeras.padel.inscripcion.model.dto;
 
 import lombok.Data;
 

@@ -1,4 +1,4 @@
-package es.laspalmeras.padel.clasificacion;
+package es.laspalmeras.padel.clasificacion.model.dto;
 
 import lombok.Data;
 

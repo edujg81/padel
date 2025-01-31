@@ -8,20 +8,22 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import es.laspalmeras.padel.ausencia.Ausencia;
-import es.laspalmeras.padel.ausencia.AusenciaDTO;
 import es.laspalmeras.padel.ausencia.AusenciaMapper;
 import es.laspalmeras.padel.ausencia.AusenciaRepository;
-import es.laspalmeras.padel.campeonato.Campeonato;
-import es.laspalmeras.padel.clasificacion.Clasificacion;
+import es.laspalmeras.padel.ausencia.model.Ausencia;
+import es.laspalmeras.padel.ausencia.model.dto.AusenciaDTO;
+import es.laspalmeras.padel.campeonato.model.Campeonato;
 import es.laspalmeras.padel.clasificacion.ClasificacionRepository;
+import es.laspalmeras.padel.clasificacion.model.Clasificacion;
 import es.laspalmeras.padel.exception.ResourceNotFoundException;
-import es.laspalmeras.padel.inscripcion.Inscripcion;
 import es.laspalmeras.padel.inscripcion.InscripcionRepository;
-import es.laspalmeras.padel.jornada.Jornada;
+import es.laspalmeras.padel.inscripcion.model.Inscripcion;
 import es.laspalmeras.padel.jornada.JornadaRepository;
-import es.laspalmeras.padel.jugador.Jugador;
+import es.laspalmeras.padel.jornada.model.Jornada;
 import es.laspalmeras.padel.jugador.JugadorRepository;
+import es.laspalmeras.padel.jugador.model.Jugador;
+import es.laspalmeras.padel.partido.model.Partido;
+import es.laspalmeras.padel.partido.model.dto.PartidoDTO;
 import jakarta.transaction.Transactional;
 
 @Service

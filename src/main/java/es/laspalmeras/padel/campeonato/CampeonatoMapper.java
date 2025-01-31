@@ -5,6 +5,9 @@ import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
 import org.mapstruct.factory.Mappers;
 
+import es.laspalmeras.padel.campeonato.model.Campeonato;
+import es.laspalmeras.padel.campeonato.model.dto.CampeonatoDTO;
+
 @Mapper(componentModel = "spring")
 public interface CampeonatoMapper {
     

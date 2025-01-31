@@ -1,4 +1,4 @@
-package es.laspalmeras.padel.jornada;
+package es.laspalmeras.padel.jornada.model;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -8,8 +8,8 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
-import es.laspalmeras.padel.campeonato.Campeonato;
-import es.laspalmeras.padel.partido.Partido;
+import es.laspalmeras.padel.campeonato.model.Campeonato;
+import es.laspalmeras.padel.partido.model.Partido;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;

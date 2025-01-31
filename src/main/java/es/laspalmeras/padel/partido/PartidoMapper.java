@@ -4,6 +4,9 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
+import es.laspalmeras.padel.partido.model.Partido;
+import es.laspalmeras.padel.partido.model.dto.PartidoDTO;
+
 @Mapper(componentModel = "spring")
 public interface PartidoMapper {
     PartidoMapper INSTANCE = Mappers.getMapper(PartidoMapper.class);

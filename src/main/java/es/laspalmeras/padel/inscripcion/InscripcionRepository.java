@@ -6,6 +6,8 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import es.laspalmeras.padel.inscripcion.model.Inscripcion;
+
 @Repository
 public interface InscripcionRepository extends JpaRepository<Inscripcion, Long> {
 	

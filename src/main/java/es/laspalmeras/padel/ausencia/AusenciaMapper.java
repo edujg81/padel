@@ -4,6 +4,9 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
+import es.laspalmeras.padel.ausencia.model.Ausencia;
+import es.laspalmeras.padel.ausencia.model.dto.AusenciaDTO;
+
 @Mapper(componentModel = "spring")
 public interface AusenciaMapper {
     AusenciaMapper INSTANCE = Mappers.getMapper(AusenciaMapper.class);

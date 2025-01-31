@@ -1,9 +1,9 @@
-package es.laspalmeras.padel.partido;
+package es.laspalmeras.padel.partido.model.dto;
 
 import java.time.LocalDate;
 import java.util.List;
 
-import es.laspalmeras.padel.ausencia.AusenciaDTO;
+import es.laspalmeras.padel.ausencia.model.dto.AusenciaDTO;
 import lombok.Data;
 
 @Data
