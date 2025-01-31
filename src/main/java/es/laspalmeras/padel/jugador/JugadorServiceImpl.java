@@ -10,10 +10,10 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import es.laspalmeras.padel.business.service.model.Campeonato;
+import es.laspalmeras.padel.campeonato.Campeonato;
+import es.laspalmeras.padel.campeonato.CampeonatoRepository;
 import es.laspalmeras.padel.exception.DNIDuplicadoException;
 import es.laspalmeras.padel.exception.ResourceNotFoundException;
-import es.laspalmeras.padel.integration.repository.CampeonatoRepository;
 
 @Service
 public class JugadorServiceImpl implements JugadorService{
