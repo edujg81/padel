@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,7 +19,6 @@ import org.springframework.web.bind.annotation.RestController;
 import es.laspalmeras.padel.jugador.model.dto.JugadorDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/public/jugadores")
@@ -30,7 +30,7 @@ public class JugadorController {
 
 	@Operation(summary = "Crear un nuevo jugador")
 	@PostMapping
-	public ResponseEntity<Long> createJugador(@Valid @RequestBody JugadorDTO jugador) {
+	public ResponseEntity<Long> createJugador(@Validated @RequestBody JugadorDTO jugador) {
 //        Long id = jugadorService.create(jugador);
 //        return ResponseEntity.ok(id);
 		return ResponseEntity

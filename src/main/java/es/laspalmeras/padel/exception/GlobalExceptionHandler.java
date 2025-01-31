@@ -1,5 +1,7 @@
 package es.laspalmeras.padel.exception;
 
+import java.util.Date;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -10,8 +12,9 @@ import org.springframework.web.context.request.WebRequest;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(ResourceNotFoundException.class)
-    public ResponseEntity<ErrorDetails> resourceNotFoundException(ResourceNotFoundException ex, WebRequest request) {
+    public ResponseEntity<?> resourceNotFoundException(ResourceNotFoundException ex, WebRequest request) {
         ErrorDetails errorDetails = new ErrorDetails(
+        	new Date(),
             ex.getMessage(),
             request.getDescription(false)
         );
@@ -19,8 +22,9 @@ public class GlobalExceptionHandler {
     }
     
     @ExceptionHandler(DNIDuplicadoException.class)
-    public ResponseEntity<ErrorDetails> dniDuplicadoException(DNIDuplicadoException ex, WebRequest request) {
+    public ResponseEntity<?> dniDuplicadoException(DNIDuplicadoException ex, WebRequest request) {
         ErrorDetails errorDetails = new ErrorDetails(
+        	new Date(),
             ex.getMessage(),
             request.getDescription(false)
         );
@@ -28,8 +32,9 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(BadRequestException.class)
-    public ResponseEntity<ErrorDetails> badRequestException(BadRequestException ex, WebRequest request) {
+    public ResponseEntity<?> badRequestException(BadRequestException ex, WebRequest request) {
         ErrorDetails errorDetails = new ErrorDetails(
+        		new Date(),
             ex.getMessage(),
             request.getDescription(false)
         );
@@ -37,9 +42,10 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<ErrorDetails> globalExceptionHandler(Exception ex, WebRequest request) {
+    public ResponseEntity<?> globalExceptionHandler(Exception ex, WebRequest request) {
         ErrorDetails errorDetails = new ErrorDetails(
-            "Ocurrió un error inesperado",
+    		new Date(),
+            ex.getMessage(),
             request.getDescription(false)
         );
         return new ResponseEntity<>(errorDetails, HttpStatus.INTERNAL_SERVER_ERROR);

@@ -47,8 +47,8 @@ public class Jugador implements Serializable {
     @Size(max = 9)
     private String dni;
     
-    @NotBlank
-    @Size(max = 255)
+    @NotBlank(message = "El nombre es obligatorio")
+    @Size(max = 100, message = "El nombre no debe exceder los 100 caracteres")
     private String nombreCompleto;
     
     @Size(max = 9)
