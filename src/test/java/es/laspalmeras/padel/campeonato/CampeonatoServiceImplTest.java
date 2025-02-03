@@ -6,7 +6,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import es.laspalmeras.padel.campeonato.model.dto.CampeonatoDTO;
+import es.laspalmeras.padel.dto.CampeonatoDTO;
+import es.laspalmeras.padel.service.CampeonatoService;
 
 @SpringBootTest
 public class CampeonatoServiceImplTest {

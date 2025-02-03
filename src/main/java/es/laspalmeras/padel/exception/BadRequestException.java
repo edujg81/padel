@@ -2,8 +2,6 @@ package es.laspalmeras.padel.exception;
 
 import java.util.List;
 
-import es.laspalmeras.padel.config.ErrorResponse;
-
 
 @SuppressWarnings("serial")
 public class BadRequestException extends RuntimeException {

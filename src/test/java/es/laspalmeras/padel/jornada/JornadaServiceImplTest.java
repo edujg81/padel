@@ -8,7 +8,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import es.laspalmeras.padel.jornada.model.dto.JornadaDTO;
+import es.laspalmeras.padel.dto.JornadaDTO;
+import es.laspalmeras.padel.service.JornadaService;
 
 @SpringBootTest
 public class JornadaServiceImplTest {

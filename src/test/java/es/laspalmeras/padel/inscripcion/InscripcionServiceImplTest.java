@@ -6,7 +6,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import es.laspalmeras.padel.inscripcion.model.Inscripcion;
+import es.laspalmeras.padel.model.Inscripcion;
+import es.laspalmeras.padel.service.InscripcionService;
 
 @SpringBootTest
 public class InscripcionServiceImplTest {

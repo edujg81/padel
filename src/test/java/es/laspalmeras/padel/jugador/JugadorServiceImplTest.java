@@ -6,7 +6,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import es.laspalmeras.padel.jugador.model.dto.JugadorDTO;
+import es.laspalmeras.padel.dto.JugadorDTO;
+import es.laspalmeras.padel.service.JugadorService;
 
 @SpringBootTest
 public class JugadorServiceImplTest {
