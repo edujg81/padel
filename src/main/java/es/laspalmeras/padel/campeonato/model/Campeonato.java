@@ -1,7 +1,12 @@
 package es.laspalmeras.padel.campeonato.model;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.List;
+
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -11,6 +16,7 @@ import es.laspalmeras.padel.jornada.model.Jornada;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EntityListeners;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -31,18 +37,15 @@ import lombok.ToString;
  * Representa un campeonato de padel.
  */
 
-//@Data
-//@NoArgsConstructor
 @Entity
 @Table(name="CAMPEONATO")
 @Getter
 @Setter
 @EqualsAndHashCode(of={"year", "categoria", "division"})
 @ToString
+@EntityListeners(AuditingEntityListener.class)
 public class Campeonato implements Serializable {
-    /**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -74,9 +77,14 @@ public class Campeonato implements Serializable {
     private List<Jornada> jornadas;
     
     @OneToMany(mappedBy = "campeonato", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    //@JsonIgnoreProperties("campeonato")
     private List<Inscripcion> inscripciones;
     
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    @CreatedDate
+    private LocalDate fechaCreacion;
+    
+    @LastModifiedDate
+    private LocalDate fechaModificacion;
+    
+//    public Long getId() { return id; }
+//    public void setId(Long id) { this.id = id; }
 }

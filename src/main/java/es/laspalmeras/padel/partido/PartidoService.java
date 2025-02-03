@@ -9,8 +9,6 @@ import es.laspalmeras.padel.partido.model.dto.PartidoDTO;
 public interface PartidoService {
 	
 	List<PartidoDTO> createPartidosForJornada(Long jornadaId);
-		
-	//Partido updatePartido(Long id, Partido partidoDetails);
 
 	List<PartidoDTO> getAllPartidos();
 	
@@ -29,6 +27,4 @@ public interface PartidoService {
     void registrarAusencia(Long partidoId, Long ausenteId, Long sustitutoId);
 
     List<AusenciaDTO> getAusenciasByPartidoId(Long partidoId);
-    
-    
 }

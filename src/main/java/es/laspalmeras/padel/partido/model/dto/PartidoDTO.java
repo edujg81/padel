@@ -30,4 +30,7 @@ public class PartidoDTO {
     private Integer juegosGanadosEquipo2Set3;
     private Integer setsGanadosEquipo1;
     private Integer setsGanadosEquipo2;
+    
+    private LocalDate fechaCreacion;
+    private LocalDate fechaModificacion;
 }

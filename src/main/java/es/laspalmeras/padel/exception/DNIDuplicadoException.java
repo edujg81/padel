@@ -10,11 +10,11 @@ public class DNIDuplicadoException extends RuntimeException{
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public DNIDuplicadoException(String message) {
-		super(message);
+	public DNIDuplicadoException(String dni) {
+		super("El DNI " + dni + " ya está registrado.");
 	}
 
-	public DNIDuplicadoException(String string, String dni) {
-		super(string + ' ' + dni);
+	public DNIDuplicadoException(String message, String dni) {
+		super(message + ' ' + dni);
 	}
 }

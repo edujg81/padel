@@ -15,6 +15,7 @@ public class JugadorDTO {
 
     @NotBlank
     @Size(max = 9)
+    @Pattern(regexp = "\\d{8}[A-HJ-NP-TV-Z]", message = "DNI debe tener 8 dígitos seguidos de una letra válida")
     private String dni;
 
     @NotBlank

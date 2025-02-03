@@ -27,6 +27,12 @@ public class CampeonatoController {
     @Autowired
     private CampeonatoService campeonatoService;
 
+    /**
+     * Crear un nuevo campeonato.
+     * 
+     * @param campeonato DTO del campeonato a crear.
+     * @return DTO del campeonato creado.
+     */
     @Operation(summary = "Crear un nuevo campeonato")
     @PostMapping
     public ResponseEntity<CampeonatoDTO> createCampeonato(@RequestBody CampeonatoDTO campeonato) {
@@ -34,12 +40,23 @@ public class CampeonatoController {
         return ResponseEntity.ok(nuevoCampeonato);
     }
 
+    /**
+     * Obtener todos los campeonatos.
+     * 
+     * @return Lista de DTOs de campeonatos.
+     */
     @Operation(summary = "Obtener todos los campeonatos")
     @GetMapping
     public List<CampeonatoDTO> getAllCampeonatos() {
         return campeonatoService.findAllCampeonatos();
     }
 
+    /**
+     * Obtener un campeonato por ID.
+     * 
+     * @param id ID del campeonato.
+     * @return DTO del campeonato.
+     */
     @Operation(summary = "Obtener un campeonato por ID")
     @GetMapping("/{id}")
     public ResponseEntity<CampeonatoDTO> getCampeonatoById(@PathVariable Long id) {
@@ -47,6 +64,13 @@ public class CampeonatoController {
         return campeonato.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
     
+    /**
+     * Actualizar un campeonato por ID.
+     * 
+     * @param id ID del campeonato.
+     * @param campeonatoDetails Detalles del campeonato a actualizar.
+     * @return DTO del campeonato actualizado.
+     */
     @Operation(summary = "Actualizar un campeonato por ID")
     @PutMapping("/{id}")
     public ResponseEntity<CampeonatoDTO> updateCampeonato(@PathVariable Long id, @RequestBody CampeonatoDTO campeonatoDetails) {
@@ -54,6 +78,12 @@ public class CampeonatoController {
         return ResponseEntity.ok(updatedCampeonato);
     }
 
+    /**
+     * Borrar un campeonato por ID.
+     * 
+     * @param id ID del campeonato.
+     * @return Respuesta sin contenido.
+     */
     @Operation(summary = "Borrar un campeonato por ID")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteCampeonato(@PathVariable Long id) {
@@ -61,6 +91,13 @@ public class CampeonatoController {
         return ResponseEntity.noContent().build();
     }
     
+    /**
+     * Cambiar estado de un campeonato.
+     * 
+     * @param id ID del campeonato.
+     * @param nuevoEstado Nuevo estado del campeonato.
+     * @return Respuesta sin contenido.
+     */
     @Operation(summary = "Cambiar estado de un campeonato")
     @PutMapping("/{id}/estado")
     public ResponseEntity<Void> cambiarEstadoCampeonato(@PathVariable Long id, @RequestParam String nuevoEstado) {

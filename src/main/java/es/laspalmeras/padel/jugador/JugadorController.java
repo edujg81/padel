@@ -28,16 +28,26 @@ public class JugadorController {
 	@Autowired
 	private JugadorService jugadorService;
 
+	/**
+	 * Crear un nuevo jugador.
+	 * 
+	 * @param jugador DTO del jugador a crear.
+	 * @return ID del jugador creado.
+	 */
 	@Operation(summary = "Crear un nuevo jugador")
 	@PostMapping
 	public ResponseEntity<Long> createJugador(@Validated @RequestBody JugadorDTO jugador) {
-//        Long id = jugadorService.create(jugador);
-//        return ResponseEntity.ok(id);
 		return ResponseEntity
 		        .created(URI.create("/jugadores/" + jugador.getId()))
 		        .body(jugadorService.create(jugador));
     }
 
+	/**
+	 * Obtener un jugador por ID.
+	 * 
+	 * @param id ID del jugador.
+	 * @return DTO del jugador.
+	 */
 	@Operation(summary = "Obtener un jugador por ID")
 	@GetMapping("/{id}")
 	public ResponseEntity<JugadorDTO> getJugadorById(@PathVariable Long id) {
@@ -45,12 +55,24 @@ public class JugadorController {
         return jugador.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
 	}
 	
+	/**
+	 * Obtener todos los jugadores.
+	 * 
+	 * @return Lista de DTOs de jugadores.
+	 */
 	@Operation(summary = "Obtener todos los jugadores")
 	@GetMapping
 	public List<JugadorDTO> getAllJugadores() {
 		return jugadorService.getAllJugadores();
 	}
 	
+	/**
+	 * Actualizar un jugador por ID.
+	 * 
+	 * @param id ID del jugador.
+	 * @param jugadorDetails Detalles del jugador a actualizar.
+	 * @return DTO del jugador actualizado.
+	 */
 	@Operation(summary = "Actualizar un jugador por ID")
 	@PutMapping("/{id}")
 	public ResponseEntity<JugadorDTO> updateJugador(@PathVariable Long id, @RequestBody JugadorDTO jugadorDetails) {
@@ -58,6 +80,12 @@ public class JugadorController {
 		return ResponseEntity.ok(updatedJugador);
 	}
 	
+	/**
+	 * Borrar un jugador por ID.
+	 * 
+	 * @param id ID del jugador.
+	 * @return Respuesta sin contenido.
+	 */
 	@Operation(summary = "Borrar un jugador por ID")
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> deleteJugador(@PathVariable Long id) {
@@ -65,6 +93,12 @@ public class JugadorController {
 		return ResponseEntity.noContent().build();
 	}
 	
+	/**
+	 * Dar de baja un jugador por ID.
+	 * 
+	 * @param id ID del jugador.
+	 * @return Respuesta sin contenido.
+	 */
 	@Operation(summary = "Dar de baja un jugador por ID")
 	@PutMapping("/baja/{id}")
     public ResponseEntity<Void> darDeBajaJugadorPorId(@PathVariable Long id) {
@@ -72,6 +106,12 @@ public class JugadorController {
         return ResponseEntity.noContent().build();
     }
 
+	/**
+	 * Dar de baja un jugador por DNI.
+	 * 
+	 * @param dni DNI del jugador.
+	 * @return Respuesta sin contenido.
+	 */
 	@Operation(summary = "Dar de baja un jugador por DNI")
     @PutMapping("/baja/dni/{dni}")
     public ResponseEntity<Void> darDeBajaJugadorPorDni(@PathVariable String dni) {
@@ -79,6 +119,11 @@ public class JugadorController {
         return ResponseEntity.noContent().build();
     }
 
+	/**
+	 * Borrar un jugador tras 5 años en baja.
+	 * 
+	 * @return Respuesta sin contenido.
+	 */
 	@Operation(summary = "Borrar un jugador tras 5 años en baja")
 	@DeleteMapping("/eliminarBajaCincoAnios")
     public ResponseEntity<Void> eliminarJugadoresBajaMasDeCincoAnios() {
@@ -86,6 +131,12 @@ public class JugadorController {
         return ResponseEntity.noContent().build();
     }
 	
+	/**
+	 * Obtener jugadores disponibles para campeonato.
+	 * 
+	 * @param campeonatoId ID del campeonato.
+	 * @return Lista de DTOs de jugadores disponibles.
+	 */
 	@Operation(summary = "Obtener jugadores disponibles para campeonato(ID)")
     @GetMapping("/disponibles/{campeonatoId}")
     public List<JugadorDTO> getJugadoresDisponiblesParaCampeonato(@PathVariable Long campeonatoId) {

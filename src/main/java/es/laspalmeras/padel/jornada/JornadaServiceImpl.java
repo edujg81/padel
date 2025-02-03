@@ -122,16 +122,12 @@ public class JornadaServiceImpl implements JornadaService {
 
         // Log de validación del estado
         if (!"En curso".equals(campeonato.getEstado())) {
-            String errorMsg = "El campeonato con id " + campeonatoId + " no está 'En curso'. Estado actual: " + campeonato.getEstado();
-            System.err.println(errorMsg);
-            throw new IllegalArgumentException(errorMsg);
+        	 throw new IllegalArgumentException("El campeonato no está 'En curso'.");
         }
 
         // Log de validación de duplicados
         if (jornadaRepository.existsByCampeonatoIdAndFechaInicio(campeonatoId, fechaInicio)) {
-            String errorMsg = "Ya existe una jornada con la fecha " + fechaInicio + " para el campeonato con id: " + campeonatoId;
-            System.err.println(errorMsg);
-            throw new IllegalArgumentException(errorMsg);
+        	throw new IllegalArgumentException("Ya existe una jornada con la fecha " + fechaInicio + " para el campeonato con id: " + campeonatoId);
         }
 
         // Log de inscripciones
@@ -151,15 +147,9 @@ public class JornadaServiceImpl implements JornadaService {
             throw new IllegalArgumentException("El número de jugadores no es suficiente para formar equipos. Se necesitan múltiplos de 4.");
         }
         
-        //int numInscritos = inscripciones.size();
-        //int numPartidos = numInscritos / 4;
-        
         // Crear partidos a partir de los jugadores
         int numPartidos = jugadores.size() / 4;
         List<Partido> partidos = generarPartidos(jugadores, numPartidos);
-
-        // Generar partidos
-        //List<Partido> partidos = generarPartidos(inscripciones, numPartidos);
 
         Jornada nuevaJornada = new Jornada();
         nuevaJornada.setCampeonato(campeonato);
@@ -174,7 +164,6 @@ public class JornadaServiceImpl implements JornadaService {
             partidoRepository.save(partido);
         });
 
-        System.out.println("Jornada creada con éxito: " + savedJornada.getId());
         return jornadaMapper.toDto(savedJornada);
     }
     
@@ -209,15 +198,7 @@ public class JornadaServiceImpl implements JornadaService {
      * @return una lista de objetos Partido
      */
     @Transactional
-    private List<Partido> generarPartidos(List<Jugador> jugadores, int numPartidos) {
-//        List<Jugador> jugadores = inscripciones.stream()
-//                .map(Inscripcion::getJugador)
-//                .collect(Collectors.toList());
-//
-//        if (jugadores.size() < 4 || jugadores.size() % 4 != 0) {
-//            throw new IllegalArgumentException("El número de jugadores inscritos no es suficiente para formar equipos. Se necesitan múltiplos de 4.");
-//        }
-        
+    private List<Partido> generarPartidos(List<Jugador> jugadores, int numPartidos) {       
         return jugadores.stream()
         		.collect(Collectors.groupingBy(jugador -> jugadores.indexOf(jugador) / 4))
         		.values().stream()

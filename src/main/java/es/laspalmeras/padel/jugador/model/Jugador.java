@@ -3,8 +3,8 @@ package es.laspalmeras.padel.jugador.model;
 import java.io.Serializable;
 import java.time.LocalDate;
 
-//import org.springframework.data.annotation.CreatedDate;
-//import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import jakarta.persistence.Entity;
@@ -34,9 +34,6 @@ import lombok.ToString;
 @ToString
 @EntityListeners(AuditingEntityListener.class)
 public class Jugador implements Serializable {
-    /**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -45,6 +42,7 @@ public class Jugador implements Serializable {
 
     @NotBlank
     @Size(max = 9)
+    @Pattern(regexp = "\\d{8}[A-HJ-NP-TV-Z]", message = "DNI debe tener 8 dígitos seguidos de una letra válida")
     private String dni;
     
     @NotBlank(message = "El nombre es obligatorio")
@@ -69,15 +67,12 @@ public class Jugador implements Serializable {
     @NotNull
     private Boolean lesionado;
     
+    @CreatedDate
     private LocalDate fechaAlta;
+    
+    @LastModifiedDate
     private LocalDate fechaBaja;
-    
-//    @CreatedDate
-//    private LocalDate fechaCreacion;
-//    
-//    @LastModifiedDate
-//    private LocalDate fechaModificacion;
-    
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+      
+    //public Long getId() { return id; }
+    //public void setId(Long id) { this.id = id; }
 }

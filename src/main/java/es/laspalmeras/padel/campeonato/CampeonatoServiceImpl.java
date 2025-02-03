@@ -174,7 +174,6 @@ public class CampeonatoServiceImpl implements CampeonatoService{
         }
 
         // Crear una entrada de clasificación para cada jugador inscrito
-        // inscripciones.forEach(inscripcion -> {
     	for (int i = 0; i < inscripciones.size(); i++) {
             Inscripcion inscripcion = inscripciones.get(i);
             

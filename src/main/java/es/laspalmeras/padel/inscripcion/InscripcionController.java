@@ -25,6 +25,13 @@ public class InscripcionController {
     @Autowired
     private InscripcionService inscripcionService;
 
+    /**
+     * Inscribir jugador a campeonato.
+     * 
+     * @param campeonatoId ID del campeonato.
+     * @param jugadorId ID del jugador.
+     * @return Inscripción creada.
+     */
     @Operation(summary = "Inscribir jugador a campeonato")
     @PostMapping
     public ResponseEntity<Inscripcion> inscribirJugador(@RequestParam Long campeonatoId, @RequestParam Long jugadorId) {
@@ -32,6 +39,13 @@ public class InscripcionController {
         return ResponseEntity.ok(inscripcion);
     }
 
+    /**
+     * Desinscribir jugador de campeonato.
+     * 
+     * @param campeonatoId ID del campeonato.
+     * @param jugadorId ID del jugador.
+     * @return Respuesta sin contenido.
+     */
     @Operation(summary = "Desinscribir jugador de campeonato")
     @DeleteMapping("/{campeonatoId}/{jugadorId}")
     public ResponseEntity<Void> desinscribirJugador(@PathVariable Long campeonatoId, @PathVariable Long jugadorId) {
@@ -39,19 +53,36 @@ public class InscripcionController {
         return ResponseEntity.noContent().build();
     }
     
+    /**
+     * Borrar inscripción por ID.
+     * 
+     * @param id ID de la inscripción.
+     * @return Respuesta sin contenido.
+     */
     @Operation(summary = "Borrar inscripción por ID")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteInscripcion(@PathVariable Long id) {
         inscripcionService.deleteInscripcion(id);
         return ResponseEntity.noContent().build();
     }
-
+    
+    /**
+     * Obtener todas las inscripciones.
+     * 
+     * @return Lista de inscripciones.
+     */
     @Operation(summary = "Obtener todas las inscripciones")
     @GetMapping
     public List<Inscripcion> getAllInscripciones() {
         return inscripcionService.findAllInscripciones();
     }
 
+    /**
+     * Obtener inscripción por ID.
+     * 
+     * @param id ID de la inscripción.
+     * @return Inscripción encontrada.
+     */
     @Operation(summary = "Obtener inscripción por ID")
     @GetMapping("/{id}")
     public ResponseEntity<Inscripcion> getInscripcionById(@PathVariable Long id) {
@@ -60,18 +91,37 @@ public class InscripcionController {
         return ResponseEntity.ok(inscripcion);
     }
 
+    /**
+     * Obtener inscripciones por campeonato(ID).
+     * 
+     * @param campeonatoId ID del campeonato.
+     * @return Lista de inscripciones.
+     */
     @Operation(summary = "Obtener inscripciones por campeonato(ID)")
     @GetMapping("/campeonato/{campeonatoId}")
     public List<Inscripcion> getInscripcionesByCampeonato(@PathVariable Long campeonatoId) {
         return inscripcionService.findInscripcionesByCampeonato(campeonatoId);
     }
 
+    /**
+     * Obtener inscripciones por jugador(ID).
+     * 
+     * @param jugadorId ID del jugador.
+     * @return Lista de inscripciones.
+     */
     @Operation(summary = "Obtener inscripciones por jugador(ID)")
     @GetMapping("/jugador/{jugadorId}")
     public List<Inscripcion> getInscripcionesByJugador(@PathVariable Long jugadorId) {
         return inscripcionService.findInscripcionesByJugador(jugadorId);
     }
     
+    /**
+     * Obtener inscripción por campeonato(ID) y jugador(ID).
+     * 
+     * @param campeonatoId ID del campeonato.
+     * @param jugadorId ID del jugador.
+     * @return Inscripción encontrada.
+     */
     @Operation(summary = "Obtener inscripción por campeonato(ID) y jugador(ID)")
     @GetMapping("/campeonato/{campeonatoId}/jugador/{jugadorId}")
     public ResponseEntity<Inscripcion> getInscripcionByCampeonatoAndJugador(@PathVariable Long campeonatoId, @PathVariable Long jugadorId) {

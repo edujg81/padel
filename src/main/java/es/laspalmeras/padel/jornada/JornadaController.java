@@ -43,7 +43,7 @@ public class JornadaController {
     /**
      * Obtiene todas las jornadas
      * 
-     * @return Lista de objetos DTO de jornada
+     * @return Lista de DTOs de jornadas.
      */
     @Operation(summary = "Obtener todas las jornadas")
     @GetMapping
@@ -51,6 +51,12 @@ public class JornadaController {
     	return ResponseEntity.ok(jornadaService.findAllJornadas());
     }
 
+    /**
+     * Obtener jornada por ID.
+     * 
+     * @param id ID de la jornada.
+     * @return DTO de la jornada.
+     */
     @Operation(summary = "Obtener jornada por ID")
     @GetMapping("/{id}")
     public ResponseEntity<JornadaDTO> getJornadaById(@PathVariable Long id) {
@@ -58,6 +64,12 @@ public class JornadaController {
         return jornada.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
+    /**
+     * Obtener jornadas de un campeonato.
+     * 
+     * @param campeonatoId ID del campeonato.
+     * @return Lista de DTOs de jornadas.
+     */
     @Operation(summary = "Obtener jornadas de un campeonato")
     @GetMapping("/campeonato/{campeonatoId}")
     public ResponseEntity<List<JornadaDTO>> getJornadasByCampeonato(@PathVariable Long campeonatoId) {
@@ -70,6 +82,12 @@ public class JornadaController {
         return ResponseEntity.ok(jornadas);
     }
     
+    /**
+     * Borrar jornada por ID.
+     * 
+     * @param id ID de la jornada.
+     * @return Respuesta sin contenido.
+     */
     @Operation(summary = "Borrar jornada por ID")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteJornada(@PathVariable Long id) {

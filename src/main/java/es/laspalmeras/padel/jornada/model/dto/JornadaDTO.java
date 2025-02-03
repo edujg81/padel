@@ -13,4 +13,6 @@ public class JornadaDTO {
     private LocalDate fechaInicio;
     private Long campeonatoId;
     private List<PartidoDTO> partidos;
+    private LocalDate fechaCreacion;
+    private LocalDate fechaModificacion;
 }

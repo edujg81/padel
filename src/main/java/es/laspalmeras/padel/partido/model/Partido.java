@@ -4,6 +4,10 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -13,6 +17,7 @@ import es.laspalmeras.padel.jugador.model.Jugador;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EntityListeners;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -30,7 +35,6 @@ import lombok.ToString;
 /**
  * Representa a un partido.
  */
-@SuppressWarnings("serial")
 @Getter
 @Setter
 @EqualsAndHashCode(of="id")
@@ -39,8 +43,12 @@ import lombok.ToString;
 @NoArgsConstructor
 @Entity
 @Table(name="PARTIDO")
+@EntityListeners(AuditingEntityListener.class)
 public class Partido implements Serializable {
-    @Id
+
+	private static final long serialVersionUID = 1L;
+
+	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -101,4 +109,10 @@ public class Partido implements Serializable {
     
     @Column(name = "sets_ganados_equipo2")
     private Integer setsGanadosEquipo2;
+    
+    @CreatedDate
+    private LocalDate fechaCreacion;
+
+    @LastModifiedDate
+    private LocalDate fechaModificacion;
 }

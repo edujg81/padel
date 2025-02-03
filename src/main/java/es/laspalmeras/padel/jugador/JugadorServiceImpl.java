@@ -38,13 +38,13 @@ public class JugadorServiceImpl implements JugadorService{
 	@Override
 	@Transactional
 	public Long create(JugadorDTO jugadorDTO) {
-		if (jugadorRepository.findByDni(jugadorDTO.getDni()) != null) {
+		if (jugadorRepository.findByDni(jugadorDTO.getDni()).isPresent()) {
 	        throw new DNIDuplicadoException(jugadorDTO.getDni());
 	    }
 		Jugador jugador = jugadorMapper.toEntity(jugadorDTO);
 		jugador.setFechaAlta(LocalDate.now());
 	    jugador.setEstado("Alta");
-	    jugadorMapper.toDto(jugadorRepository.save(jugador));
+	    jugadorRepository.save(jugador);
 		return jugador.getId();
 	}
 
@@ -52,9 +52,6 @@ public class JugadorServiceImpl implements JugadorService{
 	@Transactional
 	public void deleteJugador(Long id) {
 		jugadorRepository.deleteById(id);
-		/*Jugador jugador = jugadorRepository.findById(id)
-        		.orElseThrow(() -> new ResourceNotFoundException("Jugador no encontrado"));
-		darDeBajaJugador(jugador);*/
 	}
 
 	@Override
@@ -67,7 +64,7 @@ public class JugadorServiceImpl implements JugadorService{
 	@Override
 	public Optional<JugadorDTO> getJugadorById(Long id) {
 		Optional<Jugador> jugador = jugadorRepository.findById(id);
-        return Optional.ofNullable(jugador.map(jugadorMapper::toDto).orElse(null));
+		return jugador.map(jugadorMapper::toDto);
 	}
 	
 	@Override
@@ -86,19 +83,23 @@ public class JugadorServiceImpl implements JugadorService{
 
 	@Override
 	@Transactional
-    public JugadorDTO updateJugador(Long id, JugadorDTO jugadorDetails) {
-		Jugador jugador = jugadorRepository.findById(id)
-				.orElseThrow(() -> new ResourceNotFoundException("Jugador no encontrado"));
-		jugador.setDni(jugadorDetails.getDni());
-        jugador.setNombreCompleto(jugadorDetails.getNombreCompleto());
-        jugador.setTelefono(jugadorDetails.getTelefono());
-        jugador.setEmail(jugadorDetails.getEmail());
-        jugador.setSexo(jugadorDetails.getSexo());
-        jugador.setEstado(jugadorDetails.getEstado());
-        jugador.setLesionado(jugadorDetails.getLesionado());
-        jugador = jugadorRepository.save(jugador);
-        return jugadorMapper.toDto(jugador);
-    }
+	public JugadorDTO updateJugador(Long id, JugadorDTO jugadorDetails) {
+	    Jugador jugador = jugadorRepository.findById(id)
+	            .orElseThrow(() -> new ResourceNotFoundException("Jugador no encontrado"));
+	    actualizarDatosJugador(jugador, jugadorDetails);
+	    jugador = jugadorRepository.save(jugador);
+	    return jugadorMapper.toDto(jugador);
+	}
+	
+	private void actualizarDatosJugador(Jugador jugador, JugadorDTO jugadorDetails) {
+	    jugador.setDni(jugadorDetails.getDni());
+	    jugador.setNombreCompleto(jugadorDetails.getNombreCompleto());
+	    jugador.setTelefono(jugadorDetails.getTelefono());
+	    jugador.setEmail(jugadorDetails.getEmail());
+	    jugador.setSexo(jugadorDetails.getSexo());
+	    jugador.setEstado(jugadorDetails.getEstado());
+	    jugador.setLesionado(jugadorDetails.getLesionado());
+	}
 	
     private void darDeBajaJugador(Jugador jugador) {
         if (jugador != null && "Alta".equals(jugador.getEstado())) {
@@ -132,12 +133,6 @@ public class JugadorServiceImpl implements JugadorService{
         List<Jugador> jugadoresParaEliminar = jugadorRepository.findByFechaBajaBeforeAndEstado(cincoAniosAtras, "Baja");
         jugadorRepository.deleteAll(jugadoresParaEliminar);
     }
-
-//	@Override
-//	public Optional<JugadorDTO> read(Long id) {
-//		Optional<Jugador> jugador = jugadorRepository.findById(id);
-//        return Optional.ofNullable(jugador.map(jugadorMapper::toDto).orElse(null));
-//	}
 
 	/**
 	 *

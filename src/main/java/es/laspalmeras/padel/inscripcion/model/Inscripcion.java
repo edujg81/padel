@@ -1,6 +1,11 @@
 package es.laspalmeras.padel.inscripcion.model;
 
 import java.io.Serializable;
+import java.time.LocalDate;
+
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -8,6 +13,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import es.laspalmeras.padel.campeonato.model.Campeonato;
 import es.laspalmeras.padel.jugador.model.Jugador;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EntityListeners;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -22,15 +28,18 @@ import lombok.ToString;
 /**
  * Representa una inscripción de un jugador a un campeonato.
  */
-@SuppressWarnings("serial")
 @Getter
 @Setter
 @EqualsAndHashCode(of={"jugador", "campeonato"})
 @ToString
 @Entity
 @Table(name="INSCRIPCION")
+@EntityListeners(AuditingEntityListener.class)
 public class Inscripcion implements Serializable {
-    @Id
+
+	private static final long serialVersionUID = 1L;
+
+	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -43,4 +52,10 @@ public class Inscripcion implements Serializable {
     @JoinColumn(name = "jugador_id", nullable = false)
     @JsonIgnoreProperties("inscripcion")
     private Jugador jugador;
+    
+    @CreatedDate
+    private LocalDate fechaInscripcion;
+
+    @LastModifiedDate
+    private LocalDate fechaDesinscripcion;
 }

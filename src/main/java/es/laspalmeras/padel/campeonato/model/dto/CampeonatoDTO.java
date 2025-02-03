@@ -32,6 +32,6 @@ public class CampeonatoDTO {
     private Boolean activo = true;
     private Integer puntosPorVictoria = 2;
     private Integer puntosPorDerrota = 0;
-    private List<Long> jornadaIds;  // Cambiar a lista de IDs si no quieres traer los objetos completos
+    private List<Long> jornadaIds;
     private List<Long> inscripcionIds;
 }

@@ -1,19 +1,12 @@
 package es.laspalmeras.padel.jugador;
 
 import java.util.List;
-//import java.util.Optional;
 import java.util.Optional;
 
 import es.laspalmeras.padel.jugador.model.dto.JugadorDTO;
 
 public interface JugadorService {
 
-	/**
-	 * Devuelve el codigo que le ha otorgado el sistema.
-	 *
-	 * 
-	 *
-	 */
 	Long create(JugadorDTO jugadorDTO);
 	
 	void deleteJugador(Long id);
@@ -33,8 +26,6 @@ public interface JugadorService {
 	void eliminarJugadoresBajaMasDeCincoAnios();
 
 	JugadorDTO saveJugador(JugadorDTO jugadorDTO);
-
-	//Optional<JugadorDTO> read(Long id);
 
 	List<JugadorDTO> getJugadoresDisponiblesParaCampeonato(Long campeonatoId);
 }

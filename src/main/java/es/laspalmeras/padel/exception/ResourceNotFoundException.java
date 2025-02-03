@@ -13,4 +13,8 @@ public class ResourceNotFoundException extends RuntimeException {
 	public ResourceNotFoundException(String string, String string2, Long partidoId) {
 		super(string + ' ' + string2 + ' ' +  partidoId);
 	}
+	
+	public ResourceNotFoundException(String resourceName, String fieldName, Object fieldValue) {
+        super(String.format("%s no encontrado con %s : '%s'", resourceName, fieldName, fieldValue));
+    }
 }

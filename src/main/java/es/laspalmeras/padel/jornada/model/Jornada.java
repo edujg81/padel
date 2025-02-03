@@ -4,6 +4,9 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -28,7 +31,6 @@ import lombok.ToString;
 /**
  * Representa una jornada de un campeonato.
  */
-@SuppressWarnings("serial")
 @Getter
 @Setter
 @EqualsAndHashCode(of={"numero", "campeonato"})
@@ -36,7 +38,10 @@ import lombok.ToString;
 @Entity
 @Table(name="JORNADA")
 public class Jornada implements Serializable {
-    @Id
+
+	private static final long serialVersionUID = 1L;
+
+	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -53,4 +58,10 @@ public class Jornada implements Serializable {
     @JsonIgnoreProperties("jornada")
     @ToString.Exclude
     private List<Partido> partidos;
+    
+    @CreatedDate
+    private LocalDate fechaCreacion;
+
+    @LastModifiedDate
+    private LocalDate fechaModificacion;
 }
