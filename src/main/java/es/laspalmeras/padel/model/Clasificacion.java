@@ -106,5 +106,6 @@ public class Clasificacion implements Serializable {
         this.juegosGanados += juegosGanadosPartido;
         this.juegosPerdidos += juegosPerdidosPartido;
     }
+
 }
 

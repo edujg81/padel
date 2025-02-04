@@ -10,26 +10,20 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
 
 /**
  * Representa una ausencia de un jugador a un partido.
  */
-@SuppressWarnings("serial")
-@Getter
-@Setter
-@EqualsAndHashCode(of = "id")
-@ToString
 @Data
 @NoArgsConstructor
 @Entity
 @Table(name = "AUSENCIA")
 public class Ausencia implements Serializable {
-    @Id
+
+	private static final long serialVersionUID = 1L;
+
+	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 

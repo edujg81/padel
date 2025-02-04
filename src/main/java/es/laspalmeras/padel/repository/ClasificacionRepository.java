@@ -9,6 +9,7 @@ import es.laspalmeras.padel.model.Clasificacion;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface ClasificacionRepository extends JpaRepository<Clasificacion, Long> {
@@ -23,7 +24,8 @@ public interface ClasificacionRepository extends JpaRepository<Clasificacion, Lo
 	           "c.juegosGanados DESC, " +
 	           "c.juegosPerdidos ASC")
 	List<Clasificacion> findClasificacionCompletaOrdenada(@Param("campeonatoId") Long campeonatoId);
-    Clasificacion findByCampeonatoIdAndJugadorId(Long campeonatoId, Long jugadorId);
+	
+	Optional<Clasificacion> findByCampeonatoIdAndJugadorId(Long campeonatoId, Long jugadorId);
     
     default List<Clasificacion> findOrdenNatural(Long campeonatoId) {
         return findClasificacionCompletaOrdenada(campeonatoId).stream()

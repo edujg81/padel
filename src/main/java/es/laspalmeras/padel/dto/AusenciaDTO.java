@@ -1,6 +1,7 @@
 package es.laspalmeras.padel.dto;
 
 import es.laspalmeras.padel.model.Ausencia;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 /**
@@ -11,7 +12,11 @@ import lombok.Data;
 public class AusenciaDTO {
     private Long id;
     private Long partidoId;
+    
+    @NotNull(message = "El ID del jugador ausente es obligatorio")
     private Long ausenteId;
+    
+    @NotNull(message = "El ID del jugador sustituto es obligatorio")
     private Long sustitutoId;
 
     public static AusenciaDTO fromEntity(Ausencia ausencia) {
@@ -26,9 +31,18 @@ public class AusenciaDTO {
     public Ausencia toEntity() {
         Ausencia ausencia = new Ausencia();
         ausencia.setId(id);
-        ausencia.getPartido().setId(partidoId);
-        ausencia.getAusente().setId(ausenteId);
-        ausencia.getSustituto().setId(sustitutoId);
+//        Partido partido = new Partido();
+//        partido.setId(partidoId);
+//        ausencia.setPartido(partido);
+//        
+//        Jugador ausente = new Jugador();
+//        ausente.setId(ausenteId);
+//        ausencia.setAusente(ausente);
+//        
+//        Jugador sustituto = new Jugador();
+//        sustituto.setId(sustitutoId);
+//        ausencia.setSustituto(sustituto);
+
         return ausencia;
     }
 }

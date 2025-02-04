@@ -170,6 +170,13 @@ public class PartidoServiceImpl implements PartidoService{
         if (!partido.getRegistrado()) {
 	        // Actualizar clasificación del campeonato
 	        actualizarClasificacion(partido.getJornada().getCampeonato(), partido);
+	        
+	        // Procesar penalizaciones por ausencias
+	        procesarAusencias(partido, partido.getJornada().getCampeonato());
+	        
+	        // Actualizar el punto para sustitutas en campeonatos femeninos
+	        actualizarPuntoSustitutaFemenino(partido, partido.getJornada().getCampeonato());
+	        
 	        partido.setRegistrado(true);
         } else {
 	    	System.out.println("Este partido ya se encuentra registrado");
@@ -314,13 +321,40 @@ public class PartidoServiceImpl implements PartidoService{
 	@Override
 	@Transactional
 	public void registrarAusencia(Long partidoId, Long ausenteId, Long sustitutoId) {
+		Partido partido = partidoRepository.findById(partidoId)
+		        .orElseThrow(() -> new ResourceNotFoundException("Partido no encontrado con id:" + partidoId));
+
+	    // Validar que el partido no tenga ya 4 ausencias
+	    if (partido.getAusencias() != null && partido.getAusencias().size() >= 4) {
+	        throw new IllegalArgumentException("El partido ya tiene el máximo de 4 ausencias registradas.");
+	    }
+	    
+	    // Verificar que el sustituto no sea ninguno de los jugadores titulares
+	    if (sustitutoId.equals(partido.getEquipo1Jugador1().getId()) ||
+	        sustitutoId.equals(partido.getEquipo1Jugador2().getId()) ||
+	        sustitutoId.equals(partido.getEquipo2Jugador1().getId()) ||
+	        sustitutoId.equals(partido.getEquipo2Jugador2().getId())) {
+	        throw new IllegalArgumentException("El jugador sustituto no puede ser uno de los jugadores titulares del partido.");
+	    }
+	    
+	    // Verificar que el sustituto esté inscrito en el campeonato del partido
+	    Long campeonatoId = partido.getJornada().getCampeonato().getId();
+	    boolean inscrito = inscripcionRepository.findByCampeonatoId(campeonatoId)
+	            .stream()
+	            .map(Inscripcion::getJugador)
+	            .anyMatch(jugador -> jugador.getId().equals(sustitutoId));
+	    if (!inscrito) {
+	        throw new IllegalArgumentException("El jugador sustituto no está inscrito en el campeonato.");
+	    }
+
+	    // Registrar la ausencia	
 		Ausencia ausencia = new Ausencia();
-        ausencia.setPartido(partidoRepository.findById(partidoId)
-        		.orElseThrow(() -> new ResourceNotFoundException("Partido no encontrado con id:" + partidoId)));
+		ausencia.setPartido(partido);
         ausencia.setAusente(jugadorRepository.findById(ausenteId)
         		.orElseThrow(() -> new ResourceNotFoundException("Jugador ausente no encontrado con id:" + ausenteId)));
         ausencia.setSustituto(jugadorRepository.findById(sustitutoId)
         		.orElseThrow(() -> new ResourceNotFoundException("Jugador sustituto no encontrado con id:" + sustitutoId)));
+        
         ausenciaRepository.save(ausencia);
 	}
 
@@ -329,5 +363,46 @@ public class PartidoServiceImpl implements PartidoService{
 		return ausenciaRepository.findByPartidoId(partidoId).stream()
 				.map(AusenciaMapper.INSTANCE::toDto)
 				.collect(Collectors.toList());
+	}
+	
+	@Transactional
+	private void procesarAusencias(Partido partido, Campeonato campeonato) {
+	    if (partido.getAusencias() != null) {
+	        for (Ausencia ausencia : partido.getAusencias()) {
+	            Jugador ausente = ausencia.getAusente();
+	            // Buscar la clasificación del jugador en este campeonato
+	            Clasificacion clasificacion = clasificacionRepository
+	                    .findByCampeonatoIdAndJugadorId(campeonato.getId(), ausente.getId())
+	                    .orElseThrow(() -> new ResourceNotFoundException("Clasificación no encontrada para el jugador id: " + ausente.getId()));
+	            
+	            // Penalizar: asignar partido perdido con 2 sets en contra y 12 juegos en contra.
+	            clasificacion.setPartidosPerdidos(clasificacion.getPartidosPerdidos() + 1);
+	            clasificacion.setSetsPerdidos(clasificacion.getSetsPerdidos() + 2);
+	            clasificacion.setJuegosPerdidos(clasificacion.getJuegosPerdidos() + 12);
+	            clasificacion.setPartidosJugados(clasificacion.getPartidosJugados() + 1);
+	            
+	            clasificacionRepository.save(clasificacion);
+	        }
+	    }
+	}
+	
+	private void actualizarPuntoSustitutaFemenino(Partido partido, Campeonato campeonato) {
+	    if ("FEMENINO".equalsIgnoreCase(campeonato.getCategoria())) {
+	        // Recorrer ausencias y actualizar al sustituto en caso de victoria
+	        if (partido.getEquipoGanador().equals("Equipo 1") || partido.getEquipoGanador().equals("Equipo 2")) {
+	            for (Ausencia ausencia : partido.getAusencias()) {
+	                Jugador sustituto = ausencia.getSustituto();
+	                // Se asume que el sustituto tiene su clasificación en el campeonato
+	                Clasificacion clasificacion = clasificacionRepository
+	                        .findByCampeonatoIdAndJugadorId(campeonato.getId(), sustituto.getId())
+	                        .orElse(null);
+	                // Solo se actualiza si existe la clasificación, y se ignoran el resto de estadísticas.
+	                if (clasificacion != null) {
+	                    clasificacion.setPuntos(clasificacion.getPuntos() + 1);
+	                    clasificacionRepository.save(clasificacion);
+	                }
+	            }
+	        }
+	    }
 	}
 }
