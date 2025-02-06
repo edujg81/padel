@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import es.laspalmeras.padel.dto.JornadaDTO;
+import es.laspalmeras.padel.enums.EstadoCampeonato;
 import es.laspalmeras.padel.exception.ResourceNotFoundException;
 import es.laspalmeras.padel.mapper.JornadaMapper;
 import es.laspalmeras.padel.model.Campeonato;
@@ -124,7 +125,7 @@ public class JornadaServiceImpl implements JornadaService {
                 .orElseThrow(() -> new ResourceNotFoundException("Campeonato no encontrado con id: " + campeonatoId));
 
         // Log de validación del estado
-        if (!"En curso".equals(campeonato.getEstado())) {
+        if (!EstadoCampeonato.EN_CURSO.equals(campeonato.getEstado())) {
         	 throw new IllegalArgumentException("El campeonato no está 'En curso'.");
         }
 

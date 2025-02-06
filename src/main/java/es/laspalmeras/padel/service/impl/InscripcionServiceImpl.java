@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import es.laspalmeras.padel.enums.EstadoCampeonato;
 import es.laspalmeras.padel.exception.ResourceNotFoundException;
 import es.laspalmeras.padel.model.Campeonato;
 import es.laspalmeras.padel.model.Inscripcion;
@@ -142,9 +143,9 @@ public class InscripcionServiceImpl implements InscripcionService{
     }
     
     private void validarInscripcion(Campeonato campeonato, Jugador jugador) {
-        if (!campeonato.getActivo() || !"Sin iniciar".equals(campeonato.getEstado())) {
-            throw new IllegalArgumentException("El campeonato no está activo o no está en estado 'Sin iniciar'.");
-        }
+    	if (!campeonato.getActivo() || !EstadoCampeonato.SIN_INICIAR.equals(campeonato.getEstado())) {
+    	    throw new IllegalArgumentException("El campeonato no está activo o no está en estado 'SIN_INICIAR'.");
+    	}
 
         if ("Baja".equals(jugador.getEstado()) || jugador.getLesionado()) {
             throw new IllegalArgumentException("El jugador está dado de baja o lesionado.");

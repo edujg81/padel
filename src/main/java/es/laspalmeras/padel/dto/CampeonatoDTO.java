@@ -26,8 +26,9 @@ public class CampeonatoDTO {
     @Pattern(regexp = "\\d+", message = "División debe ser un número entero")
     private Integer division;
     
-    @Pattern(regexp = "Sin iniciar|En curso|Finalizado", message = "Estado debe ser 'Sin iniciar', 'En curso' o 'Finalizado'")
-    private String estado = "Sin iniciar";
+    @NotBlank(message = "El estado es obligatorio")
+    @Pattern(regexp = "SIN_INICIAR|EN_CURSO|FINALIZADO", message = "Estado debe ser 'SIN_INICIAR', 'EN_CURSO' o 'FINALIZADO'")
+    private String estado = "SIN_INICIAR";
     
     private Boolean activo = true;
     private Integer puntosPorVictoria = 2;

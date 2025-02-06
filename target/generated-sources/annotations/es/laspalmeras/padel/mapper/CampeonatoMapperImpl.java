@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-02-03T14:58:00+0100",
+    date = "2025-02-06T08:53:41+0100",
     comments = "version: 1.6.3, compiler: Eclipse JDT (IDE) 3.40.0.v20241112-0530, environment: Java 21.0.5 (Eclipse Adoptium)"
 )
 @Component
@@ -21,10 +21,10 @@ public class CampeonatoMapperImpl implements CampeonatoMapper {
 
         CampeonatoDTO campeonatoDTO = new CampeonatoDTO();
 
+        campeonatoDTO.setEstado( estadoToString( campeonato.getEstado() ) );
         campeonatoDTO.setActivo( campeonato.getActivo() );
         campeonatoDTO.setCategoria( campeonato.getCategoria() );
         campeonatoDTO.setDivision( campeonato.getDivision() );
-        campeonatoDTO.setEstado( campeonato.getEstado() );
         campeonatoDTO.setId( campeonato.getId() );
         campeonatoDTO.setPuntosPorDerrota( campeonato.getPuntosPorDerrota() );
         campeonatoDTO.setPuntosPorVictoria( campeonato.getPuntosPorVictoria() );
@@ -41,10 +41,10 @@ public class CampeonatoMapperImpl implements CampeonatoMapper {
 
         Campeonato campeonato = new Campeonato();
 
+        campeonato.setEstado( stringToEstado( campeonatoDTO.getEstado() ) );
         campeonato.setActivo( campeonatoDTO.getActivo() );
         campeonato.setCategoria( campeonatoDTO.getCategoria() );
         campeonato.setDivision( campeonatoDTO.getDivision() );
-        campeonato.setEstado( campeonatoDTO.getEstado() );
         campeonato.setId( campeonatoDTO.getId() );
         campeonato.setPuntosPorDerrota( campeonatoDTO.getPuntosPorDerrota() );
         campeonato.setPuntosPorVictoria( campeonatoDTO.getPuntosPorVictoria() );

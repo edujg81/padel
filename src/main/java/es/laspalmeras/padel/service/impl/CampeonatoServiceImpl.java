@@ -4,16 +4,18 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import es.laspalmeras.padel.dto.CampeonatoDTO;
+import es.laspalmeras.padel.enums.EstadoCampeonato;
 import es.laspalmeras.padel.exception.ResourceNotFoundException;
 import es.laspalmeras.padel.mapper.CampeonatoMapper;
 import es.laspalmeras.padel.model.Campeonato;
 import es.laspalmeras.padel.model.Clasificacion;
 import es.laspalmeras.padel.model.Inscripcion;
+import es.laspalmeras.padel.model.Jornada;
+import es.laspalmeras.padel.model.Partido;
 import es.laspalmeras.padel.repository.CampeonatoRepository;
 import es.laspalmeras.padel.repository.ClasificacionRepository;
 import es.laspalmeras.padel.repository.InscripcionRepository;
@@ -25,17 +27,20 @@ import es.laspalmeras.padel.service.CampeonatoService;
 @Service
 public class CampeonatoServiceImpl implements CampeonatoService{
 	
-	@Autowired
     private CampeonatoRepository campeonatoRepository;
-	
-	@Autowired
     private ClasificacionRepository clasificacionRepository;
-	
-	@Autowired
     private InscripcionRepository inscripcionRepository;
-
-    @Autowired
     private CampeonatoMapper campeonatoMapper;
+    
+    public CampeonatoServiceImpl(CampeonatoRepository campeonatoRepository,
+            ClasificacionRepository clasificacionRepository,
+            InscripcionRepository inscripcionRepository,
+            CampeonatoMapper campeonatoMapper) {
+		this.campeonatoRepository = campeonatoRepository;
+		this.clasificacionRepository = clasificacionRepository;
+		this.inscripcionRepository = inscripcionRepository;
+		this.campeonatoMapper = campeonatoMapper;
+	}
 	
     /**
      * Guarda un campeonato.
@@ -134,14 +139,73 @@ public class CampeonatoServiceImpl implements CampeonatoService{
 		Campeonato campeonato = campeonatoRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Campeonato", "id", id));
 
-        campeonato.setEstado(nuevoEstado);
+		// Convertir el String a enum. Se asume que el String viene en mayúsculas o se ajusta con toUpperCase()
+	    EstadoCampeonato estadoNuevo = EstadoCampeonato.valueOf(nuevoEstado.toUpperCase());
+	    
+		campeonato.setEstado(estadoNuevo);
         
-        // Si el estado es "En Curso", generar la clasificación inicial
-        if ("En curso".equals(nuevoEstado)) {
-            generarClasificacionInicial(campeonato);
-        }
-        
-        saveCampeonato(campeonato);
+		// Si el nuevo estado es EN_CURSO, generar la clasificación inicial
+	    if (EstadoCampeonato.EN_CURSO.equals(estadoNuevo)) {
+	        generarClasificacionInicial(campeonato);
+	    }
+	    
+	    // Si se intenta pasar a FINALIZADO, se debe verificar que todos los partidos estén registrados.
+	    if (EstadoCampeonato.FINALIZADO.equals(estadoNuevo)) {
+	        // Iterar por cada jornada del campeonato.
+	        if (campeonato.getJornadas() != null) {
+	            for (Jornada jornada : campeonato.getJornadas()) {
+	                // Suponemos que la entidad Jornada tiene un atributo List<Partido> partidos.
+	                if (jornada.getPartidos() != null) {
+	                    for (Partido partido : jornada.getPartidos()) {
+	                        if (!Boolean.TRUE.equals(partido.getRegistrado())) {
+	                            // Si se encuentra al menos un partido sin registrar, se lanza una excepción.
+	                            throw new IllegalStateException("No es posible cambiar el estado a FINALIZADO: existen partidos sin registrar.");
+	                        }
+	                    }
+	                }
+	            }
+	        }
+
+	        // Si todos los partidos están registrados, se actualiza el estado.
+	        campeonato.setEstado(EstadoCampeonato.FINALIZADO);
+	        saveCampeonato(campeonato);
+
+	        // Verificar la existencia de otros campeonatos de la misma categoría y año, pero de diferente división.
+	        // Se obtienen todos los campeonatos activos del mismo año y categoría.
+	        List<Campeonato> campeonatosMismaCategoria = campeonatoRepository.findAll().stream()
+	                .filter(c -> c.getYear().equals(campeonato.getYear())
+	                        && c.getCategoria().equals(campeonato.getCategoria())
+	                        && c.getActivo())
+	                .collect(Collectors.toList());
+
+	        // Si solo existe el campeonato actual, no se realiza ninguna actuación adicional.
+	        if (campeonatosMismaCategoria.size() > 1) {
+	            // Se comprueba que todos los campeonatos de la misma categoría y año estén en estado FINALIZADO.
+	            boolean todosFinalizados = campeonatosMismaCategoria.stream()
+	                    .allMatch(c -> EstadoCampeonato.FINALIZADO.equals(c.getEstado()));
+	            if (!todosFinalizados) {
+	                throw new IllegalStateException("No es posible crear nuevos campeonatos: existen campeonatos no finalizados en otras divisiones.");
+	            }
+
+	            // Si todos están finalizados, se crean automáticamente los campeonatos para el año siguiente.
+	            int nextYear = campeonato.getYear() + 1;
+	            for (Campeonato c : campeonatosMismaCategoria) {
+	                Campeonato nuevoCampeonato = new Campeonato();
+	                nuevoCampeonato.setYear(nextYear);
+	                nuevoCampeonato.setCategoria(c.getCategoria());
+	                nuevoCampeonato.setDivision(c.getDivision());
+	                nuevoCampeonato.setEstado(EstadoCampeonato.SIN_INICIAR); // Estado inicial para el siguiente año
+	                nuevoCampeonato.setActivo(true);
+	                nuevoCampeonato.setPuntosPorVictoria(c.getPuntosPorVictoria());
+	                nuevoCampeonato.setPuntosPorDerrota(c.getPuntosPorDerrota());
+	                // Puedes copiar o configurar otros campos según la necesidad
+	                campeonatoRepository.save(nuevoCampeonato);
+	            }
+	        }
+	    }
+	    else {
+	    	saveCampeonato(campeonato);
+	    }
 	}
 
 	private void validarCampeonatoExistente(CampeonatoDTO campeonatoDTO) {
@@ -157,7 +221,7 @@ public class CampeonatoServiceImpl implements CampeonatoService{
         campeonato.setYear(campeonatoDetails.getYear());
         campeonato.setCategoria(campeonatoDetails.getCategoria());
         campeonato.setDivision(campeonatoDetails.getDivision());
-        campeonato.setEstado(campeonatoDetails.getEstado());
+        campeonato.setEstado(EstadoCampeonato.valueOf(campeonatoDetails.getEstado().toUpperCase()));
         campeonato.setActivo(campeonatoDetails.getActivo());
         campeonato.setPuntosPorVictoria(campeonatoDetails.getPuntosPorVictoria());
         campeonato.setPuntosPorDerrota(campeonatoDetails.getPuntosPorDerrota());
@@ -176,14 +240,12 @@ public class CampeonatoServiceImpl implements CampeonatoService{
             throw new IllegalStateException("No hay jugadores inscritos en el campeonato.");
         }
 
-        // Crear una entrada de clasificación para cada jugador inscrito
-    	for (int i = 0; i < inscripciones.size(); i++) {
-            Inscripcion inscripcion = inscripciones.get(i);
-            
+        // Crear clasificaciones para cada inscripción y guardarlas en lote
+        List<Clasificacion> clasificaciones = inscripciones.stream().map(inscripcion -> {
             Clasificacion clasificacion = new Clasificacion();
             clasificacion.setCampeonato(campeonato);
             clasificacion.setJugador(inscripcion.getJugador());
-            clasificacion.setPosicion(i+1); // Inicialmente sin posición
+            clasificacion.setPosicion(0); // Se actualizará posteriormente
             clasificacion.setPuntos(0);
             clasificacion.setPartidosJugados(0);
             clasificacion.setPartidosGanados(0);
@@ -192,8 +254,8 @@ public class CampeonatoServiceImpl implements CampeonatoService{
             clasificacion.setSetsPerdidos(0);
             clasificacion.setJuegosGanados(0);
             clasificacion.setJuegosPerdidos(0);
-
-            clasificacionRepository.save(clasificacion);
-        };
+            return clasificacion;
+        }).collect(Collectors.toList());
+        clasificacionRepository.saveAll(clasificaciones);
     }
 }
