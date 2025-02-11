@@ -13,8 +13,8 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-02-07T08:37:06+0100",
-    comments = "version: 1.6.3, compiler: Eclipse JDT (IDE) 3.40.0.v20241112-0530, environment: Java 21.0.5 (Eclipse Adoptium)"
+    date = "2025-02-11T15:07:43+0100",
+    comments = "version: 1.6.3, compiler: javac, environment: Java 21.0.6 (Oracle Corporation)"
 )
 @Component
 public class JornadaMapperImpl implements JornadaMapper {
@@ -31,9 +31,9 @@ public class JornadaMapperImpl implements JornadaMapper {
         JornadaDTO jornadaDTO = new JornadaDTO();
 
         jornadaDTO.setCampeonatoId( jornadaCampeonatoId( jornada ) );
-        jornadaDTO.setFechaInicio( jornada.getFechaInicio() );
         jornadaDTO.setId( jornada.getId() );
         jornadaDTO.setNumero( jornada.getNumero() );
+        jornadaDTO.setFechaInicio( jornada.getFechaInicio() );
         jornadaDTO.setPartidos( toPartidoDTOs( jornada.getPartidos() ) );
 
         return jornadaDTO;
@@ -48,9 +48,9 @@ public class JornadaMapperImpl implements JornadaMapper {
         Jornada jornada = new Jornada();
 
         jornada.setCampeonato( jornadaDTOToCampeonato( jornadaDTO ) );
-        jornada.setFechaInicio( jornadaDTO.getFechaInicio() );
         jornada.setId( jornadaDTO.getId() );
         jornada.setNumero( jornadaDTO.getNumero() );
+        jornada.setFechaInicio( jornadaDTO.getFechaInicio() );
         jornada.setPartidos( toPartidos( jornadaDTO.getPartidos() ) );
 
         return jornada;

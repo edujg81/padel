@@ -3,7 +3,6 @@ package es.laspalmeras.padel.mapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
-import org.mapstruct.factory.Mappers;
 
 import es.laspalmeras.padel.dto.ClasificacionDTO;
 import es.laspalmeras.padel.model.Campeonato;
@@ -12,14 +11,12 @@ import es.laspalmeras.padel.model.Jugador;
 
 @Mapper(componentModel = "spring")
 public interface ClasificacionMapper {
-    ClasificacionMapper INSTANCE = Mappers.getMapper(ClasificacionMapper.class);
-
-    @Mapping(source = "campeonato.id", target = "campeonatoId", defaultExpression = "java(null)")
-    @Mapping(source = "jugador.id", target = "jugadorId", defaultExpression = "java(null)")
+    @Mapping(expression = "java(clasificacion.getCampeonato() != null ? clasificacion.getCampeonato().getId() : null)", target = "campeonatoId")
+    @Mapping(expression = "java(clasificacion.getJugador() != null ? clasificacion.getJugador().getId() : null)", target = "jugadorId")
     ClasificacionDTO toDto(Clasificacion clasificacion);
 
-    @Mapping(source = "campeonatoId", target = "campeonato", qualifiedByName = "fromIdToCampeonato")
-    @Mapping(source = "jugadorId", target = "jugador", qualifiedByName = "fromIdToJugador")
+    @Mapping(target = "campeonato", source = "campeonatoId", qualifiedByName = "fromIdToCampeonato")
+    @Mapping(target = "jugador", source = "jugadorId", qualifiedByName = "fromIdToJugador")
     Clasificacion toEntity(ClasificacionDTO clasificacionDTO);
     
     @Named("fromIdToCampeonato")

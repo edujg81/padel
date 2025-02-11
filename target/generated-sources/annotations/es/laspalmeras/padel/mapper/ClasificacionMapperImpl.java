@@ -1,16 +1,14 @@
 package es.laspalmeras.padel.mapper;
 
 import es.laspalmeras.padel.dto.ClasificacionDTO;
-import es.laspalmeras.padel.model.Campeonato;
 import es.laspalmeras.padel.model.Clasificacion;
-import es.laspalmeras.padel.model.Jugador;
 import javax.annotation.processing.Generated;
 import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-02-07T08:37:05+0100",
-    comments = "version: 1.6.3, compiler: Eclipse JDT (IDE) 3.40.0.v20241112-0530, environment: Java 21.0.5 (Eclipse Adoptium)"
+    date = "2025-02-11T15:07:43+0100",
+    comments = "version: 1.6.3, compiler: javac, environment: Java 21.0.6 (Oracle Corporation)"
 )
 @Component
 public class ClasificacionMapperImpl implements ClasificacionMapper {
@@ -23,30 +21,19 @@ public class ClasificacionMapperImpl implements ClasificacionMapper {
 
         ClasificacionDTO clasificacionDTO = new ClasificacionDTO();
 
-        Long id = clasificacionCampeonatoId( clasificacion );
-        if ( id != null ) {
-            clasificacionDTO.setCampeonatoId( id );
-        }
-        else {
-            clasificacionDTO.setCampeonatoId( null );
-        }
-        Long id1 = clasificacionJugadorId( clasificacion );
-        if ( id1 != null ) {
-            clasificacionDTO.setJugadorId( id1 );
-        }
-        else {
-            clasificacionDTO.setJugadorId( null );
-        }
         clasificacionDTO.setId( clasificacion.getId() );
-        clasificacionDTO.setJuegosGanados( clasificacion.getJuegosGanados() );
-        clasificacionDTO.setJuegosPerdidos( clasificacion.getJuegosPerdidos() );
-        clasificacionDTO.setPartidosGanados( clasificacion.getPartidosGanados() );
-        clasificacionDTO.setPartidosJugados( clasificacion.getPartidosJugados() );
-        clasificacionDTO.setPartidosPerdidos( clasificacion.getPartidosPerdidos() );
         clasificacionDTO.setPosicion( clasificacion.getPosicion() );
         clasificacionDTO.setPuntos( clasificacion.getPuntos() );
+        clasificacionDTO.setPartidosJugados( clasificacion.getPartidosJugados() );
+        clasificacionDTO.setPartidosGanados( clasificacion.getPartidosGanados() );
+        clasificacionDTO.setPartidosPerdidos( clasificacion.getPartidosPerdidos() );
         clasificacionDTO.setSetsGanados( clasificacion.getSetsGanados() );
         clasificacionDTO.setSetsPerdidos( clasificacion.getSetsPerdidos() );
+        clasificacionDTO.setJuegosGanados( clasificacion.getJuegosGanados() );
+        clasificacionDTO.setJuegosPerdidos( clasificacion.getJuegosPerdidos() );
+
+        clasificacionDTO.setCampeonatoId( clasificacion.getCampeonato() != null ? clasificacion.getCampeonato().getId() : null );
+        clasificacionDTO.setJugadorId( clasificacion.getJugador() != null ? clasificacion.getJugador().getId() : null );
 
         return clasificacionDTO;
     }
@@ -62,32 +49,16 @@ public class ClasificacionMapperImpl implements ClasificacionMapper {
         clasificacion.setCampeonato( ClasificacionMapper.fromIdToCampeonato( clasificacionDTO.getCampeonatoId() ) );
         clasificacion.setJugador( ClasificacionMapper.fromIdToJugador( clasificacionDTO.getJugadorId() ) );
         clasificacion.setId( clasificacionDTO.getId() );
-        clasificacion.setJuegosGanados( clasificacionDTO.getJuegosGanados() );
-        clasificacion.setJuegosPerdidos( clasificacionDTO.getJuegosPerdidos() );
-        clasificacion.setPartidosGanados( clasificacionDTO.getPartidosGanados() );
-        clasificacion.setPartidosJugados( clasificacionDTO.getPartidosJugados() );
-        clasificacion.setPartidosPerdidos( clasificacionDTO.getPartidosPerdidos() );
         clasificacion.setPosicion( clasificacionDTO.getPosicion() );
         clasificacion.setPuntos( clasificacionDTO.getPuntos() );
+        clasificacion.setPartidosJugados( clasificacionDTO.getPartidosJugados() );
+        clasificacion.setPartidosGanados( clasificacionDTO.getPartidosGanados() );
+        clasificacion.setPartidosPerdidos( clasificacionDTO.getPartidosPerdidos() );
         clasificacion.setSetsGanados( clasificacionDTO.getSetsGanados() );
         clasificacion.setSetsPerdidos( clasificacionDTO.getSetsPerdidos() );
+        clasificacion.setJuegosGanados( clasificacionDTO.getJuegosGanados() );
+        clasificacion.setJuegosPerdidos( clasificacionDTO.getJuegosPerdidos() );
 
         return clasificacion;
-    }
-
-    private Long clasificacionCampeonatoId(Clasificacion clasificacion) {
-        Campeonato campeonato = clasificacion.getCampeonato();
-        if ( campeonato == null ) {
-            return null;
-        }
-        return campeonato.getId();
-    }
-
-    private Long clasificacionJugadorId(Clasificacion clasificacion) {
-        Jugador jugador = clasificacion.getJugador();
-        if ( jugador == null ) {
-            return null;
-        }
-        return jugador.getId();
     }
 }

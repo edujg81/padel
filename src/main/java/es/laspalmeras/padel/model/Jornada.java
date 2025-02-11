@@ -26,12 +26,13 @@ import lombok.ToString;
 /**
  * Representa una jornada de un campeonato.
  */
+
+@Entity
+@Table(name="JORNADA")
 @Getter
 @Setter
 @EqualsAndHashCode(of={"numero", "campeonato"})
 @ToString
-@Entity
-@Table(name="JORNADA")
 public class Jornada implements Serializable {
 
 	private static final long serialVersionUID = 1L;

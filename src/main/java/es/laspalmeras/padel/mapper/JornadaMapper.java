@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.factory.Mappers;
 
 import es.laspalmeras.padel.dto.JornadaDTO;
 import es.laspalmeras.padel.dto.PartidoDTO;
@@ -13,7 +12,7 @@ import es.laspalmeras.padel.model.Partido;
 
 @Mapper(componentModel = "spring", uses = {JugadorMapper.class, PartidoMapper.class})
 public interface JornadaMapper {
-    JornadaMapper INSTANCE = Mappers.getMapper(JornadaMapper.class);
+    //JornadaMapper INSTANCE = Mappers.getMapper(JornadaMapper.class);
 
     @Mapping(source = "campeonato.id", target = "campeonatoId")
     JornadaDTO toDto(Jornada jornada);

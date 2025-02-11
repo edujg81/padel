@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS CAMPEONATO (
     anio INTEGER NOT NULL,
     categoria VARCHAR(20) CHECK (categoria IN ('Masculino', 'Femenino', 'Mixto')) NOT NULL,
     division INTEGER NOT NULL,
-    estado VARCHAR(20) CHECK (estado IN ('Sin iniciar', 'En curso', 'Finalizado')) NOT NULL,
+    estado VARCHAR(20) CHECK (estado IN ('SIN_INICIAR', 'EN_CURSO', 'FINALIZADO')) NOT NULL,
     activo BOOLEAN NOT NULL DEFAULT true,
     puntos_por_victoria INTEGER NOT NULL DEFAULT 2,
     puntos_por_derrota INTEGER NOT NULL DEFAULT 0,

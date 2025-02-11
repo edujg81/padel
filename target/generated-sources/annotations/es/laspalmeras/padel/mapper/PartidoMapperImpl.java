@@ -9,8 +9,8 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-02-07T08:37:07+0100",
-    comments = "version: 1.6.3, compiler: Eclipse JDT (IDE) 3.40.0.v20241112-0530, environment: Java 21.0.5 (Eclipse Adoptium)"
+    date = "2025-02-11T15:07:43+0100",
+    comments = "version: 1.6.3, compiler: javac, environment: Java 21.0.6 (Oracle Corporation)"
 )
 @Component
 public class PartidoMapperImpl implements PartidoMapper {
@@ -23,25 +23,26 @@ public class PartidoMapperImpl implements PartidoMapper {
 
         PartidoDTO partidoDTO = new PartidoDTO();
 
-        partidoDTO.setJornadaId( partidoJornadaId( partido ) );
-        partidoDTO.setEquipo1Jugador1Id( partidoEquipo1Jugador1Id( partido ) );
-        partidoDTO.setEquipo1Jugador2Id( partidoEquipo1Jugador2Id( partido ) );
-        partidoDTO.setEquipo2Jugador1Id( partidoEquipo2Jugador1Id( partido ) );
-        partidoDTO.setEquipo2Jugador2Id( partidoEquipo2Jugador2Id( partido ) );
-        partidoDTO.setEquipoGanador( partido.getEquipoGanador() );
-        partidoDTO.setFecha( partido.getFecha() );
         partidoDTO.setId( partido.getId() );
-        partidoDTO.setJuegosGanadosEquipo1Set1( partido.getJuegosGanadosEquipo1Set1() );
-        partidoDTO.setJuegosGanadosEquipo1Set2( partido.getJuegosGanadosEquipo1Set2() );
-        partidoDTO.setJuegosGanadosEquipo1Set3( partido.getJuegosGanadosEquipo1Set3() );
-        partidoDTO.setJuegosGanadosEquipo2Set1( partido.getJuegosGanadosEquipo2Set1() );
-        partidoDTO.setJuegosGanadosEquipo2Set2( partido.getJuegosGanadosEquipo2Set2() );
-        partidoDTO.setJuegosGanadosEquipo2Set3( partido.getJuegosGanadosEquipo2Set3() );
+        partidoDTO.setFecha( partido.getFecha() );
         partidoDTO.setPista( partido.getPista() );
-        partidoDTO.setRegistrado( partido.getRegistrado() );
         partidoDTO.setResultado( partido.getResultado() );
+        partidoDTO.setEquipoGanador( partido.getEquipoGanador() );
+        partidoDTO.setRegistrado( partido.getRegistrado() );
+        partidoDTO.setJuegosGanadosEquipo1Set1( partido.getJuegosGanadosEquipo1Set1() );
+        partidoDTO.setJuegosGanadosEquipo2Set1( partido.getJuegosGanadosEquipo2Set1() );
+        partidoDTO.setJuegosGanadosEquipo1Set2( partido.getJuegosGanadosEquipo1Set2() );
+        partidoDTO.setJuegosGanadosEquipo2Set2( partido.getJuegosGanadosEquipo2Set2() );
+        partidoDTO.setJuegosGanadosEquipo1Set3( partido.getJuegosGanadosEquipo1Set3() );
+        partidoDTO.setJuegosGanadosEquipo2Set3( partido.getJuegosGanadosEquipo2Set3() );
         partidoDTO.setSetsGanadosEquipo1( partido.getSetsGanadosEquipo1() );
         partidoDTO.setSetsGanadosEquipo2( partido.getSetsGanadosEquipo2() );
+
+        partidoDTO.setJornadaId( partido.getJornada() != null ? partido.getJornada().getId() : null );
+        partidoDTO.setEquipo1Jugador1Id( partido.getEquipo1Jugador1() != null ? partido.getEquipo1Jugador1().getId() : null );
+        partidoDTO.setEquipo1Jugador2Id( partido.getEquipo1Jugador2() != null ? partido.getEquipo1Jugador2().getId() : null );
+        partidoDTO.setEquipo2Jugador1Id( partido.getEquipo2Jugador1() != null ? partido.getEquipo2Jugador1().getId() : null );
+        partidoDTO.setEquipo2Jugador2Id( partido.getEquipo2Jugador2() != null ? partido.getEquipo2Jugador2().getId() : null );
 
         return partidoDTO;
     }
@@ -59,62 +60,22 @@ public class PartidoMapperImpl implements PartidoMapper {
         partido.setEquipo1Jugador2( partidoDTOToJugador1( partidoDTO ) );
         partido.setEquipo2Jugador1( partidoDTOToJugador2( partidoDTO ) );
         partido.setEquipo2Jugador2( partidoDTOToJugador3( partidoDTO ) );
-        partido.setEquipoGanador( partidoDTO.getEquipoGanador() );
-        partido.setFecha( partidoDTO.getFecha() );
         partido.setId( partidoDTO.getId() );
-        partido.setJuegosGanadosEquipo1Set1( partidoDTO.getJuegosGanadosEquipo1Set1() );
-        partido.setJuegosGanadosEquipo1Set2( partidoDTO.getJuegosGanadosEquipo1Set2() );
-        partido.setJuegosGanadosEquipo1Set3( partidoDTO.getJuegosGanadosEquipo1Set3() );
-        partido.setJuegosGanadosEquipo2Set1( partidoDTO.getJuegosGanadosEquipo2Set1() );
-        partido.setJuegosGanadosEquipo2Set2( partidoDTO.getJuegosGanadosEquipo2Set2() );
-        partido.setJuegosGanadosEquipo2Set3( partidoDTO.getJuegosGanadosEquipo2Set3() );
+        partido.setFecha( partidoDTO.getFecha() );
         partido.setPista( partidoDTO.getPista() );
-        partido.setRegistrado( partidoDTO.getRegistrado() );
         partido.setResultado( partidoDTO.getResultado() );
+        partido.setEquipoGanador( partidoDTO.getEquipoGanador() );
+        partido.setRegistrado( partidoDTO.getRegistrado() );
+        partido.setJuegosGanadosEquipo1Set1( partidoDTO.getJuegosGanadosEquipo1Set1() );
+        partido.setJuegosGanadosEquipo2Set1( partidoDTO.getJuegosGanadosEquipo2Set1() );
+        partido.setJuegosGanadosEquipo1Set2( partidoDTO.getJuegosGanadosEquipo1Set2() );
+        partido.setJuegosGanadosEquipo2Set2( partidoDTO.getJuegosGanadosEquipo2Set2() );
+        partido.setJuegosGanadosEquipo1Set3( partidoDTO.getJuegosGanadosEquipo1Set3() );
+        partido.setJuegosGanadosEquipo2Set3( partidoDTO.getJuegosGanadosEquipo2Set3() );
         partido.setSetsGanadosEquipo1( partidoDTO.getSetsGanadosEquipo1() );
         partido.setSetsGanadosEquipo2( partidoDTO.getSetsGanadosEquipo2() );
 
         return partido;
-    }
-
-    private Long partidoJornadaId(Partido partido) {
-        Jornada jornada = partido.getJornada();
-        if ( jornada == null ) {
-            return null;
-        }
-        return jornada.getId();
-    }
-
-    private Long partidoEquipo1Jugador1Id(Partido partido) {
-        Jugador equipo1Jugador1 = partido.getEquipo1Jugador1();
-        if ( equipo1Jugador1 == null ) {
-            return null;
-        }
-        return equipo1Jugador1.getId();
-    }
-
-    private Long partidoEquipo1Jugador2Id(Partido partido) {
-        Jugador equipo1Jugador2 = partido.getEquipo1Jugador2();
-        if ( equipo1Jugador2 == null ) {
-            return null;
-        }
-        return equipo1Jugador2.getId();
-    }
-
-    private Long partidoEquipo2Jugador1Id(Partido partido) {
-        Jugador equipo2Jugador1 = partido.getEquipo2Jugador1();
-        if ( equipo2Jugador1 == null ) {
-            return null;
-        }
-        return equipo2Jugador1.getId();
-    }
-
-    private Long partidoEquipo2Jugador2Id(Partido partido) {
-        Jugador equipo2Jugador2 = partido.getEquipo2Jugador2();
-        if ( equipo2Jugador2 == null ) {
-            return null;
-        }
-        return equipo2Jugador2.getId();
     }
 
     protected Jornada partidoDTOToJornada(PartidoDTO partidoDTO) {

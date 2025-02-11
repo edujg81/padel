@@ -7,8 +7,8 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-02-07T08:37:07+0100",
-    comments = "version: 1.6.3, compiler: Eclipse JDT (IDE) 3.40.0.v20241112-0530, environment: Java 21.0.5 (Eclipse Adoptium)"
+    date = "2025-02-11T15:07:43+0100",
+    comments = "version: 1.6.3, compiler: javac, environment: Java 21.0.6 (Oracle Corporation)"
 )
 @Component
 public class CampeonatoMapperImpl implements CampeonatoMapper {
@@ -22,13 +22,13 @@ public class CampeonatoMapperImpl implements CampeonatoMapper {
         CampeonatoDTO campeonatoDTO = new CampeonatoDTO();
 
         campeonatoDTO.setEstado( estadoToString( campeonato.getEstado() ) );
-        campeonatoDTO.setActivo( campeonato.getActivo() );
+        campeonatoDTO.setId( campeonato.getId() );
+        campeonatoDTO.setYear( campeonato.getYear() );
         campeonatoDTO.setCategoria( campeonato.getCategoria() );
         campeonatoDTO.setDivision( campeonato.getDivision() );
-        campeonatoDTO.setId( campeonato.getId() );
-        campeonatoDTO.setPuntosPorDerrota( campeonato.getPuntosPorDerrota() );
+        campeonatoDTO.setActivo( campeonato.getActivo() );
         campeonatoDTO.setPuntosPorVictoria( campeonato.getPuntosPorVictoria() );
-        campeonatoDTO.setYear( campeonato.getYear() );
+        campeonatoDTO.setPuntosPorDerrota( campeonato.getPuntosPorDerrota() );
 
         return campeonatoDTO;
     }
@@ -42,13 +42,13 @@ public class CampeonatoMapperImpl implements CampeonatoMapper {
         Campeonato campeonato = new Campeonato();
 
         campeonato.setEstado( stringToEstado( campeonatoDTO.getEstado() ) );
-        campeonato.setActivo( campeonatoDTO.getActivo() );
+        campeonato.setId( campeonatoDTO.getId() );
+        campeonato.setYear( campeonatoDTO.getYear() );
         campeonato.setCategoria( campeonatoDTO.getCategoria() );
         campeonato.setDivision( campeonatoDTO.getDivision() );
-        campeonato.setId( campeonatoDTO.getId() );
-        campeonato.setPuntosPorDerrota( campeonatoDTO.getPuntosPorDerrota() );
+        campeonato.setActivo( campeonatoDTO.getActivo() );
         campeonato.setPuntosPorVictoria( campeonatoDTO.getPuntosPorVictoria() );
-        campeonato.setYear( campeonatoDTO.getYear() );
+        campeonato.setPuntosPorDerrota( campeonatoDTO.getPuntosPorDerrota() );
 
         return campeonato;
     }

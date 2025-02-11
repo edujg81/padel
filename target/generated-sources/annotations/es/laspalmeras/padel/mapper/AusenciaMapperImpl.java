@@ -2,15 +2,13 @@ package es.laspalmeras.padel.mapper;
 
 import es.laspalmeras.padel.dto.AusenciaDTO;
 import es.laspalmeras.padel.model.Ausencia;
-import es.laspalmeras.padel.model.Jugador;
-import es.laspalmeras.padel.model.Partido;
 import javax.annotation.processing.Generated;
 import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-02-07T08:37:06+0100",
-    comments = "version: 1.6.3, compiler: Eclipse JDT (IDE) 3.40.0.v20241112-0530, environment: Java 21.0.5 (Eclipse Adoptium)"
+    date = "2025-02-11T15:07:44+0100",
+    comments = "version: 1.6.3, compiler: javac, environment: Java 21.0.6 (Oracle Corporation)"
 )
 @Component
 public class AusenciaMapperImpl implements AusenciaMapper {
@@ -23,9 +21,9 @@ public class AusenciaMapperImpl implements AusenciaMapper {
 
         Ausencia ausencia = new Ausencia();
 
-        ausencia.setPartido( ausenciaDTOToPartido( dto ) );
-        ausencia.setAusente( ausenciaDTOToJugador( dto ) );
-        ausencia.setSustituto( ausenciaDTOToJugador1( dto ) );
+        ausencia.setPartido( AusenciaMapper.fromIdToPartido( dto.getPartidoId() ) );
+        ausencia.setAusente( AusenciaMapper.fromIdToJugador( dto.getAusenteId() ) );
+        ausencia.setSustituto( AusenciaMapper.fromIdToJugador( dto.getSustitutoId() ) );
         ausencia.setId( dto.getId() );
 
         return ausencia;
@@ -39,71 +37,12 @@ public class AusenciaMapperImpl implements AusenciaMapper {
 
         AusenciaDTO ausenciaDTO = new AusenciaDTO();
 
-        ausenciaDTO.setPartidoId( entityPartidoId( entity ) );
-        ausenciaDTO.setAusenteId( entityAusenteId( entity ) );
-        ausenciaDTO.setSustitutoId( entitySustitutoId( entity ) );
         ausenciaDTO.setId( entity.getId() );
 
+        ausenciaDTO.setPartidoId( entity.getPartido() != null ? entity.getPartido().getId() : null );
+        ausenciaDTO.setAusenteId( entity.getAusente() != null ? entity.getAusente().getId() : null );
+        ausenciaDTO.setSustitutoId( entity.getSustituto() != null ? entity.getSustituto().getId() : null );
+
         return ausenciaDTO;
-    }
-
-    protected Partido ausenciaDTOToPartido(AusenciaDTO ausenciaDTO) {
-        if ( ausenciaDTO == null ) {
-            return null;
-        }
-
-        Partido partido = new Partido();
-
-        partido.setId( ausenciaDTO.getPartidoId() );
-
-        return partido;
-    }
-
-    protected Jugador ausenciaDTOToJugador(AusenciaDTO ausenciaDTO) {
-        if ( ausenciaDTO == null ) {
-            return null;
-        }
-
-        Jugador jugador = new Jugador();
-
-        jugador.setId( ausenciaDTO.getAusenteId() );
-
-        return jugador;
-    }
-
-    protected Jugador ausenciaDTOToJugador1(AusenciaDTO ausenciaDTO) {
-        if ( ausenciaDTO == null ) {
-            return null;
-        }
-
-        Jugador jugador = new Jugador();
-
-        jugador.setId( ausenciaDTO.getSustitutoId() );
-
-        return jugador;
-    }
-
-    private Long entityPartidoId(Ausencia ausencia) {
-        Partido partido = ausencia.getPartido();
-        if ( partido == null ) {
-            return null;
-        }
-        return partido.getId();
-    }
-
-    private Long entityAusenteId(Ausencia ausencia) {
-        Jugador ausente = ausencia.getAusente();
-        if ( ausente == null ) {
-            return null;
-        }
-        return ausente.getId();
-    }
-
-    private Long entitySustitutoId(Ausencia ausencia) {
-        Jugador sustituto = ausencia.getSustituto();
-        if ( sustituto == null ) {
-            return null;
-        }
-        return sustituto.getId();
     }
 }

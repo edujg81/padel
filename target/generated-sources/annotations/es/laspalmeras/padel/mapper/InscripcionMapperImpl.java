@@ -1,16 +1,14 @@
 package es.laspalmeras.padel.mapper;
 
 import es.laspalmeras.padel.dto.InscripcionDTO;
-import es.laspalmeras.padel.model.Campeonato;
 import es.laspalmeras.padel.model.Inscripcion;
-import es.laspalmeras.padel.model.Jugador;
 import javax.annotation.processing.Generated;
 import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-02-07T08:37:07+0100",
-    comments = "version: 1.6.3, compiler: Eclipse JDT (IDE) 3.40.0.v20241112-0530, environment: Java 21.0.5 (Eclipse Adoptium)"
+    date = "2025-02-11T15:07:43+0100",
+    comments = "version: 1.6.3, compiler: javac, environment: Java 21.0.6 (Oracle Corporation)"
 )
 @Component
 public class InscripcionMapperImpl implements InscripcionMapper {
@@ -23,9 +21,10 @@ public class InscripcionMapperImpl implements InscripcionMapper {
 
         InscripcionDTO inscripcionDTO = new InscripcionDTO();
 
-        inscripcionDTO.setCampeonatoId( inscripcionCampeonatoId( inscripcion ) );
-        inscripcionDTO.setJugadorId( inscripcionJugadorId( inscripcion ) );
         inscripcionDTO.setId( inscripcion.getId() );
+
+        inscripcionDTO.setCampeonatoId( inscripcion.getCampeonato() != null ? inscripcion.getCampeonato().getId() : null );
+        inscripcionDTO.setJugadorId( inscripcion.getJugador() != null ? inscripcion.getJugador().getId() : null );
 
         return inscripcionDTO;
     }
@@ -38,50 +37,10 @@ public class InscripcionMapperImpl implements InscripcionMapper {
 
         Inscripcion inscripcion = new Inscripcion();
 
-        inscripcion.setCampeonato( inscripcionDTOToCampeonato( inscripcionDTO ) );
-        inscripcion.setJugador( inscripcionDTOToJugador( inscripcionDTO ) );
+        inscripcion.setCampeonato( InscripcionMapper.fromIdToCampeonato( inscripcionDTO.getCampeonatoId() ) );
+        inscripcion.setJugador( InscripcionMapper.fromIdToJugador( inscripcionDTO.getJugadorId() ) );
         inscripcion.setId( inscripcionDTO.getId() );
 
         return inscripcion;
-    }
-
-    private Long inscripcionCampeonatoId(Inscripcion inscripcion) {
-        Campeonato campeonato = inscripcion.getCampeonato();
-        if ( campeonato == null ) {
-            return null;
-        }
-        return campeonato.getId();
-    }
-
-    private Long inscripcionJugadorId(Inscripcion inscripcion) {
-        Jugador jugador = inscripcion.getJugador();
-        if ( jugador == null ) {
-            return null;
-        }
-        return jugador.getId();
-    }
-
-    protected Campeonato inscripcionDTOToCampeonato(InscripcionDTO inscripcionDTO) {
-        if ( inscripcionDTO == null ) {
-            return null;
-        }
-
-        Campeonato campeonato = new Campeonato();
-
-        campeonato.setId( inscripcionDTO.getCampeonatoId() );
-
-        return campeonato;
-    }
-
-    protected Jugador inscripcionDTOToJugador(InscripcionDTO inscripcionDTO) {
-        if ( inscripcionDTO == null ) {
-            return null;
-        }
-
-        Jugador jugador = new Jugador();
-
-        jugador.setId( inscripcionDTO.getJugadorId() );
-
-        return jugador;
     }
 }

@@ -1,0 +1,9 @@
+es\laspalmeras\padel\controller\InscripcionControllerIntegrationTest.class
+es\laspalmeras\padel\service\impl\InscripcionServiceImplTest.class
+es\laspalmeras\padel\controller\JugadorControllerIntegrationTest.class
+es\laspalmeras\padel\service\impl\JornadaServiceImplTest.class
+es\laspalmeras\padel\controller\CampeonatoControllerIntegrationTest.class
+es\laspalmeras\padel\controller\JornadaControllerIntegrationTest.class
+es\laspalmeras\padel\service\impl\CampeonatoServiceImplTest.class
+es\laspalmeras\padel\service\impl\JugadorServiceImplTest.class
+es\laspalmeras\padel\PadelApplicationTests.class

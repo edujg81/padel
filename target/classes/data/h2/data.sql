@@ -30,11 +30,11 @@ INSERT INTO jugador (dni, nombre_completo, telefono, email, sexo, estado, lesion
 
 -- Insertar campeonatos de ejemplo
 INSERT INTO campeonato (anio, categoria, division, estado, activo, puntos_por_victoria, puntos_por_derrota) VALUES
-(2024, 'Masculino', 1, 'Sin iniciar', true, 2, 0),
-(2024, 'Femenino', 1, 'Sin iniciar', true, 2, 0),
-(2024, 'Masculino', 2, 'Sin iniciar', true, 2, 0),
-(2024, 'Femenino', 2, 'Sin iniciar', true, 2, 0),
-(2024, 'Mixto', 1, 'Sin iniciar', true, 2, 0);
+(2024, 'Masculino', 1, 'SIN_INICIAR', true, 2, 0),
+(2024, 'Femenino', 1, 'SIN_INICIAR', true, 2, 0),
+(2024, 'Masculino', 2, 'SIN_INICIAR', true, 2, 0),
+(2024, 'Femenino', 2, 'SIN_INICIAR', true, 2, 0),
+(2024, 'Mixto', 1, 'SIN_INICIAR', true, 2, 0);
 
 -- Insertar inscripciones de ejemplo
 --INSERT INTO inscripcion (campeonato_id, jugador_id) VALUES
